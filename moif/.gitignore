@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.venv/
+dist/
+build/
+*.egg-info/
+runs/
+.ipynb_checkpoints/
+.DS_Store
+data/wesad/

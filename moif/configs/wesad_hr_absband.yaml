@@ -1,0 +1,22 @@
+dataset:
+  type: wesad
+  path: data/wesad
+
+signals: ["HR"]
+
+banding:
+  mode: abs
+  abs:
+    low: 100
+    high: 110
+  min_n_per_condition: 200
+
+detection:
+  divergence_metric: JSD
+  permutation:
+    n_perm: 2000
+    seed: 42
+  fdr_alpha: 0.05
+
+logging:
+  run_id_strategy: timestamp_hash

@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MOIF Finding",
+  "type": "object",
+  "required": [
+    "signal", "band", "condition", "p_y_c1", "p_y_c2",
+    "divergence", "p_value", "q_value", "effect_z", "counts"
+  ],
+  "properties": {
+    "signal": { "type": "string" },
+    "band": {
+      "type": "object",
+      "required": ["mode"],
+      "properties": {
+        "mode": { "type": "string", "enum": ["abs","norm"] },
+        "params": { "type": "object" }
+      }
+    },
+    "condition": {
+      "type": "object",
+      "required": ["name","c1","c2"],
+      "properties": {
+        "name": { "type": "string" },
+        "c1": { "type": "string" },
+        "c2": { "type": "string" }
+      }
+    },
+    "p_y_c1": { "type": "object" },
+    "p_y_c2": { "type": "object" },
+    "divergence": {
+      "type": "object",
+      "required": ["metric","value"],
+      "properties": {
+        "metric": { "type": "string", "enum": ["JSD"] },
+        "value": { "type": "number", "minimum": 0 }
+      }
+    },
+    "p_value": { "type": "number", "minimum": 0, "maximum": 1 },
+    "q_value": { "type": "number", "minimum": 0, "maximum": 1 },
+    "effect_z": { "type": "number" },
+    "counts": {
+      "type": "object",
+      "required": ["n_c1","n_c2"],
+      "properties": { "n_c1": { "type": "integer" }, "n_c2": { "type": "integer" } }
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "MOIF RunResult",
+    "type": "object",
+    "required": [
+        "run_id",
+        "created_at",
+        "git",
+        "config_path",
+        "findings_path",
+        "report_path",
+        "summary"
+    ],
+    "properties": {
+        "run_id": {
+            "type": "string"
+        },
+        "created_at": {
+            "type": "string"
+        },
+        "git": {
+            "type": "object"
+        },
+        "config_path": {
+            "type": "string"
+        },
+        "findings_path": {
+            "type": "string"
+        },
+        "report_path": {
+            "type": "string"
+        },
+        "summary": {
+            "type": "object",
+            "required": [
+                "n_findings",
+                "n_significant"
+            ],
+            "properties": {
+                "n_findings": {
+                    "type": "integer"
+                },
+                "n_significant": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}
