@@ -84,14 +84,14 @@ df_res = df_res.sort_values(by="effect_z", ascending=False)
 
 # Significant ones (divergence)
 sig_breaking = df_res[df_res['q_value'] < 0.05].head(5)
-print("\n--- 🚨 Top 5 Invariance Breaking (ズレているところ) ---")
+print("\n--- Top 5 Invariance Breaking ---")
 for idx, row in sig_breaking.iterrows():
     print(f"Band: {row['band']} | {row['subject_1']} vs {row['subject_2']}")
     print(f"  JSD={row['jsd']:.3f}, p={row['p_value']:.4f}, q={row['q_value']:.4f}, z={row['effect_z']:.1f}")
     
 # Least significant ones (matches)
 sig_match = df_res[(df_res['q_value'] > 0.5) & (df_res['jsd'] < 0.1)].sort_values('jsd').head(5)
-print("\n--- ✅ Top 5 Invariance Matches (一致しているところ) ---")
+print("\n--- Top 5 Invariance Matches ---")
 for idx, row in sig_match.iterrows():
     print(f"Band: {row['band']} | {row['subject_1']} vs {row['subject_2']}")
     print(f"  JSD={row['jsd']:.3f}, p={row['p_value']:.4f}, q={row['q_value']:.4f}, z={row['effect_z']:.1f}")
