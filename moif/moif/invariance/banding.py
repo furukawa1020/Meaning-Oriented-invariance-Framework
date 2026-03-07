@@ -1,13 +1,14 @@
 import pandas as pd
 import numpy as np
 
-def apply_banding(df: pd.DataFrame, banding_cfg: dict) -> pd.DataFrame:
+def apply_banding(df: pd.DataFrame, banding_cfg: dict, feature_col: str = "value") -> pd.DataFrame:
     """
     Apply banding logic based on config, returning a dataframe with an added 'in_band' column.
     
     Parameters:
-        df: DataFrame with 'subject_id' and 'value' columns.
+        df: DataFrame with 'subject_id' and the specified feature column.
         banding_cfg: Dictionary with 'mode', 'abs', 'norm', etc.
+        feature_col: The column containing the physiological value to band.
     """
     mode = banding_cfg.get("mode")
     if mode not in ["abs", "norm"]:
@@ -20,7 +21,7 @@ def apply_banding(df: pd.DataFrame, banding_cfg: dict) -> pd.DataFrame:
         params = banding_cfg.get("abs", {})
         low = params.get("low", -np.inf)
         high = params.get("high", np.inf)
-        df['in_band'] = df['value'].between(low, high)
+        df['in_band'] = df[feature_col].between(low, high)
         
     elif mode == "norm":
         params = banding_cfg.get("norm", {})
@@ -38,7 +39,7 @@ def apply_banding(df: pd.DataFrame, banding_cfg: dict) -> pd.DataFrame:
                     return np.zeros_like(group)
                 return (group - mean) / std
                 
-            df['z_score'] = df.groupby('subject_id')['value'].transform(calc_z)
+            df['z_score'] = df.groupby('subject_id')[feature_col].transform(calc_z)
             df['in_band'] = df['z_score'].between(z_low, z_high)
             df.drop(columns=['z_score'], inplace=True)
             
@@ -51,6 +52,6 @@ def apply_banding(df: pd.DataFrame, banding_cfg: dict) -> pd.DataFrame:
                 high_val = group.quantile(q_high)
                 return group.between(low_val, high_val)
                 
-            df['in_band'] = df.groupby('subject_id')['value'].transform(is_in_quantile)
+            df['in_band'] = df.groupby('subject_id')[feature_col].transform(is_in_quantile)
             
     return df
