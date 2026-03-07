@@ -13,6 +13,11 @@ from moif.invariance.stats import permutation_test, apply_fdr
 print("Loading WESAD dataset with 100Hz Instantaneous CWT... (this will take a few minutes per subject)")
 df = load_wesad('data/wesad/WESAD')
 
+raw_csv_path = "wesad_100hz_instantaneous_raw.csv"
+print(f"Saving the raw 100Hz instantaneous multi-dimensional arrays to {raw_csv_path}...")
+df.to_csv(raw_csv_path, index=False)
+print("Raw arrays saved! Proceeding to significance testing...")
+
 all_classes = ['baseline', 'amusement', 'meditation', 'stress']
 
 # Define banding based on instantaneous physiological features
