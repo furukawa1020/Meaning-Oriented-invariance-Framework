@@ -1,9 +1,15 @@
+"""
+Advanced WESAD Dataloader using NeuroKit2
+Slices physiological signals into sliding windows (e.g., 60s window, 10s stride)
+and extracts domain-specific features (HRV, Phasic/Tonic EDA).
+"""
 import pickle
 from pathlib import Path
 import numpy as np
 import pandas as pd
-from scipy.signal import find_peaks
 import warnings
+
+from moif.signal.advanced_features import extract_window_features
 
 warnings.filterwarnings('ignore')
 
@@ -14,59 +20,10 @@ LABEL_MAP = {
     4: 'meditation'
 }
 
-def _compute_hr(ecg_signal: np.ndarray, fs: int = 700) -> np.ndarray:
-    """Compute instantaneous HR from ECG in 1Hz resolution using RR intervals."""
-    ecg = ecg_signal.flatten()
-    q90 = np.percentile(ecg, 90)
-    # Using height > 0.5 * 90th percentile to avoid T-waves, distance > 300ms (max 200 bpm)
-    peaks, _ = find_peaks(ecg, distance=int(fs*0.3), height=q90*0.5)
-    
-    total_sec = len(ecg) // fs
-    times_target = np.arange(total_sec)
-    
-    if len(peaks) < 2:
-        return np.full(total_sec, np.nan)
-        
-    peak_times = peaks / fs
-    rr = np.diff(peak_times)
-    hr_vals = 60.0 / rr
-    peak_times = peak_times[1:]
-    
-    # Interpolate to 1Hz
-    hr_interp = np.interp(times_target, peak_times, hr_vals)
-    return hr_interp
-
-def _align_eda(eda_signal: np.ndarray, fs: int = 4, target_length: int = 0) -> np.ndarray:
-    """Downsample EMA to 1Hz using block averaging."""
-    eda = eda_signal.flatten()
-    total_sec = len(eda) // fs
-    eda_1hz = np.array([np.mean(eda[i*fs : (i+1)*fs]) for i in range(total_sec)])
-    if target_length > 0:
-        if len(eda_1hz) < target_length:
-            eda_1hz = np.pad(eda_1hz, (0, target_length - len(eda_1hz)), 'edge')
-        else:
-            eda_1hz = eda_1hz[:target_length]
-    return eda_1hz
-
-def _align_labels(labels: np.ndarray, fs: int = 700, target_length: int = 0) -> np.ndarray:
-    labels = labels.flatten()
-    total_sec = len(labels) // fs
-    label_1hz = np.zeros(total_sec, dtype=int)
-    for i in range(total_sec):
-        chunk = labels[i*fs : (i+1)*fs]
-        val, counts = np.unique(chunk, return_counts=True)
-        label_1hz[i] = val[np.argmax(counts)]
-    
-    if target_length > 0:
-        if len(label_1hz) < target_length:
-            label_1hz = np.pad(label_1hz, (0, target_length - len(label_1hz)), 'edge')
-        else:
-            label_1hz = label_1hz[:target_length]
-    return label_1hz
-
-def load_wesad(data_dir: str | Path, signals: list[str]) -> pd.DataFrame:
+def load_wesad(data_dir: str | Path, window_size_sec: int = 60, stride_sec: int = 10) -> pd.DataFrame:
     """
     Load WESAD finding S*.pkl files.
+    Applies sliding window feature extraction using neurokit2.
     """
     root = Path(data_dir)
     records = []
@@ -75,61 +32,74 @@ def load_wesad(data_dir: str | Path, signals: list[str]) -> pd.DataFrame:
     if not pkl_files:
         raise FileNotFoundError(f"No .pkl files found in {root}")
         
+    fs_ecg = 700
+    fs_eda = 4
+    
+    # Pre-calculate window samples
+    # We will slide across the dataset using stride_sec, keeping window_size_sec of data
+    
     for p_path in pkl_files:
+        print(f"Processing {p_path.name}...")
         with open(p_path, 'rb') as f:
             data = pickle.load(f, encoding='latin1')
             
         subj_id = data['subject']
-        lbls = data['label']
+        lbls = data['label'].flatten() # 700Hz
+        
+        # Total duration in seconds
         total_sec = len(lbls) // 700
         
-        # 1Hz label stream
-        label_1hz = _align_labels(lbls, fs=700, target_length=total_sec)
+        ecg_chest = data['signal']['chest']['ECG'].flatten()
+        eda_wrist = data['signal']['wrist']['EDA'].flatten()
         
-        hr_1hz = None
-        eda_1hz = None
-        
-        if "HR" in signals:
-            ecg = data['signal']['chest']['ECG']
-            hr_1hz = _compute_hr(ecg, fs=700)
-            if len(hr_1hz) < total_sec:
-                hr_1hz = np.pad(hr_1hz, (0, total_sec - len(hr_1hz)), 'edge')
-            else:
-                hr_1hz = hr_1hz[:total_sec]
-                
-        if "EDA" in signals:
-            eda_e4 = data['signal']['wrist']['EDA']
-            eda_1hz = _align_eda(eda_e4, fs=4, target_length=total_sec)
+        # Sliding window
+        current_start_sec = 0
+        while current_start_sec + window_size_sec <= total_sec:
+            # Extract labels for this string
+            start_lbl_idx = current_start_sec * 700
+            end_lbl_idx = (current_start_sec + window_size_sec) * 700
+            chunk_lbls = lbls[start_lbl_idx : end_lbl_idx]
             
-        # Compile directly to DataFrame records
-        for i in range(total_sec):
-            label_id = label_1hz[i]
-            if label_id not in LABEL_MAP:
+            # Determine dominant label in window
+            val, counts = np.unique(chunk_lbls, return_counts=True)
+            dominant_label = val[np.argmax(counts)]
+            
+            # Only keep specified labels (Baseline, Stress, Amusement, Meditation)
+            if dominant_label not in LABEL_MAP:
+                current_start_sec += stride_sec
                 continue
                 
-            task_name = LABEL_MAP[label_id]
+            task_name = LABEL_MAP[dominant_label]
             
-            if "HR" in signals:
-                records.append({
-                    "timestamp": float(i),
-                    "subject_id": subj_id,
-                    "session_id": "1",
-                    "task": task_name,
-                    "signal_name": "HR",
-                    "value": float(hr_1hz[i]),
-                    "label": task_name
-                })
+            # Extract signal chunks
+            start_ecg_idx = current_start_sec * fs_ecg
+            end_ecg_idx = (current_start_sec + window_size_sec) * fs_ecg
+            chunk_ecg = ecg_chest[start_ecg_idx : end_ecg_idx]
             
-            if "EDA" in signals:
-                records.append({
-                    "timestamp": float(i),
-                    "subject_id": subj_id,
-                    "session_id": "1",
-                    "task": task_name,
-                    "signal_name": "EDA",
-                    "value": float(eda_1hz[i]),
-                    "label": task_name
-                })
+            start_eda_idx = current_start_sec * fs_eda
+            end_eda_idx = (current_start_sec + window_size_sec) * fs_eda
+            chunk_eda = eda_wrist[start_eda_idx : end_eda_idx]
+            
+            # Extract features (using our new neurokit2 module)
+            feats = extract_window_features(chunk_ecg, chunk_eda, fs_ecg=fs_ecg, fs_eda=fs_eda)
+            
+            # Store record
+            record = {
+                "subject_id": subj_id,
+                "session_id": "1",
+                "timestamp_start": current_start_sec,
+                "timestamp_end": current_start_sec + window_size_sec,
+                "label": task_name
+            }
+            # Unpack features
+            for k, v in feats.items():
+                record[k] = v
                 
+            records.append(record)
+            
+            current_start_sec += stride_sec
+            
     df = pd.DataFrame(records)
+    # Drop rows where feature extraction failed across the board
+    df = df.dropna(subset=['HRV_RMSSD', 'EDA_Tonic_Mean'], how='any')
     return df
