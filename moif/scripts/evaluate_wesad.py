@@ -10,32 +10,33 @@ from moif.loaders.wesad import load_wesad
 from moif.invariance.banding import apply_banding
 from moif.invariance.stats import permutation_test, apply_fdr
 
-print("Loading WESAD dataset with Advanced Sliding Windows (60s)... (this will take a few minutes)")
-df = load_wesad('data/wesad/WESAD', window_size_sec=60, stride_sec=10)
+print("Loading WESAD dataset with 100Hz Instantaneous CWT... (this will take a few minutes per subject)")
+df = load_wesad('data/wesad/WESAD')
 
 all_classes = ['baseline', 'amusement', 'meditation', 'stress']
 
-# Define banding based on advanced physiological features extracted via neurokit2
+# Define banding based on instantaneous physiological features
+# We normalize the 100Hz signals to get Z-scores per subject
 banding_cfgs = [
     {
-        "feature": "HRV_RMSSD",
-        "name": "Low HRV (Parasympathetic Withdrawal, Z < -0.5)",
+        "feature": "HRV_Inst_HF",
+        "name": "Low Instantaneous Vagal Action (Z < -0.5)",
         "config": {"mode": "norm", "norm": {"method": "z", "z_low": -10.0, "z_high": -0.5}}
     },
     {
-        "feature": "HRV_LFHF",
-        "name": "High LF/HF (Sympathetic Dominance, Z > 0.5)",
+        "feature": "HRV_Inst_LF",
+        "name": "High Instantaneous LF (Z > 0.5)",
         "config": {"mode": "norm", "norm": {"method": "z", "z_low": 0.5, "z_high": 10.0}}
     },
     {
-        "feature": "EDA_Tonic_Mean",
-        "name": "High SCL (High General Arousal, Z > 0.5)",
+        "feature": "EDA_Tonic",
+        "name": "High Instantaneous SCL (Z > 0.5)",
         "config": {"mode": "norm", "norm": {"method": "z", "z_low": 0.5, "z_high": 10.0}}
     },
     {
-        "feature": "EDA_Phasic_Mean",
-        "name": "High SCR (High Phasic Reactivity, Z > 0.5)",
-        "config": {"mode": "norm", "norm": {"method": "z", "z_low": 0.5, "z_high": 10.0}}
+        "feature": "EDA_Phasic",
+        "name": "High Instantaneous SCR (Z > 1.0)",
+        "config": {"mode": "norm", "norm": {"method": "z", "z_low": 1.0, "z_high": 10.0}}
     }
 ]
 
@@ -58,8 +59,8 @@ for b_cfg in banding_cfgs:
             labels_c1 = df_in_band[df_in_band['subject_id'] == s1]['label'].values
             labels_c2 = df_in_band[df_in_band['subject_id'] == s2]['label'].values
             
-            # Require at least 20 samples in each condition to be meaningful (windows are 60s, overlapping)
-            if len(labels_c1) < 20 or len(labels_c2) < 20:
+            # Require at least 500 samples (5 seconds of data at 100Hz) in each condition
+            if len(labels_c1) < 500 or len(labels_c2) < 500:
                 continue
                 
             jsd, p_val, eff_z = permutation_test(labels_c1, labels_c2, all_classes, n_perm=500)
@@ -82,22 +83,20 @@ if not results:
 
 df_res = pd.DataFrame(results)
 df_res['q_value'] = apply_fdr(df_res['p_value'].tolist(), alpha=0.05)
-
-# Sort by effect_z
 df_res = df_res.sort_values(by="effect_z", ascending=False)
 
 # Significant ones (divergence)
 sig_breaking = df_res[df_res['q_value'] < 0.05].head(5)
-print("\n--- Top 5 Invariance Breaking ---")
+print("\n--- Top 5 Invariance Breaking (100Hz Instantaneous) ---")
 for idx, row in sig_breaking.iterrows():
     print(f"State: {row['state']} | {row['subject_1']} vs {row['subject_2']}")
     print(f"  JSD={row['jsd']:.3f}, p={row['p_value']:.4f}, q={row['q_value']:.4f}, z={row['effect_z']:.1f}")
     
 # Least significant ones (matches)
 sig_match = df_res[(df_res['q_value'] > 0.5) & (df_res['jsd'] < 0.1)].sort_values('jsd').head(5)
-print("\n--- Top 5 Invariance Matches ---")
+print("\n--- Top 5 Invariance Matches (100Hz Instantaneous) ---")
 for idx, row in sig_match.iterrows():
     print(f"State: {row['state']} | {row['subject_1']} vs {row['subject_2']}")
     print(f"  JSD={row['jsd']:.3f}, p={row['p_value']:.4f}, q={row['q_value']:.4f}, z={row['effect_z']:.1f}")
 
-df_res.to_csv("advanced_divergence_results.csv", index=False)
+df_res.to_csv("instantaneous_divergence_results.csv", index=False)
