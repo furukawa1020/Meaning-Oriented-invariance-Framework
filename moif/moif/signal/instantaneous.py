@@ -56,21 +56,27 @@ def extract_instantaneous_features(
             f_rri = interp1d(rri_t, rri_ms, kind='cubic', bounds_error=False, fill_value="extrapolate")
             rri_100hz = f_rri(t_target)
             
-            # Instantaneous Time-Frequency Analysis via overlapping STFT
-            # 20-second window to capture LF appropriately (0.04Hz is ~25s period, but 20s captures enough power gradient)
-            nperseg = min(target_fs * 20, len(rri_100hz) // 2)
-            noverlap = nperseg - 1 # 1 sample step for instantaneous tracking
+            # Calculate instantaneous powers directly from RRI (Approximate via 4Hz moving average before 100Hz interoplation to prevent huge STFT matrices)
+            # This is a pragmatic optimization for 100Hz CWT
+            t_orig_rri = rri_t
             
+            # Use Welch/Lomb-Scargle or simple Bandpass for instantaneous power tracking
             try:
-                f, t, Zxx = signal.spectrogram(rri_100hz, fs=target_fs, window='hann', 
-                                               nperseg=nperseg, noverlap=noverlap)
+                # Direct bandpass filtering on the interpolated signal for HF and LF envelopes
+                sos_lf = signal.butter(4, [0.04, 0.15], btype='bandpass', fs=target_fs, output='sos')
+                sos_hf = signal.butter(4, [0.15, 0.40], btype='bandpass', fs=target_fs, output='sos')
                 
-                power = np.abs(Zxx)**2
-                lf_mask = (f >= 0.04) & (f < 0.15)
-                hf_mask = (f >= 0.15) & (f <= 0.4)
+                lf_band = signal.sosfiltfilt(sos_lf, rri_100hz)
+                hf_band = signal.sosfiltfilt(sos_hf, rri_100hz)
                 
-                inst_lf = np.sum(power[lf_mask, :], axis=0) if np.sum(lf_mask) > 0 else np.full(len(t), np.nan)
-                inst_hf = np.sum(power[hf_mask, :], axis=0) if np.sum(hf_mask) > 0 else np.full(len(t), np.nan)
+                # Hilbert transform to get analytic signal envelope (Instantaneous power)
+                inst_lf = np.abs(signal.hilbert(lf_band)) ** 2
+                inst_hf = np.abs(signal.hilbert(hf_band)) ** 2
+                
+            except Exception as e:
+                print(f"Filter extraction failed: {e}")
+                inst_lf = np.full(target_length, np.nan)
+                inst_hf = np.full(target_length, np.nan)
                 
                 # Align Spectrogram time axis back to absolute target timestamps
                 inst_lf = interp1d(t, inst_lf, bounds_error=False, fill_value="extrapolate")(t_target)
