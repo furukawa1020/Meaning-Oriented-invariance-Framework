@@ -30,8 +30,8 @@ def load_wesad(data_dir: str | Path) -> pd.DataFrame:
     if not pkl_files:
         raise FileNotFoundError(f"No .pkl files found in {root}")
         
-    # Limit to 3 subjects for faster theoretical validation in this run
-    pkl_files = sorted(pkl_files)[:3]
+    # Process all subjects for the rigorous theoretical validation
+    pkl_files = sorted(pkl_files)
         
     fs_ecg = 700
     fs_eda = 4
