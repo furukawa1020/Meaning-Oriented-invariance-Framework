@@ -1,0 +1,16 @@
+subject,n_high_scl_samples,n_distinct_labels,label_entropy,label_distribution
+S11,53440,2,0.9931,"{'baseline': np.float64(0.549), 'stress': np.float64(0.451)}"
+S3,70006,2,0.9864,"{'stress': np.float64(0.568), 'baseline': np.float64(0.432)}"
+S6,83273,2,0.7591,"{'stress': np.float64(0.781), 'meditation': np.float64(0.219)}"
+S2,76240,2,0.7084,"{'stress': np.float64(0.807), 'baseline': np.float64(0.193)}"
+S8,75366,2,0.5308,"{'stress': np.float64(0.879), 'baseline': np.float64(0.121)}"
+S7,71599,2,0.4881,"{'stress': np.float64(0.894), 'baseline': np.float64(0.106)}"
+S14,61474,3,0.3906,"{'stress': np.float64(0.936), 'meditation': np.float64(0.052), 'amusement': np.float64(0.012)}"
+S17,61075,1,-0.0,{'baseline': np.float64(1.0)}
+S16,67300,1,-0.0,{'stress': np.float64(1.0)}
+S15,68600,1,-0.0,{'stress': np.float64(1.0)}
+S13,66400,1,-0.0,{'stress': np.float64(1.0)}
+S10,72500,1,-0.0,{'stress': np.float64(1.0)}
+S4,63500,1,-0.0,{'stress': np.float64(1.0)}
+S5,64500,1,-0.0,{'stress': np.float64(1.0)}
+S9,64500,1,-0.0,{'stress': np.float64(1.0)}
