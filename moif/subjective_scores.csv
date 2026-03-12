@@ -1,0 +1,120 @@
+subject_id,condition,STAI,SAM_Valence,SAM_Arousal
+S10,Base,14,6.0,8.0
+S10,Fun,10,2.0,2.0
+S10,Medi 1,6,,
+S10,TSST,13,,
+S10,Medi 2,6,,
+S10,bRead,9,,
+S10,fRead,0,,
+S10,sRead,0,,
+S11,Base,16,6.0,4.0
+S11,TSST,7,2.0,6.0
+S11,Medi 1,6,,
+S11,Fun,17,,
+S11,Medi 2,6,,
+S11,bRead,11,,
+S11,sRead,0,,
+S11,fRead,0,,
+S13,Base,13,5.0,8.0
+S13,Fun,10,3.0,4.0
+S13,Medi 1,9,,
+S13,TSST,13,,
+S13,Medi 2,8,,
+S13,bRead,9,,
+S13,fRead,0,,
+S13,sRead,0,,
+S14,Base,5,5.0,3.0
+S14,TSST,8,2.0,7.0
+S14,Medi 2,9,,
+S14,Fun,14,,
+S14,Medi 1,5,,
+S14,bRead,9,,
+S14,sRead,0,,
+S14,fRead,0,,
+S15,Base,14,6.0,7.0
+S15,Fun,9,5.0,5.0
+S15,Medi 1,7,,
+S15,TSST,15,,
+S15,Medi 2,6,,
+S15,bRead,9,,
+S15,fRead,0,,
+S15,sRead,0,,
+S16,Base,11,7.0,3.0
+S16,TSST,9,2.0,8.0
+S16,Medi 1,9,,
+S16,Fun,15,,
+S16,Medi 2,7,,
+S16,bRead,12,,
+S16,sRead,0,,
+S16,fRead,0,,
+S17,Base,11,7.0,8.0
+S17,Fun,9,2.0,2.0
+S17,Medi 1,7,,
+S17,TSST,12,,
+S17,Medi 2,8,,
+S17,bRead,10,,
+S17,fRead,0,,
+S17,sRead,0,,
+S2,Base,15,7.0,5.0
+S2,TSST,8,2.0,4.0
+S2,Medi 1,6,,
+S2,Fun,16,,
+S2,Medi 2,9,,
+S2,sRead,16,,
+S2,fRead,0,,
+S3,Base,16,7.0,7.0
+S3,TSST,8,4.0,7.0
+S3,Medi 1,11,,
+S3,Fun,13,,
+S3,Medi 2,7,,
+S3,bRead,11,,
+S3,sRead,0,,
+S3,fRead,0,,
+S4,Base,10,7.0,8.0
+S4,Fun,7,2.0,1.0
+S4,Medi 1,6,,
+S4,TSST,15,,
+S4,Medi 2,7,,
+S4,bRead,8,,
+S4,fRead,0,,
+S4,sRead,0,,
+S5,Base,16,7.0,6.0
+S5,Fun,8,2.0,2.0
+S5,Medi 1,7,,
+S5,TSST,14,,
+S5,Medi 2,6,,
+S5,bRead,10,,
+S5,fRead,0,,
+S5,sRead,0,,
+S6,Base,18,8.0,6.0
+S6,TSST,10,2.0,3.0
+S6,Medi 1,7,,
+S6,Fun,16,,
+S6,Medi 2,8,,
+S6,bRead,17,,
+S6,sRead,0,,
+S6,fRead,0,,
+S7,Base,14,7.0,7.0
+S7,Fun,7,2.0,7.0
+S7,Medi 1,6,,
+S7,TSST,15,,
+S7,Medi 2,5,,
+S7,bRead,11,,
+S7,fRead,0,,
+S7,sRead,0,,
+S8,Base,11,7.0,7.0
+S8,Fun,8,3.0,3.0
+S8,Medi 1,11,,
+S8,TSST,14,,
+S8,Medi 2,9,,
+S8,bRead,8,,
+S8,fRead,0,,
+S8,sRead,0,,
+S9,Base,17,8.0,7.0
+S9,TSST,7,3.0,4.0
+S9,Medi 1,6,,
+S9,Fun,15,,
+S9,Medi 2,5,,
+S9,bRead,14,,
+S9,sRead,0,,
+S9,fRead,0,,
