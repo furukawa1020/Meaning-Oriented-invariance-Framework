@@ -1,0 +1,31 @@
+Dear Editor-in-Chief and Editorial Board of IEEE Sensors Letters,
+
+We wish to resubmit our manuscript, now titled "Dynamic Baseline Anchoring for High-Resolution Wearable Sensor Fusion: Overcoming Contextual Drift in Physiological Monitoring," for consideration in IEEE Sensors Letters. 
+
+We thank the Editorial Office for the previous un-submission feedback (SENSL-26-03-RL-0327). We have thoroughly revised both the manuscript and this cover letter to explicitly address your requirements. We fully understand that IEEE Sensors Letters requires a direct contribution to sensor devices, systems, or sensor data integration, and not merely general AI/ML or signal processing without sensor relevance.
+
+This manuscript proposes a novel sensor calibration and multi-modal fusion architecture specifically designed to overcome a critical hardware/system challenge in wearable sensing: severe baseline drift and intra-subject contextual variability.
+
+Below, we explicitly articulate how our submission aligns with the scope of IEEE Sensors Letters:
+
+1. The Sensor-Related Problem Being Addressed:
+Wearable physiological sensors (such as ECG and EDA) deployed in real-world environments suffer from massive inter- and intra-subject variability. Changes in contact pressure, sweat gland density, and basal autonomic tone cause the absolute sensor readings to drift significantly. Traditional systems rely on static thresholds or global Z-score normalization, which fail to separate true physiological arousal from hardware-specific or contextual baseline drift, leading to brittle sensing accuracy.
+
+2. How the Proposed Method Advances the Sensor System (Beyond SOTA):
+We propose a Dynamic Baseline Anchoring (DBA) framework explicitly tailored for multi-modal wearable sensor fusion. Rather than applying generic machine learning to raw signals, our framework first achieves an ultra-high-resolution (100Hz) synchronization of disparate sensor modalities (using Continuous Wavelet Transform for ECG and cvxEDA constrained optimization for EDA). It then projects these readings into a multi-dimensional feature space and calculates the Mahalanobis distance relative to the individual’s basal physiological manifold. This specific calibration technique normalizes the sensor data against its own covariance structure, effectively canceling out baseline drift and hardware-specific scaling issues.
+
+3. Experimental Validation, Quantitative Comparison, and Use of Public Datasets:
+As requested, we justify our use of the WESAD public dataset: Using a standardized, publicly available dataset consisting of multi-modal wearable sensor data (RespiBAN chest-worn and wrist-worn sensors) allows us to validate the hardware-agnostic capability of our calibration framework. 
+Quantitative Improvement: We demonstrate that conventional processing methods falsely separate physiological data distributions due to uncalibrated drift. In contrast, our DBA framework mathematically stabilizes the sensor representation, achieving up to a 97.6% distribution overlap (robustness) across drastically different contextual stimuli. This proves that our method provides a highly stable, calibrated, and robust physiological signal output regardless of the contextual noise—a measurable improvement in sensor system reliability.
+
+This work does not formulate a general AI algorithm; it presents a tightly integrated sensor data processing pipeline (from raw physiological sensor outputs -> 100Hz multimodal fusion -> Mahalanobis baseline calibration) that directly improves the deployment capability and robustness of wearable physiological sensor systems.
+
+We confirm that this manuscript represents original work, has not been published, and is not under consideration elsewhere. We believe the revised manuscript now stringently fits the specific scope of IEEE Sensors Letters.
+
+Thank you for your reconsideration.
+
+Sincerely,
+
+Kotaro Furukawa
+Kanazawa University
+[Contact Information]
