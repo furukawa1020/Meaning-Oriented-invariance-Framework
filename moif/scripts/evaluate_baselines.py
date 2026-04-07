@@ -130,7 +130,7 @@ def process_subject(subj_df, features):
 
 print("Loading WESAD raw features...")
 df_all = pd.read_csv('results/wesad_100hz_instantaneous_raw.csv')
-features = ['ECG_cwt_LF', 'ECG_cwt_HF', 'EDA_Phasic', 'EDA_Tonic']
+features = ['HRV_Inst_LF', 'HRV_Inst_HF', 'EDA_Phasic', 'EDA_Tonic']
 
 results = []
 subjects = df_all['subject_id'].unique()
