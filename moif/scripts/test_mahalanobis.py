@@ -19,7 +19,7 @@ label_map = {1: 'baseline', 2: 'stress', 3: 'amusement', 4: 'meditation'}
 s11['label_name'] = s11['label'].map(label_map)
 
 # Define the physiological feature space
-features = ['ECG_cwt_LF', 'ECG_cwt_HF', 'EDA_Phasic', 'EDA_Tonic']
+features = ['HRV_Inst_LF', 'HRV_Inst_HF', 'EDA_Phasic', 'EDA_Tonic']
 
 print("Calculating Mahalanobis distance relative to Baseline...")
 # Calculate Mahalanobis distance
