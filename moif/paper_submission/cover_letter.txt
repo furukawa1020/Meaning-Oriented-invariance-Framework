@@ -1,0 +1,26 @@
+Dear Editor-in-Chief of IEEE Sensors Letters,
+
+Please find enclosed our manuscript entitled "Revealing Hidden Topological Heterogeneity in Wearable Sensor Data through Dynamic Baseline Anchoring" for consideration as a Letter in IEEE Sensors Letters.
+
+1) Statement on the manuscript's significance to the sensors community:
+Wearable multimodal sensor systems (ECG, EDA) frequently rely on universally standardized preprocessing pipelines (e.g., rolling window Z-scores) to mitigate intense hardware and physiological baseline drift. The significance of our work lies in quantitatively demonstrating that these standard calibration pipelines actively dictate and distort the observable data topology. We provide the sensors community with critical evidence that utilizing coarse temporal windowing uniformly masks extreme, underlying inter-subject variance, creating artificial homogenization.
+
+2) Comments on the manuscript's novelty, impact, and urgency that require rapid dissemination:
+The rapid expansion of continuous wearable monitoring has led to an explosion of machine-learning models trained on standardized datasets like WESAD. The urgency of this letter stems from our novel discovery that standard normalization pipelines induce massive "calibration artifacts" that researchers may be unwittingly training algorithms upon. By applying an instantaneous, individually covariant calibration method (Dynamic Baseline Anchoring) to 45 subjects, we expose a stark, statistically bimodal topological divergence previously hidden by moving averages. Rapid dissemination is required to alert the sensor engineering community that adaptive, individualized calibration matrices must be adopted before deploying population-wide multidimensional thresholding models, otherwise future sensor systems will continue to suffer from preprocessing-induced structural distributions.
+
+3) Previously published or submitted works on similar topics:
+Please note that an earlier, differently scoped version of this research was previously submitted to this journal and desk-rejected (Manuscript ID: SENSL-26-03-RL-0327). While that previous iteration focused heavily on psychological interpretations of "physiological invariance" (which was deemed out-of-scope), this current manuscript is a completely rewritten, new submission. We have fundamentally shifted the entire scope, methodology, and statistical validation to rigorously evaluate "sensor preprocessing pipelines" and "calibration-induced geometric distortions," placing it strictly within the hardware and signal processing scope of IEEE Sensors Letters. Beyond this prior desk-rejected iteration, the author indicates there are no previously published or submitted works on this specific topic in any archival journal.
+
+4) Preprint repositories:
+This manuscript has not been posted on any preprint repositories.
+
+We believe this empirical critique fits perfectly within the scope of IEEE Sensors Letters by prioritizing the immediate implications of sensor hardware preprocessing limits, and we hope it will stimulate crucial discussion on calibration infrastructure. 
+
+Thank you for your consideration.
+
+Sincerely,
+
+Kotaro Furukawa
+Frontier School of Transdisciplinary Sciences, 
+Kanazawa University, Ishikawa, Japan
+Email: f.kotaro.0530@gmail.com
