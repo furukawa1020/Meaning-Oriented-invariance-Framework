@@ -127,24 +127,35 @@ def process_subject(subj_df, features):
         
     return res
 
-print("Loading WESAD raw features...")
-df_all = pd.read_csv('results/wesad_100hz_instantaneous_raw.csv')
-features = ['HRV_Inst_LF', 'HRV_Inst_HF', 'EDA_Phasic', 'EDA_Tonic']
+import argparse
 
-results = []
-subjects = df_all['subject_id'].unique()
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--input', type=str, default='results/wesad_100hz_instantaneous_raw.csv')
+    parser.add_argument('--output', type=str, default='results/evaluation_baselines_wesad.csv')
+    args = parser.parse_args()
 
-print(f"Evaluating {len(subjects)} subjects for Overlap & Separability...")
-for subj in subjects:
-    print(f"Processing {subj}...")
-    subj_df = df_all[df_all['subject_id'] == subj]
-    res = process_subject(subj_df, features)
-    if res:
-        results.append(res)
-
-df_res = pd.DataFrame(results)
-print("\n--- RESULTS OVERVIEW ---")
-print(df_res.mean(numeric_only=True).round(2).to_string())
-
-df_res.to_csv('results/evaluation_baselines_wesad.csv', index=False)
-print("\nSaved detailed results to results/evaluation_baselines_wesad.csv")
+    print(f"Loading raw features from {args.input}...")
+    df_all = pd.read_csv(args.input)
+    features = ['HRV_Inst_LF', 'HRV_Inst_HF', 'EDA_Phasic', 'EDA_Tonic']
+    
+    results = []
+    subjects = df_all['subject_id'].unique()
+    
+    print(f"Evaluating {len(subjects)} subjects for Overlap & Separability...")
+    for subj in subjects:
+        print(f"Processing {subj}...")
+        subj_df = df_all[df_all['subject_id'] == subj]
+        res = process_subject(subj_df, features)
+        if res:
+            results.append(res)
+    
+    if len(results) > 0:
+        df_res = pd.DataFrame(results)
+        print("\n--- RESULTS OVERVIEW ---")
+        print(df_res.mean(numeric_only=True).round(2).to_string())
+        
+        df_res.to_csv(args.output, index=False)
+        print(f"\nSaved detailed results to {args.output}")
+    else:
+        print("No valid results computed.")

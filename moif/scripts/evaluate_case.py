@@ -1,87 +1,76 @@
-"""
-Evaluate Invariance Breaking on CASE Dataset.
-Compares 'bluVid' (Baseline) vs 'scary' (Stress equivalent) 
-across all 30 subjects at 100Hz resolution.
-"""
-import sys
-import numpy as np
 import pandas as pd
+import numpy as np
+import os
+import sys
 from pathlib import Path
 
 # Add project root to sys.path
 sys.path.append('.')
 
 from moif.loaders.case import load_case
-from moif.invariance.stats import permutation_test
-from sklearn.neighbors import NearestNeighbors
+from moif.signal.instantaneous import extract_instantaneous_features
 
-print("Loading CASE dataset (interpolated 1000Hz synchronized to 100Hz)...")
-# Note: Using the moved directory
-df = load_case('data/case')
+case_raw_csv_path = "results/case_100hz_instantaneous_raw.csv"
 
-print(f"Total CASE samples loaded: {len(df)}")
-subjects = df['subject_id'].unique()
+def prepare_case_data():
+    if os.path.exists(case_raw_csv_path):
+        print(f"File {case_raw_csv_path} already exists. Loading it...")
+        return pd.read_csv(case_raw_csv_path)
 
-# We use Valence/Arousal to show divergence despite physiological overlap
-# Standardizing features (Z-score from baseline per subject)
-features = ['ECG', 'GSR', 'BVP'] # Basic physiological features available in CASE
-z_features = [f'{f}_Z' for f in features]
-
-results = []
-
-for sub_id in subjects:
-    sub_df = df[df['subject_id'] == sub_id].copy()
-    
-    # CASE: 10: baseline, 1 & 2: stress (scary)
-    b = sub_df[sub_df['label'] == 'baseline'].copy()
-    s = sub_df[sub_df['label'] == 'stress'].copy()
-    
-    if b.empty or s.empty:
-        print(f"Skipping {sub_id}: missing baseline or stress classes.")
-        continue
+    print("Loading CASE dataset (1000Hz -> 100Hz)...")
+    # Load raw interpolated dataframe
+    df_raw = load_case('data/case')
+    if df_raw.empty:
+        print("Error: CASE data not loaded correctly or directory not found.")
+        sys.exit(1)
         
-    # Scale per subject baseline
-    for col in features:
-        m = b[col].mean()
-        std = b[col].std()
-        if std == 0: continue
-        b.loc[:, f'{col}_Z'] = (b[col] - m) / std
-        s.loc[:, f'{col}_Z'] = (s[col] - m) / std
+    print("Applying Continuous Instantaneous Extraction (CWT & cvxEDA) per subject...")
+    target_fs = 100
+    dfs_extracted = []
+    
+    subjects = df_raw['subject_id'].unique()
+    for subj in subjects:
+        print(f"  Extracting features for subject {subj}...")
+        df_subj = df_raw[df_raw['subject_id'] == subj].copy()
         
-    if f'{features[0]}_Z' not in b.columns: continue
-    
-    # 1. Overlap (Omega) calculation at r=1.0
-    nn = NearestNeighbors(radius=1.0)
-    b_vals = b[z_features].values
-    if len(b_vals) > 10000:
-        b_vals = b_vals[np.random.choice(len(b_vals), 10000, replace=False)]
-    
-    nn.fit(b_vals)
-    
-    s_vals = s[z_features].values
-    if len(s_vals) > 10000:
-        s_vals = s_vals[np.random.choice(len(s_vals), 10000, replace=False)]
+        # In CASE loader, ecg and gsr were already resampled to 100Hz in the df_raw.
+        # It's better to use these 100Hz signals directly as input if extract_instantaneous_features supports it.
+        # Let's check: extract_instantaneous_features(ecg, eda, fs_ecg, fs_eda, target_fs=100)
+        # So we pass fs_ecg=100, fs_eda=100
+        ecg_signal = df_subj['ECG'].values
+        eda_signal = df_subj['GSR'].values
         
-    ind = nn.radius_neighbors(s_vals, return_distance=False)
-    overlap_pct = np.mean([len(n) > 0 for n in ind]) * 100
+        try:
+            df_feats = extract_instantaneous_features(
+                ecg_signal, eda_signal, fs_ecg=target_fs, fs_eda=target_fs, target_fs=target_fs
+            )
+        except Exception as e:
+            print(f"    Failed to extract for {subj}: {e}")
+            continue
+            
+        # extract_instantaneous_features returns a DataFrame with 'timestamp', EDA_*, HRV_*
+        # We need to map the labels back
+        df_feats['subject_id'] = subj
+        df_feats['label'] = df_subj['label'].values[:len(df_feats)] # Align lengths
+        if 'valence' in df_subj.columns:
+            df_feats['valence'] = df_subj['valence'].values[:len(df_feats)]
+            df_feats['arousal'] = df_subj['arousal'].values[:len(df_feats)]
+            
+        dfs_extracted.append(df_feats)
+        
+    df_final = pd.concat(dfs_extracted, ignore_index=True)
+    df_final = df_final.dropna(subset=['label', 'HRV_Inst_HF', 'EDA_Tonic'])
     
-    # 2. Subjective Divergence
-    # In CASE, we have continuous valence/arousal
-    mean_val_b = b['valence'].mean()
-    mean_val_s = s['valence'].mean()
-    val_diff = abs(mean_val_s - mean_val_b)
-    
-    results.append({
-        'Subject': sub_id,
-        'Overlap (%)': overlap_pct,
-        'Valence Diff': val_diff
-    })
-    
-    print(f"{sub_id}: Overlap={overlap_pct:.2f}%, Valence Diff={val_diff:.2f}")
+    print(f"Saving extracted CASE dataset to {case_raw_csv_path}...")
+    os.makedirs('results', exist_ok=True)
+    df_final.to_csv(case_raw_csv_path, index=False)
+    return df_final
 
-res_df = pd.DataFrame(results).sort_values('Overlap (%)', ascending=False)
-print("\n=== CASE Universal Distribution Overlap (Physiology: ECG, GSR, BVP) ===")
-print(res_df.to_string())
-
-res_df.to_csv("case_overlap_results.csv", index=False)
-print("\nAnalysis complete. Results saved to case_overlap_results.csv.")
+if __name__ == "__main__":
+    df_case = prepare_case_data()
+    print("CASE extraction complete.")
+    
+    # Now run the baseline evaluation on CASE using the same logic
+    # We can just import and call process_subject from evaluate_baselines
+    # But wait, evaluate_baselines.py doesn't export process_subject cleanly if we run it as main.
+    # Actually we can just run evaluate_baselines by passing the csv path as an argument.
