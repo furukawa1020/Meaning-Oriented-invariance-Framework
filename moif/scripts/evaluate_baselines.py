@@ -51,8 +51,7 @@ def calculate_separability(X, y):
     return f1_score(y_test, preds, pos_label='stress')
 
 def process_subject(subj_df, features):
-    label_map = {1: 'baseline', 2: 'stress', 3: 'amusement', 4: 'meditation'}
-    subj_df['label_name'] = subj_df['label'].map(label_map)
+    subj_df['label_name'] = subj_df['label']
     
     # Filter only baseline and stress for comparison
     df_eval = subj_df[subj_df['label_name'].isin(['baseline', 'stress'])].copy()
