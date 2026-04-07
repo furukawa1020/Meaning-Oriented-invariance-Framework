@@ -12,7 +12,7 @@ from moif.invariance.mahalanobis import calculate_mahalanobis_distance
 print("Loading WESAD S11 data...")
 # Read raw 100Hz WESAD data
 df = pd.read_csv('results/wesad_100hz_instantaneous_raw.csv')
-s11 = df[df['subject'] == 'S11'].copy()
+s11 = df[df['subject_id'] == 'S11'].copy()
 
 # Ensure label mapping is standard
 label_map = {1: 'baseline', 2: 'stress', 3: 'amusement', 4: 'meditation'}
