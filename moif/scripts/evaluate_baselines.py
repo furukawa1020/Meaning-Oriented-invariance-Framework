@@ -1,159 +1,175 @@
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler
-from sklearn.neighbors import NearestNeighbors
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split
 from sklearn.metrics import f1_score
-from scipy.spatial.distance import mahalanobis
+from scipy.linalg import sqrtm
 import warnings
 import os
 import sys
 sys.path.append('.')
-from moif.loaders.wesad import load_wesad
 
 warnings.filterwarnings('ignore')
 
-def calculate_overlap_omega(baseline_data, stress_data, radius_multiplier=1.0):
-    """
-    Calculates the distribution overlap metric Omega (percentage of stress data 
-    that falls within the 1-sigma dense region of baseline data).
-    """
-    if len(baseline_data) < 10 or len(stress_data) < 10:
-        return 0.0
-    
-    # Define the dense boundary of the baseline data (1 sigma)
-    # Using NearestNeighbors to find if points are within R of any baseline point
-    nbrs = NearestNeighbors(radius=radius_multiplier, algorithm='auto').fit(baseline_data)
-    
-    # For each point in stress_data, find neighbors in baseline_data within radius
-    # radius_neighbors returns (distances, indices). We just need to know if len(indices) > 0.
-    # To be fast, we can use kneighbors with k=1 and check if dist < radius
-    distances, _ = nbrs.kneighbors(stress_data, n_neighbors=1)
-    
-    # Calculate percentage
-    overlap_count = np.sum(distances <= radius_multiplier)
-    omega = (overlap_count / len(stress_data)) * 100
-    return omega
+def compute_cohens_d(group1, group2):
+    n1, n2 = len(group1), len(group2)
+    if n1 < 2 or n2 < 2: return 0.0
+    s1, s2 = np.var(group1, ddof=1), np.var(group2, ddof=1)
+    s = np.sqrt(((n1 - 1) * s1 + (n2 - 1) * s2) / (n1 + n2 - 2))
+    return np.abs(np.mean(group1) - np.mean(group2)) / s if s > 0 else 0.0
 
-def calculate_separability(X, y):
+def process_and_evaluate(df_all, features, active_label='stress'):
     """
-    Calculate how well Baseline and Stress can be separated using Logistic Regression.
+    Evaluates normalization methods ensuring strict isolation of train/test data 
+    and proper dimension-matching.
     """
-    y = np.array(y)
-    if len(np.unique(y)) < 2:
-        return 0.0
+    subjects = df_all['subject_id'].unique()
     
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
-    clf = LogisticRegression(max_iter=1000, class_weight='balanced')
-    clf.fit(X_train, y_train)
-    preds = clf.predict(X_test)
-    return f1_score(y_test, preds, pos_label='stress')
-
-def process_subject(subj_df, features):
-    subj_df['label_name'] = subj_df['label']
+    # Pre-split contiguous blocks for ALL subjects to allow fitting Global Scaler properly
+    data_dict = {}
+    X_train_global_list = []
     
-    # Filter only baseline and stress for comparison
-    df_eval = subj_df[subj_df['label_name'].isin(['baseline', 'stress'])].copy()
-    if df_eval.empty or len(df_eval['label_name'].unique()) < 2:
-        return None
-    
-    # 1. Global Z-Score
-    scaler = StandardScaler()
-    X_global_z = scaler.fit_transform(df_eval[features])
-    
-    # 2. Rolling Z-Score (60 seconds = 6000 samples at 100Hz)
-    rolling_window = 6000
-    df_eval_rolling = df_eval[features].copy()
-    for col in features:
-        mean_r = df_eval[col].rolling(window=rolling_window, min_periods=1).mean()
-        std_r = df_eval[col].rolling(window=rolling_window, min_periods=1).std().replace(0, 1)
-        df_eval_rolling[col] = (df_eval[col] - mean_r) / std_r
-    # Drop NaNs created by rolling std (first element)
-    df_eval_rolling = df_eval_rolling.fillna(0)
-    X_rolling_z = df_eval_rolling.values
-    
-    # 3. Mahalanobis DBA
-    # Calculate covariance and mean of BASELINE only
-    base_data = df_eval[df_eval['label_name'] == 'baseline'][features]
-    if len(base_data) < 100:
-        return None
+    for subj in subjects:
+        subj_df = df_all[df_all['subject_id'] == subj].copy()
+        subj_df['label_name'] = subj_df['label']
         
-    mu_base = base_data.mean().values
-    cov_base = np.cov(base_data.values, rowvar=False)
-    
-    # Add small epsilon to diagonal to prevent singular matrix
-    cov_base += np.eye(cov_base.shape[0]) * 1e-6
-    try:
-        inv_cov_base = np.linalg.inv(cov_base)
-    except np.linalg.LinAlgError:
-        return None
-        
-    X_dba = np.zeros((len(df_eval), 1))
-    for i, row in enumerate(df_eval[features].values):
-        X_dba[i] = mahalanobis(row, mu_base, inv_cov_base)
-    
-    # Replace outliers > 10 in DBA with 10 to stabilize (since it's a distance)
-    # X_dba = np.clip(X_dba, 0, 10)
-    
-    # Now calculate Omega and Separability for each method
-    methods = {
-        'Global Z': X_global_z,
-        'Rolling Z': X_rolling_z,
-        'DBA': X_dba
-    }
-    
-    y = df_eval['label_name'].values
-    idx_base = (y == 'baseline')
-    idx_stress = (y == 'stress')
-    
-    res = {'Subject': df_eval.iloc[0]['subject_id']}
-    
-    for m_name, X in methods.items():
-        # Standardize the output space of the method so 1 sigma means the same thing geometrically
-        if X.shape[1] > 1: # multi-dimensional
-            X_std = StandardScaler().fit_transform(X)
-        else:
-            X_std = StandardScaler().fit_transform(X)
+        df_eval = subj_df[subj_df['label_name'].isin(['baseline', active_label])].copy()
+        if df_eval.empty or len(df_eval['label_name'].unique()) < 2:
+            continue
             
-        b_data = X_std[idx_base]
-        s_data = X_std[idx_stress]
+        base_idx = np.where(df_eval['label_name'] == 'baseline')[0]
+        act_idx = np.where(df_eval['label_name'] == active_label)[0]
         
-        omega = calculate_overlap_omega(b_data, s_data, radius_multiplier=1.0)
-        sep_f1 = calculate_separability(X_std, y)
+        # 50/50 Block Split (First half train, Second half test) - NO RANDOM SHUFFLING
+        split_b = int(len(base_idx) * 0.5)
+        split_a = int(len(act_idx) * 0.5)
         
-        res[f'{m_name} Omega'] = omega
-        res[f'{m_name} Separability (F1)'] = sep_f1
+        train_idx = np.concatenate([base_idx[:split_b], act_idx[:split_a]])
+        test_idx = np.concatenate([base_idx[split_b:], act_idx[split_a:]])
         
-    return res
+        X_raw = df_eval[features].values
+        y_raw = df_eval['label_name'].values
+        
+        # We need the indices of the 'baseline' strictly inside the train split for DBA
+        base_train_mask = (y_raw[train_idx] == 'baseline')
+        
+        # Compute proper causal rolling Z-score over the continuous stream
+        # Rolling only uses past data, so it's intrinsically leakage-free at any time t
+        rolling_window = 6000
+        df_rolling = df_eval[features].copy()
+        for col in features:
+            mean_r = df_eval[col].rolling(window=rolling_window, min_periods=1).mean()
+            std_r = df_eval[col].rolling(window=rolling_window, min_periods=1).std().replace(0, 1)
+            df_rolling[col] = (df_eval[col] - mean_r) / std_r
+        X_rolling = df_rolling.fillna(0).values
+        
+        data_dict[subj] = {
+            'X_raw': X_raw,
+            'y_raw': y_raw,
+            'train_idx': train_idx,
+            'test_idx': test_idx,
+            'base_train_mask': base_train_mask,
+            'X_rolling': X_rolling
+        }
+        
+        # Add to global train set
+        X_train_global_list.append(X_raw[train_idx])
+        
+    if not X_train_global_list:
+        return pd.DataFrame()
+        
+    results = []
+    
+    for subj, d in data_dict.items():
+        X_train_raw = d['X_raw'][d['train_idx']]
+        X_test_raw = d['X_raw'][d['test_idx']]
+        y_train = d['y_raw'][d['train_idx']]
+        y_test = d['y_raw'][d['test_idx']]
+        
+        # 1. Subject-wise Z-Score (Fit only on this subject's train chunk)
+        subj_scaler = StandardScaler().fit(X_train_raw)
+        X_train_sz = subj_scaler.transform(X_train_raw)
+        X_test_sz = subj_scaler.transform(X_test_raw)
+        
+        # 3. Rolling Z-Score
+        X_train_rz = d['X_rolling'][d['train_idx']]
+        X_test_rz = d['X_rolling'][d['test_idx']]
+        
+        # 4. DBA (Mahalanobis Whitening) -> n-dimensional output
+        X_train_base = X_train_raw[d['base_train_mask']]
+        
+        mu_b = X_train_base.mean(axis=0)
+        cov_b = np.cov(X_train_base, rowvar=False)
+        cov_b += np.eye(cov_b.shape[0]) * 1e-6 # Epsilon for stability
+        
+        try:
+            cov_b_inv = np.linalg.inv(cov_b)
+            # Whitening matrix W = Sigma^(-1/2)
+            W = sqrtm(cov_b_inv).real 
+            X_train_dba = (X_train_raw - mu_b) @ W
+            X_test_dba = (X_test_raw - mu_b) @ W
+        except np.linalg.LinAlgError:
+            continue
+            
+        methods = {
+            'Subject_Z': (X_train_sz, X_test_sz),
+            'Rolling_Z': (X_train_rz, X_test_rz),
+            'DBA': (X_train_dba, X_test_dba)
+        }
+        
+        res = {'Subject': subj}
+        
+        for m_name, (X_tr, X_te) in methods.items():
+            # Linear Classification completely on strictly held-out block
+            clf = LogisticRegression(max_iter=1000, class_weight='balanced')
+            clf.fit(X_tr, y_train)
+            preds = clf.predict(X_te)
+            f1 = f1_score(y_test, preds, pos_label=active_label)
+            
+            # Compute Effect Size (Cohen's d) on the Test Set distribution
+            idx_base_te = (y_test == 'baseline')
+            idx_act_te = (y_test == active_label)
+            
+            b_data = X_te[idx_base_te]
+            a_data = X_te[idx_act_te]
+            
+            d_score = np.mean([compute_cohens_d(b_data[:, i], a_data[:, i]) for i in range(X_te.shape[1])])
+            
+            res[f'{m_name}_F1'] = f1
+            res[f'{m_name}_d'] = d_score
+            
+        results.append(res)
+        
+    return pd.DataFrame(results)
 
 import argparse
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--input', type=str, default='results/wesad_100hz_instantaneous_raw.csv')
-    parser.add_argument('--output', type=str, default='results/evaluation_baselines_wesad.csv')
+    parser.add_argument('--input', type=str, required=True)
+    parser.add_argument('--output', type=str, required=True)
+    parser.add_argument('--active_label', type=str, default='stress')
     args = parser.parse_args()
 
     print(f"Loading raw features from {args.input}...")
     df_all = pd.read_csv(args.input)
     features = ['HRV_Inst_LF', 'HRV_Inst_HF', 'EDA_Phasic', 'EDA_Tonic']
     
-    results = []
-    subjects = df_all['subject_id'].unique()
+    print(f"Evaluating subjects preventing temporal leakage using Blocked Splits...")
+    df_res = process_and_evaluate(df_all, features, active_label=args.active_label)
     
-    print(f"Evaluating {len(subjects)} subjects for Overlap & Separability...")
-    for subj in subjects:
-        print(f"Processing {subj}...")
-        subj_df = df_all[df_all['subject_id'] == subj]
-        res = process_subject(subj_df, features)
-        if res:
-            results.append(res)
-    
-    if len(results) > 0:
-        df_res = pd.DataFrame(results)
+    if not df_res.empty:
         print("\n--- RESULTS OVERVIEW ---")
-        print(df_res.mean(numeric_only=True).round(2).to_string())
+        
+        from scipy.stats import wilcoxon
+        print("Mean +/- Std:")
+        print(f"Subject_Z F1: {df_res['Subject_Z_F1'].mean():.2f} +/- {df_res['Subject_Z_F1'].std():.2f}")
+        print(f"Rolling_Z F1: {df_res['Rolling_Z_F1'].mean():.2f} +/- {df_res['Rolling_Z_F1'].std():.2f}")
+        print(f"DBA F1: {df_res['DBA_F1'].mean():.2f} +/- {df_res['DBA_F1'].std():.2f}")
+        
+        # Paired Wilcoxon Test
+        stat, p = wilcoxon(df_res['DBA_F1'], df_res['Rolling_Z_F1'])
+        print(f"\nWilcoxon Test (DBA vs Rolling): p-value = {p:.2e}")
         
         df_res.to_csv(args.output, index=False)
         print(f"\nSaved detailed results to {args.output}")

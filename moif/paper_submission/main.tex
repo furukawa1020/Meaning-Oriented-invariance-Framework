@@ -1,141 +1,124 @@
-\documentclass[journal, twocolumn]{IEEEtran}
-
-\usepackage{cite}
-\usepackage{amsmath,amssymb,amsfonts}
-\usepackage{algorithmic}
+\documentclass{IEEE_lsens}
 \usepackage{graphicx}
-\usepackage{textcomp}
-\usepackage{xcolor}
+\usepackage{algorithmic}
 \usepackage{booktabs}
 \usepackage{multirow}
+\usepackage{amsmath}
 
-\begin{document}
+\IEEELSENSarticlesubject{Sensor Applications}
 
-\title{Revealing Hidden Topological Heterogeneity in Wearable Sensor Data through Dynamic Baseline Anchoring}
+\title{Subject-Specific Covariance-Aware Calibration for Wearable Physiological Sensing Under Drift}
 
-\author{
-    \IEEEauthorblockN{Kotaro Furukawa, \textit{Student Member, IEEE}}\\
-    \IEEEauthorblockA{Frontier School of Transdisciplinary Sciences, Kanazawa University, Ishikawa, Japan\\
-    Email: f.kotaro.0530@gmail.com}
-}
+\author{\IEEEauthorblockN{Kotaro Furukawa\IEEEauthorieeemembermark{1}, \textit{Student Member, IEEE}}
+\IEEEauthorblockA{\IEEEauthorrefmark{1}Frontier School of Transdisciplinary Sciences, Kanazawa University, Ishikawa, Japan}%
+\thanks{Corresponding author: K. Furukawa (e-mail: f.kotaro.0530@gmail.com).}}
 
-\maketitle
+\IEEELSENSmanuscriptreceived{Manuscript received April 12, 2026.}
 
-\begin{abstract}
-Continuous physiological sensing is foundational to affective computing and ambulatory monitoring. Standard processing pipelines typically employ generic temporal normalization (e.g., rolling averages) to mitigate hardware-induced drift. We hypothesize that these standard normalization methods artificially enforce population-level topological homogeneity, masking individual-specific covariance structures inherent in biological responses. In this letter, we test this hypothesis by comparing conventional windowed normalizations against a high-resolution (100 Hz), Dynamic Baseline Anchoring (DBA) methodology based on individual Mahalanobis distance. Applying this to 45 subjects across the WESAD and CASE datasets, we demonstrate that DBA reveals a statistically significant bimodal distribution (Hartigan's dip test, $p < 0.05$) in the geometric overlap of physiological stress topologies. While physiological state separability (mean F1: 0.86\textendash0.89) is strictly maintained across the population, the topological overlap between resting and active task responses exhibits extreme dichotomy, ranging from near 0\% to nearly 100\% dependent entirely on the subject. These findings highlight that sensor calibration design fundamentally shapes the observable data topology, potentially introducing structural distortions under conventional normalization pipelines.
+\IEEEtitleabstractindextext{%
+\begin{abstract}[Graphical_Abstract]
+Continuous physiological sensing requires robust calibration against hardware-induced signal drift and interpersonal autonomic variance. Standard processing pipelines typically employ generic temporal normalization (e.g., rolling averages) to mitigate these shifts in real-time. In this letter, we evaluate subject-wise static and moving-window normalizations against a Dynamic Baseline Anchoring (DBA) methodology formulated as a multi-dimensional Mahalanobis whitening transformation. Evaluating on 45 subjects across the WESAD and CASE datasets, we implemented blocked cross-validation ensuring exclusive train-split parameter estimation. We empirically demonstrate that continuous rolling normalizations degrade downstream sensor separability (dropping F1 to 0.43 in WESAD). Conversely, we show that subject-specific, covariance-aware calibration prevents the separability collapse introduced by continuous rolling normalization under drift. Our primary contribution is a continuous calibration protocol for wearable sensing. When only a resting anchor is available and rolling correction risks boundary collapse, DBA avoids temporal failure modes while remaining competitive with subject-wise train-block standardization on held-out contiguous blocks.
 \end{abstract}
 
 \begin{IEEEkeywords}
-Wearable Sensors, Sensor Calibration, Data Normalization, Physiological Topology, Electrodermal Activity (EDA), Heterogeneity.
-\end{IEEEkeywords}
+Wearable Sensors, Sensor Calibration, Data Normalization, Mahalanobis Whitening, Electrodermal Activity.
+\end{IEEEkeywords}}
+
+\begin{document}
+
+\maketitle
 
 \section{Introduction}
-\IEEEPARstart{W}{earable} physiological sensors, integrating real-time modalities such as electrocardiogram (ECG) and electrodermal activity (EDA), assert significant potential for continuous objective state monitoring \cite{picard1997}. However, deploying these sensors in uncontrolled environments introduces substantial signal variability originating from both dynamic hardware contact and vast intra-subject autonomic variance \cite{wilhelm2006}. 
 
-Conventional multi-sensor systems address this variability by universally processing raw outputs utilizing global standardization (Z-score) or localized rolling-window averaging \cite{schmidt2018wesad}. While these normalization techniques successfully bound continuous data conceptually, we hypothesize that coarse temporal windowing (e.g., 60-second intervals) artificially homogenizes instantaneous physiological events, blurring the true geometric topology of the sensor output.
+\IEEEPARstart{W}{earable} physiological sensors assert significant potential for continuous objective state monitoring in naturalistic environments \cite{picard1997}. However, deploying these sensors in ambulatory contexts introduces substantial signal volatility, originating simultaneously from dynamic hardware contact (sensor drift) and pronounced intra-subject autonomic variance \cite{wilhelm2006, picard2001}. 
 
-Standard normalization essentially operates on a potentially limiting assumption: the presumption of uniform measurement topology across populations. Rather than attributing variability solely to biological differences, this work frames the observed heterogeneity as a consequence of calibration design within sensor processing pipelines. To explore this preprocessing-induced distortion, we investigate how differing calibration methodologies impact the observed multidimensional signal geometry.
+To counteract longitudinal drift and standardize inter-subject discrepancies, algorithms typically rely on normalization techniques prior to feature extraction or classification. Standard approaches include subject-wise standardizations \cite{schmidt2018wesad, bota2019} and tracking normalizations such as rolling moving-average subtraction \cite{calvo2010}. While computationally lightweight, these methods enforce rigid, independent scaling across all signal dimensions, and continuous rolling approaches carry a severe risk of signal erasure: moving averages intrinsically suppress sustained state-changes, potentially destroying the physiological separation required for continuous sensing \cite{bota2019}.
 
-The core contribution of this letter is the quantitative discovery that applying an individually covariant calibration exposes latent topological heterogeneity otherwise suppressed as a calibration artifact by conventional normalization. We explore a Dynamic Baseline Anchoring (DBA) technique that instantaneously aligns multiple sensor streams via the Mahalanobis distance relative to each user's unique resting covariance manifold. By statistically evaluating multi-dimensional signal overlap across heterogeneous datasets, we demonstrate that sensor representational topologies exhibit robust, bimodal variance, fundamentally questioning the deployment of universal static normalization models in precision systems.
+Recent analyses indicate that individual deviations in baseline physiology are structurally complex; generic standardizations that indiscriminately compress physiological timeseries into population-derived Gaussian margins may silently distort downstream class separations \cite{calvo2010, martinez2017}. 
 
-\section{Methodology: Sensor Validation Pipeline}
+In this letter, we present a focused evaluation of \textit{Dynamic Baseline Anchoring} (DBA), structured as a multi-dimensional Mahalanobis-based whitening transformation. Rather than standardizing raw sensor streams to a universal scalar mean, DBA dynamically anchors and decorrelates incoming data blocks relative to the geometric density of the user's individual rest state. By employing strict blocked cross-validation across 45 unique subjects from two public datasets (WESAD, CASE), we verify that preserving a user's multi-dimensional baseline covariance prevents the temporal F1 collapse commonly caused by moving-average normalizations. Our distinct novelty lies not in proposing a new classification algorithm, but in establishing an empirical wearable calibration protocol: demonstrating that subject-specific baseline-conditioned whitening acts as a leakage-free mechanism to preserve downstream sensor-state separability under continuous drift.
 
-\subsection{Instantaneous Multimodal Extraction}
-To analyze specific physiological topologies without temporal smoothing artifacts, we synchronized all modalities into a unified 100 Hz multidimensional feature space.
+\section{Methodology}
 
-\subsubsection{Electrodermal Activity (EDA) Deconvolution}
-Standard continuous EDA is highly susceptible to massive sweat accumulation drift. Utilizing continuous-time convex optimization (cvxEDA) \cite{cvxeda2015}, the signal is separated into a baseline tonic drift ($EDA_{Tonic}$) and instantaneous sudomotor phasic bursts ($EDA_{Phasic}$). While susceptible to varying skin impedance, extracting these instantaneous components mitigates the reliance on generic moving-window detrending.
-
-\subsubsection{Wavelet-Based Heart Rate Extraction}
-We bypass standard windowed Fast Fourier Transforms (FFT) by applying a Continuous Wavelet Transform (CWT) equipped with an analytic Morlet wavelet to the R-R interval time series. This method outputs highly reactive instantaneous vectors for standard frequency bands ($HRV_{LF}$ and $HRV_{HF}$) at 100 Hz, avoiding artificial latency.
-
-\subsection{Dynamic Baseline Anchoring (DBA)}
-Extraction generates an instantaneous vector $X_t \in \mathbb{R}^4$. Generic Euclidean scaling applied to this matrix frequently fails, as dimensions with high hardware variance physically dominate the representation space. To establish a scale-invariant structure, DBA anchors data utilizing the covariance matrix.
-
-A 20-minute controlled resting block dictates the specific multivariate noise topology of the user's sensor deployment: $\mathcal{N}(\mu_{base}, \Sigma_{base})$. Subsequent incoming vectors $X_t$ are evaluated continuously using the Mahalanobis distance ($D_M$):
-\begin{equation}
-    D_M(X_t) = \sqrt{(X_t - \mu_{base})^T \Sigma_{base}^{-1} (X_t - \mu_{base})}
-\end{equation}
-The inversion matrix $\Sigma_{base}^{-1}$ normalizes the multi-sensor stream based explicitly on the measured resting covariances, effectively neutralizing systemic multidimensional drift artifacts without enforcing arbitrary global window sizes.
-
-\section{Evaluation and Statistical Validation}
-
-\subsection{Baseline Comparisons and Datasets}
-To test the hypothesis of artificial homogenization, we analyzed 45 subjects across two separate continuous datasets: WESAD (15 subjects) \cite{schmidt2018wesad} and CASE (30 subjects). We quantitatively compared the 4D topological structures produced by three competing normalizations:
+\subsection{Active Conditions and Dataset Structuring}
+We defined the validation task as the continuous, binary separation of a neutral resting baseline against an induced active condition, utilizing two independent datasets partitioned temporally to assess distinct physiological paradigms:
 \begin{enumerate}
-    \item \textbf{Global Z-Score}: Universal distribution scaling.
-    \item \textbf{Rolling Z-Score}: 60-second local moving average.
-    \item \textbf{Mahalanobis DBA}: The proposed individually anchored covariant topology.
+    \item \textbf{WESAD (15 Subjects):} Evaluates a 20-minute resting baseline against an acute stress task via the TSST \cite{schmidt2018wesad}. 
+    \item \textbf{CASE (30 Subjects):} Continuously tracks individuals viewing affective video protocols \cite{sharma2019}. Segments systematically annotated by participants as both high arousal and negative valence were logically grouped to form the active condition against the neutral baseline video segment.
 \end{enumerate}
 
-\subsection{Validating Theoretical Topologies}
-To evaluate the impact of calibration, we utilized two metrics:
+\subsection{Continuous Feature Extraction Space}
+Raw ECG/BVP and EDA telemetry streams were synchronously resampled to an operational frequency of 100 Hz. We derived dense, continuous physiological states using high-resolution, instantaneous metrics mapping common wearable domains:
 \begin{itemize}
-    \item \textbf{Separability (F1-Score)}: Utilizing logistic regression (Stress vs. Baseline), we measured whether the calibration destroyed underlying biological distinction. 
-    \item \textbf{Geometric Overlap ($\Omega$)}: $\Omega$ is computed as the proportion of active task samples whose Mahalanobis distance satisfies $D_M \le \tau$. The threshold $\tau$ (equivalent to $1.0\sigma$) was selected as a natural boundary of the baseline covariance ellipsoid; robustness analysis across $\sigma \in [0.5, 2.0]$ confirmed that the subsequent bimodal distribution persists.
+    \item \textbf{Continuous RR-derived Wavelets:} Cardiac inter-beat intervals (RR) were tracked continuously. A Continuous Wavelet Transform (CWT) produced instantaneous time-varying spectral coefficients tuned precisely to classic Low Frequency (0.04--0.15 Hz) and High Frequency (0.15--0.40 Hz) structural domains.
+    \item \textbf{Instantaneous EDA Components:} Convex optimization (cvxEDA) \cite{cvxeda2015} decoupled the raw stream into tonic (drift) and fast-acting phasic components at 100 Hz.
 \end{itemize}
 
-\section{Empirical Discoveries}
+\subsection{Dynamic Baseline Anchoring via Whitening}
+Let $\mathbf{x}_t \in \mathbb{R}^n$ represent the raw multivariate sensor column vector at time $t$. Provided a strictly isolated training baseline block $\mathcal{B}$, we compute the empirical multivariate mean $\boldsymbol{\mu}_{\mathcal{B}}$ and covariance matrix $\boldsymbol{\Sigma}_{\mathcal{B}}$. We formalize DBA mathematically as a Mahalanobis whitening transformation leveraging the fractional power of the inverse covariance matrix:
+\begin{equation}
+\mathbf{z}_t = \boldsymbol{\Sigma}_{\mathcal{B}}^{-1/2} (\mathbf{x}_t - \boldsymbol{\mu}_{\mathcal{B}}) 
+\end{equation}
+While equivalent to standard baseline-conditioned whitening, our methodical contribution resides in its execution for drift calibration: estimating parameters exclusively from a training baseline only, and applying it uniformly during contiguous testing to maintain subject-specific covariance without future leakage. This $n$-dimensional normalized feature space guarantees an equal comparative basis against standardized multivariate vectors.
 
-\subsection{Preservation of Signal Separability}
-Table \ref{tab:comparison} details the mean sensor metrics. Critically, conventional Rolling Z-score methods successfully increased topological overlap ($\Omega$), but at the massive cost of destroying physiological signal separability (F1 crashed from 0.86 to 0.61 in WESAD). This confirms our hypothesis that macroscopic temporal windowing artificially homogenizes and crushes acute responses. Conversely, the DBA framework generated massive overlap increases while maintaining peak analytical Separability ($\approx 0.88$).
 
-\begin{table}[tb]
-\caption{Mean Topologies Impacted by Preprocessing Methods}
+
+\subsection{Leakage-Safe Blocked Cross-Validation Protocol}
+Evaluating high-density (100 Hz) telemetry is extremely susceptible to temporal leakage if samples are split randomly. To guarantee strict independence, we implemented a 50/50 temporal Blocked Split. For each subject, the contiguous first halves of the baseline and active blocks were reserved exclusively for training, while the latter halves were fully held out for linear testing (Logistic Regression, L2 penalty). \textbf{All normalization parameters, including the baseline anchors ($\boldsymbol{\mu}_{\mathcal{B}}, \boldsymbol{\Sigma}_{\mathcal{B}}$) and standard Z-score scalers ($\mu, \sigma$), were estimated on the training portion only and then applied invariantly to the held-out contiguous test portion. For rolling z-score, only past temporal samples were used within the rolling window at any given point.}
+
+\begin{table}[!t]
+\caption{Blocked Test-Set F1 Separability (Mean $\pm$ SD) across Parameter-Locked Normalization Pipelines}
 \label{tab:comparison}
 \centering
-\begin{tabular}{lccc}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular*}{\columnwidth}{l@{\extracolsep{\fill}}r@{\extracolsep{\fill}}r}
 \toprule
-Dataset & Preprocessing & Mean Overlap ($\Omega$) & Separability (F1) \\
+\textbf{Normalization Method} & \textbf{WESAD (Acute Stress)} & \textbf{CASE (High Arousal)} \\
 \midrule
-\multirow{3}{*}{\textbf{WESAD}} 
-& Global Z-Score & 37.6\% & 0.86 \\
-& Rolling Z-Score & 65.2\% & 0.61 \\
-& Mahalanobis DBA & \textbf{74.9}\% & \textbf{0.86} \\
-\midrule
-\multirow{2}{*}{\textbf{CASE}}
-& Global Z-Score & 37.1\% & 0.89 \\
-& Mahalanobis DBA & \textbf{90.0}\% & \textbf{0.89} \\
+Subject-wise Z-Score & $0.90 \pm 0.20$ & $0.74 \pm 0.35$ \\
+Rolling Z-Score & $0.43 \pm 0.23$ & $0.67 \pm 0.15$ \\
+\textbf{DBA (Proposed)} & $0.90 \pm 0.20$ & $0.74 \pm 0.35$ \\
 \bottomrule
-\end{tabular}
+\end{tabular*}
+\vspace{-0.1cm}
 \end{table}
 
-This result reveals a critical inconsistency: despite high classification separability, the underlying geometric topology can either completely diverge or fully overlap with baseline structures, depending entirely on the individual physiological covariance structure.
+\section{Results and Discussion}
 
-\subsection{Exposing Latent Topological Heterogeneity}
-While mean overlaps appear indicative of general sensor drift reduction, decomposing the DBA output exposed extreme underlying structures. A Hartigan’s dip test on the individual topological overlap distribution confirmed a massive, statistically significant deviation from unimodality ($p < 0.05$). 
+\subsection{Prevention of Temporal Geometry Collapse}
+Table \ref{tab:comparison} indicates that unanchored tracking normalizations (Rolling Z-Score) structurally alter the underlying class separability of extended wearable responses. The 60-second floating window uniformly erased continuous signal offsets, causing the test-set per-subject F1 to drop ($0.43 \pm 0.23$ in WESAD, $0.67 \pm 0.15$ in CASE). Subject-wise Z-Score provides a strong within-subject reference using combined train-block statistics. However, DBA reaches comparable held-out separability using solely an isolated resting anchor. Subject-wise Z-Score uses combined baseline and active train-block statistics, whereas DBA requires only a resting baseline anchor. This securely mitigates the continuous rolling failure mode without requiring prior exposure to the target active state for scaling variance estimates, yielding robust maintenance across sets (WESAD F1: $0.90 \pm 0.20$, CASE F1: $0.74 \pm 0.35$). DBA preserved separable boundaries significantly better than rolling normalization in the severe WESAD acute stress task (Wilcoxon signed-rank test, $p<0.01$).
 
-Figure \ref{fig:method_comparison} demonstrates this bimodal polarization. The distribution exhibits clear polarization with peaks near 0\% and 100\%. Gaussian mixture modeling further supports a two-component structural divide. While global and rolling normalizations force subject variance into a generic mediocre distribution ($\approx 30-60\%$), DBA effectively unlocks the underlying sensor data structure. Some subjects exhibited $\Omega \approx 0\%$, generating perfectly distinct topographical separations between resting and stress responses. Paradoxically, numerous other subjects produced $\Omega \approx 100\%$, indicating their massive, fully separable active stress topology geometrically sat flawlessly identically atop their basal resting manifold. An ANOVA tracking intra-subject variance confirmed that the DBA method significantly uncovers latent inter-subject heterogeneity ($p < 0.05$).
+\section{Conclusion}
+This study evaluated the structural stability of wearable calibration methodologies. We demonstrated that dynamic moving averages suppress sustained offsets at the expense of downstream class separation. Our contribution is a sensor calibration protocol for continuous wearable sensing: by requiring only a single isolated resting baseline anchor, multi-dimensional baseline-conditioned whitening avoids the separability failure modes introduced by rolling drift correction while remaining competitive with train-block static standardization on held-out continuous blocks.
 
-\begin{figure}[tb]
-    \centering
-    \includegraphics[width=0.45\textwidth]{../results/figures/fig2_method_comparison.png}
-    \caption{Distribution overlap ($\Omega$) across calibration methodologies. The DBA framework exposes extreme inter-subject bimodal topological differences that are obscured by conventional rolling-window normalization.}
-    \label{fig:method_comparison}
-\end{figure}
-
-\section{Conclusion and Paradigm Implications}
-By utilizing a high-resolution, individually covariant calibration method (DBA), this letter revealed that continuous wearable sensor streams exhibit wildly bimodal geometric topologies beneath generic baseline drift. This study demonstrates that calibration methodology directly governs the observed structure of multimodal sensor data. Rather than sensor representations being uniformly invariant, we discovered that identical tasks produced vastly discordant signal geometries across different sensor representations. We suggest that affective somatic data cannot be mathematically treated as a stationary or uniform mapping, but rather must acknowledge profound, biologically unique topological deviations that are artificially suppressed as preprocessing-induced distortions. 
-
-This study is currently limited to two public datasets and specific feature representations; further validation across additional sensing modalities is required. Therefore, sensor systems must incorporate calibration strategies that preserve individual covariance structures rather than enforcing uniform normalization.
-
-\bibliographystyle{IEEEtran}
-\begin{thebibliography}{9}
+\begin{thebibliography}{10}
 
 \bibitem{picard1997}
-R. W. Picard, \textit{Affective Computing}. MIT Press, 1997.
+R.~W. Picard, \emph{Affective Computing}.\hskip 1em plus 0.5em minus 0.4em\relax MIT Press, 1997.
 
 \bibitem{wilhelm2006}
-P. Wilhelm and M. Schoebi, ``Assessing mood in daily life,'' \textit{European Journal of Psychological Assessment}, vol. 23, no. 4, pp. 258--267, 2007.
+F.~H. Wilhelm {\it et al.}, ``Ambulatory assessment of emotions and cardiovascular responses in social phobia,'' {\it Psychosomatic Medicine}, vol. 68, no. 5, pp. 739--746, 2006.
 
-\bibitem{barrett2017}
-L. F. Barrett, \textit{How emotions are made: The secret life of the brain}. Houghton Mifflin Harcourt, 2017.
+\bibitem{picard2001}
+R.~W. Picard, E.~Vyzas, and J.~Healey, ``Toward machine emotional intelligence: Analysis of affective physiological state,'' {\it IEEE Trans. Pattern Anal. Mach. Intell.}, vol. 23, no. 10, pp. 1175--1191, Oct 2001.
 
 \bibitem{schmidt2018wesad}
-P. Schmidt, A. Reiss, R. Duerichen, C. Marberger, and K. Van Laerhoven, ``Introducing WESAD, a multimodal dataset for wearable stress and affect detection,'' in \textit{Proceedings of the 20th ACM International Conference on Multimodal Interaction}, 2018, pp. 400--408.
+P.~Schmidt {\it et al.}, ``Introducing {WESAD}: A multimodal dataset for wearable stress and affect detection,'' in {\it Proc. 20th ACM Int. Conf. Multimodal Interact.}, 2018, pp. 400--408.
+
+\bibitem{bota2019}
+P.~Bota {\it et al.}, ``A review, current challenges, and future possibilities on emotion recognition using machine learning and physiological signals,'' {\it IEEE Access}, vol. 7, pp. 140990--141020, 2019.
+
+\bibitem{calvo2010}
+R.~A. Calvo and S.~D'Mello, ``Affect detection: An interdisciplinary review of models, methods, and their applications,'' {\it IEEE Trans. Affect. Comput.}, vol. 1, no. 1, pp. 18--37, Jan 2010.
+
+\bibitem{martinez2017}
+J.~M. P. Martinez {\it et al.}, ``A survey of machine learning techniques for physiological based mental status monitoring,'' {\it IEEE Trans. Human-Machine Systems}, 2017.
+
+\bibitem{sharma2019}
+K.~Sharma {\it et al.}, ``A dataset of continuous affect annotations and physiological signals for emotion analysis,'' {\it Sci. Data}, vol. 6, no. 1, p. 196, 2019.
 
 \bibitem{cvxeda2015}
-A. Greco, G. Valenza, A. Lanata, E. P. Scilingo, and L. Citi, ``cvxEDA: A Convex Optimization Approach to Electrodermal Activity Processing,'' \textit{IEEE Transactions on Biomedical Engineering}, vol. 63, no. 4, pp. 797--804, 2016.
+A.~Greco, G.~Valenza, A.~Lanata, E.~P.~Scilingo, and L.~Citi, ``cvxEDA: A convex optimization approach to electrodermal activity processing,'' \emph{IEEE Trans. Biomed. Eng.}, vol. 63, no. 4, pp. 797--804, Apr. 2016.
 
 \end{thebibliography}
 
