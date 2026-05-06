@@ -16,9 +16,9 @@ To mathematically enforce this certification, the following guard will be placed
 import os
 import sys
 
-if os.environ.get("ALLOW_REAL_DATA_PHASE_2") != "1":
+if os.environ.get("ALLOW_REAL_DATA_PHASE_2A_INGESTION") != "1":
     print("FATAL: Real data access is mathematically locked.")
-    print("You must explicitly pass ALLOW_REAL_DATA_PHASE_2=1 to execute Phase 2.")
+    print("You must explicitly pass ALLOW_REAL_DATA_PHASE_2A_INGESTION=1 to execute Phase 2A.")
     sys.exit(1)
 ```
 
