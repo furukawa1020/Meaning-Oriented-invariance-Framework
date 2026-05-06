@@ -1,0 +1,99 @@
+# Analysis Configuration: Normalization Effects on Subjective-State Modeling
+
+primary_claim:
+  normalization_is_part_of_user_state_model
+
+primary_classifier:
+  type: logistic_regression
+  penalty: l2
+  C: 1.0
+  class_weight: balanced
+  solver: liblinear
+  random_state: 42
+
+forbidden_claims:
+  - novel calibration algorithm
+  - drift mitigation
+  - leakage-free
+  - prevents collapse
+  - physiological signals cannot estimate subjective states
+
+main_outcome_priority:
+  - pipeline_disagreement
+  - subject_level_variability
+  - performance
+  - feature_geometry
+  - calibration_length
+  - cross_dataset_stress_test
+
+submission_gate:
+  require_normalization_effect: true
+  require_pipeline_disagreement: true
+  require_subject_level_effect: true
+  require_hms_implication: true
+
+datasets:
+  - WESAD
+  - CASE
+
+tasks:
+  WESAD:
+    baseline: rest
+    active: TSST_stress
+  CASE:
+    baseline: neutral_video
+    active: high_arousal_negative_valence
+
+splits:
+  within_subject: temporal_block_50_50
+  cross_dataset: source_to_target
+
+normalizations:
+  - subject_trainblock_zscore
+  - baseline_only_zscore
+  - baseline_covariance_whitening
+  - rolling_zscore_30s
+  - rolling_zscore_60s
+  - rolling_zscore_120s
+  - population_zscore
+
+metrics:
+  - f1
+  - balanced_accuracy
+  - auroc
+  - auprc
+  - sensitivity
+  - specificity
+  - mcc
+  - brier_score
+
+feature_contribution_metrics:
+  - standardized_logistic_regression_coefficients
+  - permutation_importance
+  - spearman_rank_correlation
+
+feature_geometry_metrics:
+  - centroid_distance
+  - mahalanobis_distance
+  - within_class_scatter
+  - between_class_scatter
+  - fisher_ratio
+  - covariance_logdet
+  - condition_number
+  - overlap_proxy
+
+pipeline_disagreement_metrics:
+  - prediction_disagreement_rate
+  - cohens_kappa
+  - risk_score_spearman
+  - risk_score_pearson
+  - label_flip_count
+  - flip_rate_baseline_to_active
+  - flip_rate_active_to_baseline
+
+calibration_lengths_seconds:
+  - 30
+  - 60
+  - 120
+  - 300
+  - 600
