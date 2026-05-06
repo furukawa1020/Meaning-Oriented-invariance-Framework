@@ -19,7 +19,8 @@ def generate_diagnostic():
     pct_significant = df['is_significant'].mean()
     
     # 3. Median Optimal Lags by Feature/Label
-    lag_summary = df.groupby(['feat', 'label'])['best_lag'].agg(['mean', 'median', 'std']).to_dict()
+    summary_df = df.groupby(['feat', 'label'])['best_lag'].agg(['mean', 'median', 'std'])
+    lag_summary = {f"{f}_{l}": row.to_dict() for (f, l), row in summary_df.iterrows()}
     
     # 4. Correlation Gain
     df['corr_gain'] = abs(df['max_corr']) - abs(df['zero_lag_corr'])
