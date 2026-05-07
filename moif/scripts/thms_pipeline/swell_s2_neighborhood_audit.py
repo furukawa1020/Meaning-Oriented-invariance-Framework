@@ -29,7 +29,7 @@ def run_s2_audit():
     # Aggregate to block-level
     agg_dict = {
         'HR': 'mean',
-        'HRV_RMSSD': 'mean',
+        'RMSSD': 'mean',
         'SCL': 'mean',
         'SnErrorKeys': 'sum',
         'SnKeyStrokes': 'sum',
@@ -43,15 +43,15 @@ def run_s2_audit():
     # 2. Within-participant Normalization (N/T/I blocks only)
     for sid in df_block['subject_id'].unique():
         mask = df_block['subject_id'] == sid
-        for col in ['HR', 'SCL', 'HRV_RMSSD']:
+        for col in ['HR', 'SCL', 'RMSSD']:
             vals = df_block.loc[mask, col]
-            if vals.std() > 0:
+            if len(vals) > 1 and vals.std() > 0:
                 df_block.loc[mask, f'z_{col}'] = (vals - vals.mean()) / vals.std()
             else:
                 df_block.loc[mask, f'z_{col}'] = 0.0
 
     # 3. Physiological Load Index (PLI)
-    df_block['PLI'] = df_block['z_HR'] + df_block['z_SCL'] - df_block['z_HRV_RMSSD']
+    df_block['PLI'] = df_block['z_HR'] + df_block['z_SCL'] - df_block['z_RMSSD']
     
     # 4. Error Rate (Secondary)
     df_block['error_rate'] = df_block.apply(lambda x: x['SnErrorKeys'] / x['SnKeyStrokes'] if x['SnKeyStrokes'] > 0 else np.nan, axis=1)
@@ -72,7 +72,7 @@ def run_s2_audit():
     df_block.to_csv(swell_dir / "swell_s2_block_level_table.csv", index=False)
 
     # 6. Neighborhood Analysis (k=10)
-    features = ['z_HR', 'z_SCL', 'z_HRV_RMSSD']
+    features = ['z_HR', 'z_SCL', 'z_RMSSD']
     # Filter only labeled samples for conflict analysis
     df_labeled = df_block[df_block['impairment_label'].notnull()].copy()
     X = df_labeled[features].values
