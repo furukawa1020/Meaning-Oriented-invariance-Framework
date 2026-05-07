@@ -3,6 +3,18 @@ import numpy as np
 from pathlib import Path
 import json
 
+class NpEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.integer):
+            return int(obj)
+        if isinstance(obj, np.floating):
+            return float(obj)
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        if isinstance(obj, bool) or isinstance(obj, np.bool_):
+            return bool(obj)
+        return super(NpEncoder, self).default(obj)
+
 def run_s1_audit():
     swell_dir = Path(r"C:\Projects\Meaning-Oriented invariance Framework\moif\data\swell")
     phys_path = swell_dir / "3 - Feature dataset" / "per sensor" / "D - Physiology features (HR_HRV_SCL - final).csv"
@@ -14,39 +26,28 @@ def run_s1_audit():
     df_pc = pd.read_csv(pc_path)
     
     # Handle duplicate columns in questionnaire_data.csv (like 'done?')
-    # We only need the first few columns
     df_quest = pd.read_csv(quest_path, usecols=range(26)) 
     
     # 2. Normalize IDs and Keys
-    # Physiology: PP1, PP2... -> 1, 2...
     df_phys['subject_id'] = df_phys['PP'].str.replace('PP', '').astype(int)
-    # PC: PP1, PP2... -> 1, 2...
     df_pc['subject_id'] = df_pc['PP'].str.replace('PP', '').astype(int)
-    # Questionnaire: SP, MP, 1, 2... -> Filter out SP/MP and keep numbers
     df_quest = df_quest[pd.to_numeric(df_quest['PP'], errors='coerce').notnull()].copy()
     df_quest['subject_id'] = df_quest['PP'].astype(int)
 
-    # 3. Join PC and Physiology (both minute-level)
-    # PC has 'timestamp', Phys has 'timestamp'
-    # Wait, check if timestamps match. In SWELL, they are usually synchronized.
-    # We join on subject_id, Condition, and timestamp
+    # 3. Join PC and Physiology
     df_joined = pd.merge(df_phys, df_pc, on=['subject_id', 'Condition', 'timestamp'], how='inner', suffixes=('_phys', '_pc'))
     
     # 4. Calculate Proxy: error_rate
-    # Normalize by keystrokes
     df_joined['SnKeyStrokes'] = pd.to_numeric(df_joined['SnKeyStrokes'], errors='coerce').fillna(0)
     df_joined['SnErrorKeys'] = pd.to_numeric(df_joined['SnErrorKeys'], errors='coerce').fillna(0)
     df_joined['error_rate'] = df_joined.apply(lambda x: x['SnErrorKeys'] / x['SnKeyStrokes'] if x['SnKeyStrokes'] > 0 else np.nan, axis=1)
-    df_joined['typing_intensity'] = df_joined['SnKeyStrokes'] # minute-level intensity
+    df_joined['typing_intensity'] = df_joined['SnKeyStrokes']
 
     # 5. Join Questionnaire (Block-level)
-    # Map 'Blok' in Quest to 'C' in Phys/PC (SWELL: C is block)
-    # Condition in Quest (N, I, T) matches Phys/PC
     df_quest['Blok'] = df_quest['Blok'].astype(int)
     df_final = pd.merge(df_joined, df_quest, left_on=['subject_id', 'Condition', 'C'], right_on=['subject_id', 'Condition', 'Blok'], how='left')
 
     # 6. Correlation Analysis for Scale Direction
-    # We look for Performance, Performance (recoded), Stress, MentalEffort
     perf_col = 'Performance'
     perf_rec_col = 'Performance (recoded)'
     stress_col = 'Stress'
@@ -54,12 +55,9 @@ def run_s1_audit():
     corr_perf_rec = df_final[[perf_col, perf_rec_col]].corr().iloc[0, 1] if perf_col in df_final and perf_rec_col in df_final else None
     corr_perf_stress = df_final[[perf_col, stress_col]].corr().iloc[0, 1] if perf_col in df_final and stress_col in df_final else None
 
-    # Performance higher is better?
-    # If stress and performance are negatively correlated, Performance 10 is good.
     perf_higher_is_better = True if (corr_perf_stress is not None and corr_perf_stress < 0) else False
 
     # 7. Reports
-    # Joined Table
     out_table = swell_dir / "swell_joined_minute_block_table.csv"
     df_final.to_csv(out_table, index=False)
 
@@ -80,7 +78,7 @@ def run_s1_audit():
         }
     }
     with open(swell_dir / "swell_error_proxy_validity_report.json", "w") as f:
-        json.dump(validity, f, indent=2)
+        json.dump(validity, f, indent=2, cls=NpEncoder)
 
     # Scale Report
     scale_report = {
@@ -95,7 +93,7 @@ def run_s1_audit():
         "notes": f"Correlation(Perf, Stress) = {corr_perf_stress:.3f}" if corr_perf_stress else ""
     }
     with open(swell_dir / "swell_questionnaire_scale_direction_report.json", "w") as f:
-        json.dump(scale_report, f, indent=2)
+        json.dump(scale_report, f, indent=2, cls=NpEncoder)
 
     # Gate Report
     matched_rate = float(len(df_final) / len(df_phys))
@@ -127,7 +125,7 @@ def run_s1_audit():
         "warnings": ["Zero keystrokes in many minutes; error_rate is sparse."]
     }
     with open("swell_s1_gate_report.json", "w") as f:
-        json.dump(gate_report, f, indent=2)
+        json.dump(gate_report, f, indent=2, cls=NpEncoder)
 
 if __name__ == "__main__":
     run_s1_audit()
