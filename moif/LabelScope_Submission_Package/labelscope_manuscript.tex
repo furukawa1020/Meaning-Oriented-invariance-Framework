@@ -277,13 +277,6 @@ Recommended next step & (unspecified) & Refine hardware or restate claim \\
 \end{tabular}
 \end{table}
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.85\columnwidth]{C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4352/fig2_comparison_1778499261087.png}
-\caption{Conceptual comparison of interpretations: Accuracy-Only (unconstrained) vs.\ LabelScope (audited). Path A leads to overbroad state claims, while Path B provides a computable cap for permitted action policies.}
-\label{fig:comparison}
-\end{figure}
-
 LabelScope requires researchers to report their predictive performance \textit{within the context of an audited claim level}. This ensures that engineering convenience (e.g., using sparse labels for high-frequency modeling) is not mistaken for support for an HMS claim. We advocate that future HMS research report claim supportability levels alongside traditional performance metrics.
 
 \subsection{LabelScope as an Engineering Safeguard}
@@ -311,6 +304,13 @@ In adaptive systems, the audited level can be used as a guard condition for acti
 \bottomrule
 \end{tabular}
 \end{table}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.85\columnwidth]{C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4352/fig2_comparison_1778499261087.png}
+\caption{Conceptual comparison of interpretations: Accuracy-Only (unconstrained) vs.\ LabelScope (audited). Path A leads to overbroad state claims, while Path B provides a computable cap for permitted action policies.}
+\label{fig:comparison}
+\end{figure}
 
 For example, if a virtual HMS uses the WESAD stress classifier to trigger interventions, LabelScope (at Level 2) prohibits interpreting the trigger as movement-independent internal stress. The permitted action is restricted to task/protocol-aware adaptation (e.g., suggesting a posture change). This proactive auditing reduces the risk of misdirected interventions and improves the overall trust in adaptive human-machine systems.
 
