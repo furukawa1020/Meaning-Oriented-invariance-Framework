@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.3)  11 MAY 2026 21:15
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.3)  11 MAY 2026 21:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -587,29 +587,30 @@ Underfull \hbox (badness 1902) in paragraph at lines 165--165
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-Overfull \hbox (8.28816pt too wide) in paragraph at lines 212--220
+Overfull \hbox (27.62416pt too wide) in paragraph at lines 212--220
  [][] 
  []
 
 [3]
+Overfull \hbox (65.07457pt too wide) in paragraph at lines 268--278
+ [][] 
+ []
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
 <C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4352
-/fig2_comparison_1778499261087.png, id=231, 246.6816pt x 246.6816pt>
+/fig2_comparison_1778499261087.png, id=232, 246.6816pt x 246.6816pt>
 File: C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebc
 b4352/fig2_comparison_1778499261087.png Graphic file (type png)
 <use C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb
 4352/fig2_comparison_1778499261087.png>
 Package pdftex.def Info: C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83
 e-4952-83ec-ee1bebcb4352/fig2_comparison_1778499261087.png  used on input line 
-266.
+282.
 (pdftex.def)             Requested size: 214.20154pt x 214.2085pt.
 
-
 LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-Overfull \hbox (65.07457pt too wide) in paragraph at lines 275--285
- [][] 
- []
 
 [4]
 Underfull \hbox (badness 10000) in paragraph at lines 305--305
@@ -694,9 +695,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 310--311
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
 [5 <c:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4
 352/fig2_comparison_1778499261087.png>]
-Overfull \hbox (65.91774pt too wide) in paragraph at lines 384--391
+Overfull \hbox (65.91774pt too wide) in paragraph at lines 385--392
  [][] 
  []
 
@@ -720,7 +724,7 @@ Here is how much of TeX's memory you used:
  41947 multiletter control sequences out of 15000+600000
  753834 words of font info for 181 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,13n,79p,1231b,460s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,13n,79p,1247b,499s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/tex
 live/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2025
 /texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb><c:/texlive/2025/texm
@@ -741,7 +745,7 @@ exlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb><c:/texlive/202
 xmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2025/texmf-dist/fonts/typ
 e1/urw/times/utmbi8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr
 8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on labelscope_manuscript.pdf (8 pages, 1173452 bytes).
+Output written on labelscope_manuscript.pdf (8 pages, 1173803 bytes).
 PDF statistics:
  412 PDF objects out of 1000 (max. 8388607)
  350 compressed objects within 4 object streams
