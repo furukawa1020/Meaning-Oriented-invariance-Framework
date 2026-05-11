@@ -22,7 +22,7 @@
 \maketitle
 
 \begin{abstract}
-Physiology-based human-machine systems (HMS) often report high predictive performance on operational labels, but such labels may not support the state claims used to drive adaptive system behavior. This paper introduces LabelScope, a conservative pre-interpretation audit framework that assigns a capped claim level $L_{Final} \in \{0,1,2,3\}$ using Resolution (RA), Proxy (PA), and Structure (SA) audit modules. The framework is demonstrated through case studies on the WESAD and SWELL-KW datasets. In WESAD, high physiology-only performance was observed across pooled and condition-wise contrasts (AUROC = 0.88 pooled; 0.93 stress vs. baseline; 0.79 stress vs. amusement), while the intended HMS claim remained capped at Level 2 due to behavioral entanglement. By detecting failure modes such as behavioral-proxy risk and pseudo-replication, LabelScope provides an audit basis for constraining the system's action policy, supporting the interpretation of predictive accuracy within defensible claim boundaries.
+Physiology-based human-machine systems (HMS) often report high predictive performance on operational labels, but such labels may not support the state claims used to drive adaptive system behavior. This paper introduces LabelScope, a conservative pre-interpretation audit framework that assigns a capped claim level $L_{Final} \in \{0,1,2,3\}$ using Resolution (RA), Proxy (PA), and Structure (SA) audit modules. The framework is demonstrated through case studies on the WESAD and SWELL-KW datasets. In WESAD, a momentary 60-s internal-state claim was capped at Level 0 by RA, while a weakened protocol-linked stress-proxy claim remained capped at Level 2 due to behavioral entanglement despite high physiology-only performance. By detecting failure modes such as behavioral-proxy risk and pseudo-replication, LabelScope provides an audit basis for constraining the system's action policy, supporting the interpretation of predictive accuracy within defensible claim boundaries.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -195,9 +195,11 @@ For WESAD, the RA was evaluated under a claim of momentary 60-s internal-state d
 \textbf{Claim Specification} & \textbf{RA} & \textbf{PA} & \textbf{Final Cap} \\
 \midrule
 Momentary internal-state & Level 0 & --- & Level 0 \\
-Protocol-linked proxy    & Pass    & Level 2 & Level 2 \\
+Protocol-linked proxy    & No RA-imposed cap$^\ddagger$ & Level 2 & Level 2 \\
 \bottomrule
 \end{tabular}
+
+$^\ddagger$Under the protocol-level claim specification, the modeling unit matches the independent label unit; thus, $R_P=1$ and RA does not impose a cap.
 \end{table}
 
 \subsubsection{Proxy Audit (PA) Results}
@@ -236,10 +238,10 @@ Run-length-preserving block-randomized labels & 0.52 & 0.52 & 0.510 & SA fail; w
 \end{table*}
 
 \subsubsection{Classifier Performance Baseline}
-To demonstrate the decoupling of performance and validity, we trained Random Forest classifiers (100 trees, random seed 42, default max depth, balanced class weights) using a Leave-One-Subject-Out (LOSO) split. Features were subject-wise z-score normalized. The ACC-only model includes 3-axis statistical features (mean, std, max) and SMA. The ACC-only classifier is not part of the PA itself; it is included as an auxiliary baseline to test whether the operational label is predictable from movement-derived features beyond the single SMA audit covariate. Table \ref{tab:wesad_performance} shows that ACC-only models achieve substantial performance, suggesting that the operational label is predictable from movement-derived features. Confidence intervals were estimated by subject-level bootstrapping over LOSO predictions ($B=1000$ resamples over held-out subjects). The classifier baseline is used only to demonstrate the decoupling between predictive performance and claim scope; it is not used by LabelScope to assign the cap.
+To demonstrate the decoupling of performance and validity, we trained Random Forest classifiers (100 trees, random seed 42, default max depth, balanced class weights) using a Leave-One-Subject-Out (LOSO) split. Features were subject-wise z-score normalized. The ACC-only model includes 3-axis statistical features (mean, std, max) and SMA. The ACC-only classifier is not part of the PA itself; it is included as an auxiliary baseline to test whether the operational label is predictable from movement-derived features beyond the single SMA audit covariate. Table \ref{tab:wesad_performance} shows that ACC-only models achieve non-trivial performance, suggesting that the operational label is predictable from movement-derived features. Confidence intervals were estimated by subject-level bootstrapping over LOSO predictions ($B=1000$ resamples over held-out subjects). The classifier baseline is used only to demonstrate the decoupling between predictive performance and claim scope; it is not used by LabelScope to assign the cap.
 
 \begin{table*}[t]
-\caption{WESAD Classifier Performance vs. Audit-Imposed Cap for Protocol-Linked Claim. Confidence intervals estimated by subject-level bootstrapping ($B=1000$).}
+\caption{WESAD Classifier Performance vs. Audit-Imposed Cap. Classifier performance is reported to illustrate label learnability; it does not by itself support a 60-s momentary internal-state claim, which is capped at Level 0 by RA. Confidence intervals estimated by subject-level bootstrapping ($B=1000$).}
 \label{tab:wesad_performance}
 \centering
 \begin{tabular}{@{}lcccc@{}}
@@ -256,11 +258,11 @@ ACC only (S vs A)         & 0.70 & 0.69 & 0.73 [0.70, 0.76] & Level 2 \\
 \end{tabular}
 \end{table*}
 
-Subject-wise condition-wise ACC-only baselines are provided in the supplementary material and show the same qualitative pattern of substantial behavioral predictability as the pooled analysis.
+Subject-wise condition-wise ACC-only baselines are provided in the supplementary material and show the same qualitative pattern of non-trivial predictability from movement-derived features as the pooled analysis.
 $^\dagger$The Level 2 cap applies only to the weakened protocol-linked stress-proxy claim. A momentary 60-s internal-state claim is capped at Level 0 by RA.
 
 \subsection{SWELL-KW Case Study: Redesigning Label Resolution}
-The initial minute-level claim on SWELL-KW resulted in $R_P = 15$, capping the claim at \textbf{Level 0}. Table \ref{tab:swell_redesign} illustrates how claim redesign can remove the RA-imposed cap. For this evaluation, the classifier target was defined as the experimental work-condition label binarized as Neutral vs.~(Time Pressure + Interruption), using physiology-only features (ECG/EDA). Satisfying RA by lowering resolution (e.g., to a 5-min trend) corrects the resolution mismatch but does not inherently validate the physiological quality of the signal. Notably, the minute-level resolution ($R_P=15$) leads to an apparent performance inflation under the replicated-window evaluation ($\text{Acc} \approx 0.90$), whereas the audited 15-minute block claim ($R_P=1$) yields a more realistic performance estimate ($\text{Acc} \approx 0.71$), as detailed in Table \ref{tab:swell_performance}. Confidence intervals for SWELL-KW were estimated by subject-level bootstrapping over LOSO predictions ($B=1000$). The performance decrease from 1-min to 15-min evaluation should not be interpreted as a pure estimate of pseudo-replication bias; rather, it demonstrates that predictive performance is highly sensitive to the mismatch between the modeling unit and the independent label unit.
+The initial minute-level claim on SWELL-KW resulted in $R_P = 15$, capping the claim at \textbf{Level 0}. Table \ref{tab:swell_redesign} illustrates how claim redesign can remove the RA-imposed cap. For this evaluation, the classifier target was defined as the experimental work-condition label binarized as Neutral vs.~(Time Pressure + Interruption), using physiology-only features (ECG/EDA). Satisfying RA by lowering resolution (e.g., to a 5-min trend) corrects the resolution mismatch but does not inherently validate the physiological quality of the signal. Notably, the minute-level resolution ($R_P=15$) leads to an apparent performance inflation under the replicated-window evaluation ($\text{Acc} \approx 0.90$), whereas the audited 15-minute block claim ($R_P=1$) yields a more realistic performance estimate ($\text{Acc} \approx 0.71$), as detailed in Table \ref{tab:swell_performance}. Confidence intervals for SWELL-KW were estimated by subject-level bootstrapping over LOSO predictions ($B=1000$). The performance decrease from 1-min to 15-min evaluation should not be interpreted as a pure estimate of pseudo-replication bias; rather, it demonstrates that predictive performance is highly sensitive to the mismatch between the modeling unit and the independent label unit. These values are not intended as a direct model-selection comparison across resolutions, because the aggregation unit and effective sample size change with the claim specification.
 
 \begin{table*}[t]
 \caption{SWELL-KW Performance Inflation Analysis. Metrics: Random Forest (100 trees), LOSO split, Binary target: Neutral vs. (TP+Intr.).}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.3)  11 MAY 2026 22:09
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.3)  11 MAY 2026 22:14
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -535,23 +535,44 @@ Package hyperref Info: Link coloring OFF on input line 16.
 \openout3 = `labelscope_manuscript.out'.
 
 \c@lstlisting=\count339
-LaTeX Font Info:    Trying to load font information for U+msa on input line 25.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 24.
 
 
 (c:/texlive/2025/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 25.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 24.
 
 
 (c:/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [1{c:/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/texlive/2
-025/texmf-dist/fonts/enc/dvips/base/8r.enc}
+)
+
+! LaTeX Error: \begin{document} ended by \end{abstract}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.25 \end{abstract}
+                   
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Extra \endgroup.
+\end  ...end#1\endcsname \@checkend {#1}\endgroup 
+                                                  \UseHook {env/#1/after}\if...
+l.25 \end{abstract}
+                   
+Things are pretty mixed up, but I think the worst is over.
+
+[1{c:/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/texlive/202
+5/texmf-dist/fonts/enc/dvips/base/8r.enc}
 
 
 ]
-Overfull \hbox (19.16576pt too wide) in paragraph at lines 70--78
+Overfull \hbox (19.16576pt too wide) in paragraph at lines 69--77
  [][] 
  []
 
@@ -562,24 +583,24 @@ b4352/fig1_pipeline_1778498543035.png Graphic file (type png)
 <use C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb
 4352/fig1_pipeline_1778498543035.png>
 Package pdftex.def Info: C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83
-e-4952-83ec-ee1bebcb4352/fig1_pipeline_1778498543035.png  used on input line 84
+e-4952-83ec-ee1bebcb4352/fig1_pipeline_1778498543035.png  used on input line 83
 .
 (pdftex.def)             Requested size: 252.0pt x 252.00711pt.
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 96.
+put line 95.
 [2 <c:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4
 352/fig1_pipeline_1778498543035.png>]
-Underfull \hbox (badness 4673) in paragraph at lines 168--168
+Underfull \hbox (badness 4673) in paragraph at lines 167--167
 []\T1/ptm/m/n/8 Recognition of spe-cific dataset
  []
 
 
-Underfull \hbox (badness 3386) in paragraph at lines 169--170
+Underfull \hbox (badness 3386) in paragraph at lines 168--169
 []\T1/ptm/m/n/8 Direct mea-sure-ment of in-ter-nal
  []
 
 
-Underfull \hbox (badness 1902) in paragraph at lines 170--170
+Underfull \hbox (badness 1902) in paragraph at lines 169--169
 []\T1/ptm/m/n/8 No ev-i-dence found to cap the
  []
 
@@ -588,36 +609,36 @@ Underfull \hbox (badness 1902) in paragraph at lines 170--170
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 <C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4352
-/fig2_comparison_1778499261087.png, id=259, 246.6816pt x 246.6816pt>
+/fig2_comparison_1778499261087.png, id=257, 246.6816pt x 246.6816pt>
 File: C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebc
 b4352/fig2_comparison_1778499261087.png Graphic file (type png)
 <use C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb
 4352/fig2_comparison_1778499261087.png>
 Package pdftex.def Info: C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83
 e-4952-83ec-ee1bebcb4352/fig2_comparison_1778499261087.png  used on input line 
-319.
+320.
 (pdftex.def)             Requested size: 214.20154pt x 214.2085pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [5 <c:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4
 352/fig2_comparison_1778499261087.png>]
-Underfull \hbox (badness 2744) in paragraph at lines 345--345
+Underfull \hbox (badness 2744) in paragraph at lines 346--346
 []\T1/ptm/m/n/8 Dataset-specific mon-i-tor-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 346--346
+Underfull \hbox (badness 10000) in paragraph at lines 347--347
 []\T1/ptm/m/n/8 Behavior-aware
  []
 
 
-Underfull \hbox (badness 1571) in paragraph at lines 347--347
+Underfull \hbox (badness 1571) in paragraph at lines 348--348
 []\T1/ptm/m/n/8 Cautious state-contingent
  []
 
 
-Underfull \hbox (badness 2310) in paragraph at lines 347--348
+Underfull \hbox (badness 2310) in paragraph at lines 348--349
 []\T1/ptm/m/n/8 Adaptive work-load sup-
  []
 
@@ -634,17 +655,21 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package rerunfilecheck Info: File `labelscope_manuscript.out' has not changed.
 (rerunfilecheck)             Checksum: 309D44CA5E8548580B866A1451105D7E;6235.
  ) 
 Here is how much of TeX's memory you used:
- 13368 strings out of 467533
- 204082 string characters out of 5423669
+ 13352 strings out of 467533
+ 203927 string characters out of 5423669
  645814 words of memory out of 5000000
- 41954 multiletter control sequences out of 15000+600000
- 753834 words of font info for 181 fonts, out of 8000000 for 9000
+ 41945 multiletter control sequences out of 15000+600000
+ 751368 words of font info for 172 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,13n,79p,1343b,586s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,13n,79p,1524b,460s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/tex
 live/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2025
 /texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb><c:/texlive/2025/texm
@@ -652,24 +677,22 @@ f-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2025/texmf-dist/fo
 nts/type1/public/amsfonts/cm/cmmi5.pfb><c:/texlive/2025/texmf-dist/fonts/type1/
 public/amsfonts/cm/cmmi6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmmi7.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mmi8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb><
-c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive
-/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2025/texmf
--dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/texlive/2025/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmr9.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmsy10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6
-.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><c:/t
-exlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/202
-5/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb><c:/texlive/2025/texmf-di
-st/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2025/texmf-dist/f
-onts/type1/urw/times/utmb8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/tim
-es/utmbi8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:
-/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on labelscope_manuscript.pdf (9 pages, 1190385 bytes).
+mmi8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><
+c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/
+2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/texlive/2025/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2025/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmsy6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmsy7.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
+8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pf
+b><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2025
+/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb><c:/texlive/2025/texmf-dist/fonts
+/type1/urw/times/utmr8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/u
+tmri8a.pfb>
+Output written on labelscope_manuscript.pdf (9 pages, 1164404 bytes).
 PDF statistics:
- 444 PDF objects out of 1000 (max. 8388607)
- 379 compressed objects within 4 object streams
+ 429 PDF objects out of 1000 (max. 8388607)
+ 370 compressed objects within 4 object streams
  124 named destinations out of 1000 (max. 500000)
  243 words of extra memory for PDF output out of 10000 (max. 10000000)
 
