@@ -190,16 +190,19 @@ For WESAD, the RA was evaluated under a claim of momentary 60-s internal-state d
 \caption{WESAD Audit Outcomes by Claim Specification}
 \label{tab:wesad_claim_outcomes}
 \centering
-\begin{tabular}{@{}lccc@{}}
+\begin{tabular}{@{}lp{1.8cm}cc@{}}
 \toprule
 \textbf{Claim Specification} & \textbf{RA} & \textbf{PA} & \textbf{Final Cap} \\
 \midrule
 Momentary internal-state & Level 0 & --- & Level 0 \\
-Protocol-linked proxy    & No RA-imposed cap$^\ddagger$ & Level 2 & Level 2 \\
+Protocol-linked proxy    & No RA cap$^\ddagger$ & Level 2 & Level 2 \\
 \bottomrule
 \end{tabular}
+\smallskip
 
-$^\ddagger$For this weakened claim, the 60-s windows are not treated as independent evidence for momentary state detection; they are used only to characterize the learnability and proxy structure of a protocol-derived operational label.
+\begin{minipage}{\columnwidth}
+\small $^\ddagger$No RA-imposed cap for weakened reporting claim. 60-s windows used as auxiliary learnability metrics for proxy interpretation.
+\end{minipage}
 \end{table}
 
 \subsubsection{Proxy Audit (PA) Results}
@@ -256,26 +259,34 @@ Physiology only (S vs A)  & 0.74 & 0.73 & 0.79 [0.76, 0.82] & Level 2 \\
 ACC only (S vs A)         & 0.70 & 0.69 & 0.73 [0.70, 0.76] & Level 2 \\
 \bottomrule
 \end{tabular}
+\smallskip
+
+\begin{minipage}{\textwidth}
+\small $^\dagger$The Level 2 cap applies only to the weakened protocol-linked stress-proxy claim. A momentary 60-s internal-state claim is capped at Level 0 by RA.
+\end{minipage}
 \end{table*}
 
+\subsection{SWELL-KW Case Study: Redesigning Label Resolution}
+The initial minute-level claim on SWELL-KW resulted in $R_P = 15$, capping the claim at \textbf{Level 0}. Table \ref{tab:swell_redesign} illustrates how claim redesign can remove the RA-imposed cap. Table \ref{tab:swell_performance} details the performance inflation that occurs at higher resolutions.
+
 \begin{table}[h]
-\caption{WESAD PA Sensitivity to $\tau_{PA}$ (group-mean rule)}
-\label{tab:wesad_sensitivity}
+\caption{SWELL-KW Resolution Redesign Comparison}
+\label{tab:swell_redesign}
 \centering
-\begin{tabular}{@{}lcccc@{}}
+\begin{tabular}{@{}lccc@{}}
 \toprule
-$\tau_{PA}$ threshold & 0.70 & 0.75 & \textbf{0.80} & 0.85 \\
+\textbf{Claim Spec.} & \textbf{Resolution} & \textbf{$R_P$} & \textbf{RA Outcome} \\
 \midrule
-Audit Outcome & Level 2 & Level 2 & \textbf{Level 2} & Level 3 \\
+Minute-level effort & 1 min & 15 & Fail; Level 0 \\
+5-min trend         & 5 min & 3 & No RA cap$^*$ \\
+Block-level effort  & 15 min & 1 & No RA cap$^*$ \\
 \bottomrule
 \end{tabular}
+\smallskip
+\begin{minipage}{\columnwidth}
+\small $^*$Requires PA/SA re-audit under new resolution.
+\end{minipage}
 \end{table}
-
-Subject-wise condition-wise ACC-only baselines are provided in the supplementary material and show the same qualitative pattern of non-trivial predictability from movement-derived features as the pooled analysis.
-$^\dagger$The Level 2 cap applies only to the weakened protocol-linked stress-proxy claim. A momentary 60-s internal-state claim is capped at Level 0 by RA.
-
-\subsection{SWELL-KW Case Study: Redesigning Label Resolution}
-The initial minute-level claim on SWELL-KW resulted in $R_P = 15$, capping the claim at \textbf{Level 0}. Table \ref{tab:swell_redesign} illustrates how claim redesign can remove the RA-imposed cap. For this evaluation, the classifier target was defined as the experimental work-condition label binarized as Neutral vs.~(Time Pressure + Interruption), using physiology-only features (ECG/EDA). Satisfying RA by lowering resolution (e.g., to a 5-min trend) corrects the resolution mismatch but does not inherently validate the physiological quality of the signal. Notably, the minute-level resolution ($R_P=15$) leads to an apparent performance inflation under the replicated-window evaluation ($\text{Acc} \approx 0.90$), whereas the audited 15-minute block claim ($R_P=1$) yields a more realistic performance estimate ($\text{Acc} \approx 0.71$), as detailed in Table \ref{tab:swell_performance}. Confidence intervals for SWELL-KW were estimated by subject-level bootstrapping over LOSO predictions ($B=1000$). The performance decrease from 1-min to 15-min evaluation should not be interpreted as a pure estimate of pseudo-replication bias; rather, it demonstrates that predictive performance is highly sensitive to the mismatch between the modeling unit and the independent label unit. These values are not intended as a direct model-selection comparison across resolutions, because the aggregation unit and effective sample size change with the claim specification.
 
 \begin{table*}[t]
 \caption{SWELL-KW Performance Inflation Analysis. Metrics: Random Forest (100 trees), LOSO split, Binary target: Neutral vs. (TP+Intr.).}
@@ -291,22 +302,6 @@ The initial minute-level claim on SWELL-KW resulted in $R_P = 15$, capping the c
 \bottomrule
 \end{tabular}
 \end{table*}
-
-\begin{table}[h]
-\caption{SWELL-KW Resolution Redesign Comparison}
-\label{tab:swell_redesign}
-\centering
-\begin{tabular}{@{}lccc@{}}
-\toprule
-\textbf{Claim Spec.} & \textbf{Resolution} & \textbf{$R_P$} & \textbf{RA Outcome} \\
-\midrule
-Minute-level effort & 1 min & 15 & Fail; Level 0 \\
-5-min trend         & 5 min & 3 & No RA-imposed cap \\
-Block-level effort  & 15 min & 1 & No RA-imposed cap \\
-\bottomrule
-\end{tabular}
-\end{table}
-$^*$Requires PA/SA re-run under new resolution.
 
 \section{Discussion: Implications for HMS Design}
 \label{sec:discussion}
@@ -332,51 +327,73 @@ Recommended next step & (unspecified) & Refine hardware or restate claim \\
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.85\columnwidth]{C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4352/fig2_comparison_1778499261087.png}
-\caption{Conceptual comparison of interpretations: Accuracy-Only (unconstrained) vs.\ LabelScope (audited). Path A leads to overbroad state claims, while Path B provides a computable cap for permitted action policies.}
+\caption{Conceptual comparison: Accuracy-Only (unconstrained) vs.\ LabelScope (audited). Path A leads to overbroad claims, while Path B provides a computable cap for action policies.}
 \label{fig:comparison}
 \end{figure}
 
-LabelScope requires researchers to report their predictive performance \textit{within the context of an audited claim level}. Fig. 2 summarizes this distinction as two interpretation paths: Path A leads to overbroad state claims by equating learnability with validity, while Path B (LabelScope) provides a computable cap for permitted action policies based on label supportability. This helps prevent engineering convenience (e.g., using sparse labels for high-frequency modeling) from being mistaken for support for an HMS claim. We advocate that future HMS research report claim supportability levels alongside traditional performance metrics.
+LabelScope requires researchers to report their predictive performance \textit{within the context of an audited claim level}. This helps prevent engineering convenience from being mistaken for physiological support. We advocate that future HMS research report claim supportability levels alongside traditional performance metrics.
 
 \section{Pre-deployment Engineering Check}
-Beyond its role as a reporting discipline, LabelScope serves as a pre-deployment engineering check during the HMS design process. By identifying failure modes such as resolution mismatch or behavioral-proxy risk \textit{before} the system is deployed, designers can make informed decisions to improve the system's reliability.
-
-For example, if a virtual HMS uses the WESAD stress classifier to trigger interventions, LabelScope (at Level 2) prohibits interpreting the trigger as movement-independent internal stress. The permitted action is restricted to task/protocol-aware adaptation (e.g., suggesting a posture change). This proactive auditing may help reduce the risk of trust degradation in adaptive human-machine systems by preventing misdirected interventions based on over-interpreted physiological proxies.
-
-\subsection{Limitations and Future Work}
-While LabelScope provides a rigorous foundation, it is not a ``validity oracle.'' Its results are sensitive to the choice of features, neighborhood definitions, and audit thresholds.
-
-\begin{enumerate}
-    \item \textbf{Absence of Closed-Loop Evaluation}: The current study evaluates LabelScope only through retrospective audits of public datasets. It does not evaluate the framework in a closed-loop HMS or with human participants. Determining how audit-triggered claim caps affect actual system behavior, user experience, and task performance requires rigorous user studies in future deployments.
-    \item \textbf{Epistemological Limits of the Proxy Audit}: The PA only audits against \textit{observed} covariates ($C_B$). In unrestricted environments, physiological signals can be sensitive to unobserved factors (e.g., room temperature, undocumented postural shifts, caffeine intake). A ``Level 3'' claim indicates only that no evidence of proxy risk was found under the tested covariates; it cannot guarantee the absence of unmeasured entanglements. Future work should integrate causal inference techniques to bound the impact of unobserved variables.
-    \item \textbf{Threshold Standardization and Sensitivity}: The default values of $\tau_{RA} = 5.0$ and $\tau_{PA} = 0.30$ were chosen conservatively. Table \ref{tab:pa_sensitivity} reports the PA cap outcome for WESAD across a range of $\tau_{PA}$ values. The Level 2 cap is insensitive to $\tau_{PA}$ within $[0.20, 0.60]$ under the group-mean rule, since the group mean ($\rho_{LC} = 0.65$) exceeds all thresholds in this range. At $\tau_{PA} = 0.70$, the group mean no longer exceeds the threshold; however, 6 of 15 subjects individually exceed it, warranting subject-level reporting in that regime.
-    \item \textbf{Negative Control Specificity}: While the run-length-preserving block-level shuffle provides a stricter negative control than fully random label permutations, additional controls that preserve higher-order temporal structure (e.g., transition matrices or task-cycle periodicity) should be evaluated in future work to further refine the SA module. Detailed metadata regarding the negative control implementation (block length, unit, repetition count, and class balance preservation) are provided in the supplementary material.
-\end{enumerate}
+Beyond its role as a reporting discipline, LabelScope serves as a pre-deployment engineering check during the HMS design process. By identifying failure modes such as resolution mismatch or behavioral-proxy risk \textit{before} the system is deployed, designers can make informed decisions to improve the system's reliability. Table \ref{tab:action_policy} details how each LabelScope level maps to permitted and prohibited system interventions.
 
 \begin{table}[h]
-\caption{WESAD PA Sensitivity to $\tau_{PA}$ (group-mean rule)}
-\label{tab:pa_sensitivity}
+\caption{HMS Action Policy Gating by Claim Level}
+\label{tab:action_policy}
 \centering
-\begin{tabular}{@{}ccc@{}}
+\begin{tabular}{@{}llp{4cm}@{}}
 \toprule
-$\tau_{PA}$ & Subjects Exceeding & Dataset-Level Cap \\
+\textbf{Level} & \textbf{Permitted Action} & \textbf{Rationale} \\
 \midrule
-0.20 & 15/15 & Level 2 \\
-0.30 & 15/15 & Level 2 \\
-0.40 & 15/15 & Level 2 \\
-0.50 & 14/15 & Level 2 (mean $= 0.65$) \\
-0.60 & 11/15 & Level 2 (mean $= 0.65$) \\
-0.70 & 6/15  & No group-level cap (mean $= 0.65 < 0.70$); \\
-     &       & subject-level reporting needed \\
+Level 0 & None & Unsupported resolution/link. \\
+Level 1 & Local UI adjustment & Context-only recognition. \\
+Level 2 & Protocol-aware adaptation & Behavioral-proxy entanglement. \\
+Level 3 & System-wide intervention & Robust physiological support. \\
 \bottomrule
 \end{tabular}
 \end{table}
 
+For example, if a virtual HMS uses the WESAD stress classifier to trigger interventions, LabelScope (at Level 2) prohibits interpreting the trigger as movement-independent internal stress. The permitted action is restricted to task/protocol-aware adaptation (e.g., suggesting a posture change). This proactive auditing helps reduce the risk of trust degradation by preventing misdirected interventions based on over-interpreted physiological proxies.
+
+\section{Limitations and Future Work}
+While LabelScope provides a rigorous foundation, it is not a ``validity oracle.'' Its results are sensitive to the choice of features, neighborhood definitions, and audit thresholds. Table \ref{tab:pa_sensitivity} reports the sensitivity of the WESAD PA outcome to the threshold $\tau_{PA}$.
+
+\begin{table*}[t]
+\caption{WESAD PA Sensitivity Analysis ($\rho_{LC} = 0.65$). Audit thresholds $\tau_{PA} \ge 0.70$ result in 'None' for the group-level cap under the group-mean rule.}
+\label{tab:pa_sensitivity}
+\centering
+\begin{tabular}{@{}lcccccl@{}}
+\toprule
+\textbf{$\tau_{PA}$ threshold} & \textbf{Subjects $>\tau_{PA}$} & \textbf{Group Mean $>\tau_{PA}$?} & \textbf{Group-level Cap} & \textbf{Note} \\
+\midrule
+0.20 & 15/15 & Yes & Level 2 & --- \\
+0.30 & 15/15 & Yes & Level 2 & --- \\
+0.50 & 14/15 & Yes & Level 2 & --- \\
+0.60 & 11/15 & Yes & Level 2 & --- \\
+0.70 & 6/15  & No  & None$^\dagger$ & Subject-level reporting needed \\
+0.75 & 4/15  & No  & None$^\dagger$ & Subject-level reporting needed \\
+0.80 & 2/15  & No  & None$^\dagger$ & Subject-level reporting needed \\
+\bottomrule
+\end{tabular}
+\smallskip
+
+\begin{minipage}{\textwidth}
+\centering
+\small $^\dagger$No group-level cap; subject-level reporting required for outliers. The audit provides no basis for a group-level cap at high stringency thresholds.
+\end{minipage}
+\end{table*}
+
+\begin{enumerate}
+    \item \textbf{Absence of Closed-Loop Evaluation}: The current study evaluates LabelScope through retrospective audits. Determining how audit-triggered claim caps affect actual system behavior requires rigorous user studies in future deployments.
+    \item \textbf{Epistemological Limits of the Proxy Audit}: The PA only audits against \textit{observed} covariates ($C_B$). A ``Level 3'' claim indicates only that no evidence of proxy risk was found under the tested configuration; it cannot guarantee the absence of unmeasured entanglements. 
+    \item \textbf{SA and Claim Robustness}: In WESAD, SA checks for detectable organization in the tested ECG/EDA feature space; it does not rescue the claim from PA/RA-imposed caps.
+\end{enumerate}
+
 \section{Conclusion}
-We have presented LabelScope, a conservative framework for auditing state-label validity in physiology-based HMS. By shifting the focus from predictive accuracy to claim supportability, LabelScope can support more cautious and reproducible reporting of physiological HMS claims. As HMS are deployed in increasingly consequential environments, systematic auditing of claim supportability will be an important step toward building human-centered systems with a well-characterized scope of inference.
+We have presented LabelScope, a conservative framework for auditing state-label validity in physiology-based HMS. By shifting the focus from predictive accuracy to claim supportability, LabelScope supports more cautious and reproducible reporting. As HMS are deployed in increasingly consequential environments, systematic auditing of claim supportability will be an important step toward building human-centered systems with a well-characterized scope of inference.
 
 \appendices
-\section*{Appendix: Audit Implementation Details}
+\section{Audit Implementation Details}
+
 \begin{table*}[t!]
 \caption{Physiological Features Used in Structure Audit ($X$, $D = 14$)}
 \label{tab:features}
@@ -454,14 +471,5 @@ The WESAD and SWELL-KW datasets are publicly available. The audit code, preproce
 \bibitem{kaber2018} D. B. Kaber, ``A conceptual framework of human-machine teaming: Types and levels of teaming and functions,'' \emph{IEEE Trans. Human-Machine Syst.}, vol. 48, no. 6, pp. 641--654, 2018.
 \bibitem{lohani2019} M. S. Lohani et al., ``A review of psychophysiological measures to assess cognitive states in real-world driving,'' \emph{IEEE Trans. Human-Machine Syst.}, vol. 49, no. 1, pp. 184--194, 2019.
 \end{thebibliography}
-
-\clearpage
-
-\section*{Data and Code Availability}
-The WESAD and SWELL-KW datasets are publicly available. The audit code, preprocessing configuration, random seeds, and table-generation scripts are provided in the supplementary archive to support peer review and reproducibility. LabelScope is designed to be reproducible under fixed preprocessing parameters and permutation seeds. The implementation uses NeuroKit2 (v0.2.1) and cvxEDA.
-
-\begin{IEEEbiographynophoto}{Kotaro Furukawa}
-is currently pursuing the B.S. degree. Their research interests include affective computing, physiological signal processing, and human-machine systems. Furukawa is currently developing systematic audit frameworks for adaptive human-machine teaming.
-\end{IEEEbiographynophoto}
 
 \end{document}

@@ -64,6 +64,8 @@
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-B}3}Structure Audit (SA) Results}{4}{subsubsection.4.2.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-B}4}Classifier Performance Baseline}{4}{subsubsection.4.2.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-C}}SWELL-KW Case Study: Redesigning Label Resolution}{4}{subsection.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {V}Discussion: Implications for HMS Design}{4}{section.5}\protected@file@percent }
+\newlabel{sec:discussion}{{V}{4}{Discussion: Implications for HMS Design}{section.5}{}}
 \citation{wesad2018}
 \@writefile{lot}{\contentsline {table}{\numberline {IV}{\ignorespaces WESAD Condition-wise Proxy Index ($\rho _{LC}$). Audit threshold $\tau _{PA} = 0.30$.}}{5}{table.4}\protected@file@percent }
 \newlabel{tab:wesad_pa}{{IV}{5}{WESAD Condition-wise Proxy Index ($\rho _{LC}$). Audit threshold $\tau _{PA} = 0.30$}{table.4}{}}
@@ -71,27 +73,26 @@
 \newlabel{tab:wesad_sa}{{V}{5}{WESAD SA Result (with Negative Control). Params: $D=14, k=50, B=1000, L=60$\,s. Note: SA pass does not imply $L_{Final}=3$ if PA fails}{table.5}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {VI}{\ignorespaces WESAD Classifier Performance vs. Audit-Imposed Cap for Weakened Claim. Classifier performance is reported to illustrate label learnability; it does not by itself support a 60-s momentary internal-state claim, which is capped at Level 0 by RA. Confidence intervals estimated by subject-level bootstrapping ($B=1000$).}}{5}{table.6}\protected@file@percent }
 \newlabel{tab:wesad_performance}{{VI}{5}{WESAD Classifier Performance vs. Audit-Imposed Cap for Weakened Claim. Classifier performance is reported to illustrate label learnability; it does not by itself support a 60-s momentary internal-state claim, which is capped at Level 0 by RA. Confidence intervals estimated by subject-level bootstrapping ($B=1000$)}{table.6}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {VII}{\ignorespaces WESAD PA Sensitivity to $\tau _{PA}$ (group-mean rule)}}{5}{table.7}\protected@file@percent }
-\newlabel{tab:wesad_sensitivity}{{VII}{5}{WESAD PA Sensitivity to $\tau _{PA}$ (group-mean rule)}{table.7}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {V}Discussion: Implications for HMS Design}{5}{section.5}\protected@file@percent }
-\newlabel{sec:discussion}{{V}{5}{Discussion: Implications for HMS Design}{section.5}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Conceptual comparison of interpretations: Accuracy-Only (unconstrained) vs.\ LabelScope (audited). Path A leads to overbroad state claims, while Path B provides a computable cap for permitted action policies.}}{5}{figure.2}\protected@file@percent }
-\newlabel{fig:comparison}{{2}{5}{Conceptual comparison of interpretations: Accuracy-Only (unconstrained) vs.\ LabelScope (audited). Path A leads to overbroad state claims, while Path B provides a computable cap for permitted action policies}{figure.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {VII}{\ignorespaces SWELL-KW Resolution Redesign Comparison}}{5}{table.7}\protected@file@percent }
+\newlabel{tab:swell_redesign}{{VII}{5}{SWELL-KW Resolution Redesign Comparison}{table.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {VI}Pre-deployment Engineering Check}{5}{section.6}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Conceptual comparison: Accuracy-Only (unconstrained) vs.\ LabelScope (audited). Path A leads to overbroad claims, while Path B provides a computable cap for action policies.}}{5}{figure.2}\protected@file@percent }
+\newlabel{fig:comparison}{{2}{5}{Conceptual comparison: Accuracy-Only (unconstrained) vs.\ LabelScope (audited). Path A leads to overbroad claims, while Path B provides a computable cap for action policies}{figure.2}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {VIII}{\ignorespaces SWELL-KW Performance Inflation Analysis. Metrics: Random Forest (100 trees), LOSO split, Binary target: Neutral vs. (TP+Intr.).}}{6}{table.8}\protected@file@percent }
 \newlabel{tab:swell_performance}{{VIII}{6}{SWELL-KW Performance Inflation Analysis. Metrics: Random Forest (100 trees), LOSO split, Binary target: Neutral vs. (TP+Intr.)}{table.8}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {IX}{\ignorespaces SWELL-KW Resolution Redesign Comparison}}{6}{table.9}\protected@file@percent }
-\newlabel{tab:swell_redesign}{{IX}{6}{SWELL-KW Resolution Redesign Comparison}{table.9}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {VI}Pre-deployment Engineering Check}{6}{section.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-A}}Limitations and Future Work}{6}{subsection.6.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {VII}Conclusion}{6}{section.7}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {X}{\ignorespaces Reporting Comparison: Accuracy-Only vs.\ LabelScope-Audited (Typical reporting patterns for a dataset like WESAD \cite  {wesad2018})}}{7}{table.10}\protected@file@percent }
-\newlabel{tab:reporting_comparison}{{X}{7}{Reporting Comparison: Accuracy-Only vs.\ LabelScope-Audited (Typical reporting patterns for a dataset like WESAD \cite {wesad2018})}{table.10}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {XI}{\ignorespaces WESAD PA Sensitivity to $\tau _{PA}$ (group-mean rule)}}{7}{table.11}\protected@file@percent }
-\newlabel{tab:pa_sensitivity}{{XI}{7}{WESAD PA Sensitivity to $\tau _{PA}$ (group-mean rule)}{table.11}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {XII}{\ignorespaces Physiological Features Used in Structure Audit ($X$, $D = 14$)}}{8}{table.12}\protected@file@percent }
-\newlabel{tab:features}{{XII}{8}{Physiological Features Used in Structure Audit ($X$, $D = 14$)}{table.12}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {XIII}{\ignorespaces Behavioral Covariate Used in Proxy Audit ($C_B$, $K = 1$)}}{8}{table.13}\protected@file@percent }
-\newlabel{tab:covariates}{{XIII}{8}{Behavioral Covariate Used in Proxy Audit ($C_B$, $K = 1$)}{table.13}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {IX}{\ignorespaces Reporting Comparison: Accuracy-Only vs.\ LabelScope-Audited (Typical reporting patterns for a dataset like WESAD \cite  {wesad2018})}}{6}{table.9}\protected@file@percent }
+\newlabel{tab:reporting_comparison}{{IX}{6}{Reporting Comparison: Accuracy-Only vs.\ LabelScope-Audited (Typical reporting patterns for a dataset like WESAD \cite {wesad2018})}{table.9}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {X}{\ignorespaces HMS Action Policy Gating by Claim Level}}{6}{table.10}\protected@file@percent }
+\newlabel{tab:action_policy}{{X}{6}{HMS Action Policy Gating by Claim Level}{table.10}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {VII}Limitations and Future Work}{6}{section.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {VIII}Conclusion}{6}{section.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{Appendix\nobreakspace  A: Audit Implementation Details}{6}{section*.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {XI}{\ignorespaces WESAD PA Sensitivity Analysis ($\rho _{LC} = 0.65$). Audit thresholds $\tau _{PA} \ge 0.70$ result in 'None' for the group-level cap under the group-mean rule.}}{7}{table.11}\protected@file@percent }
+\newlabel{tab:pa_sensitivity}{{XI}{7}{WESAD PA Sensitivity Analysis ($\rho _{LC} = 0.65$). Audit thresholds $\tau _{PA} \ge 0.70$ result in 'None' for the group-level cap under the group-mean rule}{table.11}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {XII}{\ignorespaces Physiological Features Used in Structure Audit ($X$, $D = 14$)}}{7}{table.12}\protected@file@percent }
+\newlabel{tab:features}{{XII}{7}{Physiological Features Used in Structure Audit ($X$, $D = 14$)}{table.12}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {XIII}{\ignorespaces Behavioral Covariate Used in Proxy Audit ($C_B$, $K = 1$)}}{7}{table.13}\protected@file@percent }
+\newlabel{tab:covariates}{{XIII}{7}{Behavioral Covariate Used in Proxy Audit ($C_B$, $K = 1$)}{table.13}{}}
 \bibstyle{IEEEtran}
 \bibcite{picard1997}{1}
 \bibcite{Calvo2010}{2}
@@ -123,7 +124,5 @@
 \bibcite{cheng2020}{28}
 \bibcite{kaber2018}{29}
 \bibcite{lohani2019}{30}
-\@writefile{toc}{\contentsline {section}{References}{9}{section*.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{Biographies}{10}{IEEEbiography.0}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{Kotaro Furukawa}{10}{IEEEbiography.1}\protected@file@percent }
-\gdef \@abspage@last{10}
+\@writefile{toc}{\contentsline {section}{References}{8}{section*.3}\protected@file@percent }
+\gdef \@abspage@last{8}
