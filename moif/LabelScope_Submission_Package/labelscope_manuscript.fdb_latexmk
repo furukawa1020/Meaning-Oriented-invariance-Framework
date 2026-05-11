@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1778503696.12403 "c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_Package/labelscope_manuscript.tex" "labelscope_manuscript.pdf" "labelscope_manuscript" 1778503697.73342 0
-  "c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_Package/labelscope_manuscript.tex" 1778503692 40134 0c45c6f69aff5fca331b60d92371803f ""
+["pdflatex"] 1778503716.52661 "c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_Package/labelscope_manuscript.tex" "labelscope_manuscript.pdf" "labelscope_manuscript" 1778503718.08117 0
+  "c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_Package/labelscope_manuscript.tex" 1778503710 39554 a01594393749ebc27df4336b22b05d62 ""
   "c:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4352/fig1_pipeline_1778498543035.png" 1778498543 382275 55f18c1cb80a76c324f669a937b46c42 ""
   "c:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4352/fig2_comparison_1778499261087.png" 1778499261 500108 49a0625cbacdebc039c6fd4264eadbf8 ""
   "c:/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc" 1770093395 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
@@ -150,9 +150,9 @@
   "c:/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1770103547 5587484 49bd08ff372a6985d7d70778694ddaac ""
   "c:/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1770103868 3636162 afd28e82f1bc0291a2e045cd3ffa4474 ""
   "c:/texlive/2025/texmf.cnf" 1770103504 713 614551405fc44b98efbf516466e3c909 ""
-  "labelscope_manuscript.aux" 1778503697 11008 5bb2ac33dbe536248596a4a458aa4b10 "pdflatex"
-  "labelscope_manuscript.out" 1778503697 6050 bd88b0a632fe231c80bc73a4c23eacc8 "pdflatex"
-  "labelscope_manuscript.tex" 1778503692 40134 0c45c6f69aff5fca331b60d92371803f ""
+  "labelscope_manuscript.aux" 1778503717 10984 f913102b74fbde767d3235c563dd498c "pdflatex"
+  "labelscope_manuscript.out" 1778503717 6050 bd88b0a632fe231c80bc73a4c23eacc8 "pdflatex"
+  "labelscope_manuscript.tex" 1778503710 39554 a01594393749ebc27df4336b22b05d62 ""
   (generated)
   "labelscope_manuscript.aux"
   "labelscope_manuscript.log"
