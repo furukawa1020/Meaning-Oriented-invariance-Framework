@@ -184,10 +184,24 @@ SWELL-KW \cite{swell2014} contains physiological recordings from 25 participants
 \subsection{WESAD Case Study: Resolution and Proxy Risk}
 
 \subsubsection{Resolution Audit (RA) Results}
-For WESAD, the RA was evaluated under the claim specification of 60-s window-level protocol-linked sensing. Because the operational label is derived from contiguous protocol blocks ($N_{ind\_obs} = 3$ per subject), the replication ratio $R_P = 1110/3 = 370$ significantly exceeds the threshold $\tau_{RA} = 5.0$. This indicates that for a claim of momentary internal state detection, the WESAD setup would be capped at Level 0. However, in this case study, we report the audit for the protocol-linked stress proxy claim. Under this claim specification, while the resolution failure precludes momentary claims, the final cap is driven by behavioral entanglement in the proxy audit.
+For WESAD, the RA was evaluated under a claim of momentary 60-s internal-state detection. Because the operational label is derived from protocol blocks (Stress, Baseline, Amusement), we define $N_{ind\_obs}$ as the number of independent label segments across all subjects ($N_{ind\_obs} = 15 \text{ subjects} \times 3 \text{ blocks} = 45$). The replication ratio $R_P = 1110/45 \approx 24.7$ significantly exceeds the threshold $\tau_{RA} = 5.0$. Therefore, the WESAD case study does not support real-time 60-s internal-state detection, and the momentary claim is capped at \textbf{Level 0} by RA. We subsequently analyze a weaker \textbf{protocol-linked stress-proxy claim}, for which PA imposes a Level 2 cap (see Table \ref{tab:wesad_claim_outcomes}).
+
+\begin{table}[h]
+\caption{WESAD Audit Outcomes by Claim Specification}
+\label{tab:wesad_claim_outcomes}
+\centering
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Claim Specification} & \textbf{RA} & \textbf{PA} & \textbf{Final Cap} \\
+\midrule
+Momentary internal-state & Level 0 & --- & Level 0 \\
+Protocol-linked proxy    & Pass    & Level 2 & Level 2 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsubsection{Proxy Audit (PA) Results}
-We use \textbf{behavioral entanglement} to denote a condition in which the operational label is systematically associated with observed behavioral covariates, such that movement-independent internal-state claims should be capped. We audited the binary stress label in WESAD against the SMA derived from wrist-worn acceleration ($K=1$). As shown in Table \ref{tab:wesad_pa}, the binary stress label exceeded the proxy-risk threshold $\tau_{PA} = 0.30$ across all 15 subjects.
+We use \textbf{behavioral entanglement} to denote a condition in which the operational label is systematically associated with observed behavioral covariates, such that movement-independent internal-state claims should be capped. We audited the protocol-linked stress label in WESAD against the SMA derived from wrist-worn acceleration ($K=1$). As shown in Table \ref{tab:wesad_pa}, the binary stress label exceeded the proxy-risk threshold $\tau_{PA} = 0.30$ across all 15 subjects.
 \begin{table*}[t]
 \caption{WESAD Condition-wise Proxy Index ($\rho_{LC}$). Audit threshold $\tau_{PA} = 0.30$.}
 \label{tab:wesad_pa}
@@ -225,7 +239,7 @@ Run-length-preserving block-randomized labels & 0.52 & 0.52 & 0.510 & SA fail; w
 To demonstrate the decoupling of performance and validity, we trained Random Forest classifiers (100 trees, random seed 42, default max depth, balanced class weights) using a Leave-One-Subject-Out (LOSO) split. Features were subject-wise z-score normalized. The ACC-only model includes 3-axis statistical features (mean, std, max) and SMA. The ACC-only classifier is not part of the PA itself; it is included as an auxiliary baseline to test whether the operational label is predictable from movement-derived features beyond the single SMA audit covariate. Table \ref{tab:wesad_performance} shows that ACC-only models achieve substantial performance, suggesting that the operational label is predictable from movement-derived features. Confidence intervals were estimated by subject-level bootstrapping over LOSO predictions ($B=1000$ resamples over held-out subjects). The classifier baseline is used only to demonstrate the decoupling between predictive performance and claim scope; it is not used by LabelScope to assign the cap.
 
 \begin{table*}[t]
-\caption{WESAD Classifier Performance vs. Audit-Imposed Cap. Confidence intervals estimated by subject-level bootstrapping ($B=1000$).}
+\caption{WESAD Classifier Performance vs. Audit-Imposed Cap for Protocol-Linked Claim. Confidence intervals estimated by subject-level bootstrapping ($B=1000$).}
 \label{tab:wesad_performance}
 \centering
 \begin{tabular}{@{}lcccc@{}}
@@ -242,11 +256,11 @@ ACC only (S vs A)         & 0.70 & 0.69 & 0.73 [0.70, 0.76] & Level 2 \\
 \end{tabular}
 \end{table*}
 
-Condition-wise ACC-only baselines are provided in the supplementary material and show the same qualitative pattern of substantial behavioral predictability as the pooled analysis.
-$^\dagger$The cap refers to the operational WESAD stress label under the audited HMS claim, not to the classifier input modality.
+Subject-wise condition-wise ACC-only baselines are provided in the supplementary material and show the same qualitative pattern of substantial behavioral predictability as the pooled analysis.
+$^\dagger$The Level 2 cap applies only to the weakened protocol-linked stress-proxy claim. A momentary 60-s internal-state claim is capped at Level 0 by RA.
 
 \subsection{SWELL-KW Case Study: Redesigning Label Resolution}
-The initial minute-level claim on SWELL-KW resulted in $R_P = 15$, capping the claim at \textbf{Level 0}. Table \ref{tab:swell_redesign} illustrates how claim redesign can remove the RA-imposed cap. For this evaluation, the classifier target was defined as the experimental work-condition label binarized as Neutral vs.~(Time Pressure + Interruption), using physiology-only features (ECG/EDA). Satisfying RA by lowering resolution (e.g., to a 5-min trend) corrects the resolution mismatch but does not inherently validate the physiological quality of the signal. Notably, the minute-level resolution ($R_P=15$) leads to an apparent performance inflation ($\text{Acc} \approx 0.90$), whereas the audited 15-minute block claim ($R_P=1$) yields a more realistic performance estimate ($\text{Acc} \approx 0.71$), as detailed in Table \ref{tab:swell_performance}. Confidence intervals for SWELL-KW were estimated by subject-level bootstrapping over LOSO predictions ($B=1000$). The performance decrease from 1-min to 15-min evaluation should not be interpreted as a pure estimate of pseudo-replication bias; rather, it demonstrates that predictive performance is highly sensitive to the mismatch between the modeling unit and the independent label unit.
+The initial minute-level claim on SWELL-KW resulted in $R_P = 15$, capping the claim at \textbf{Level 0}. Table \ref{tab:swell_redesign} illustrates how claim redesign can remove the RA-imposed cap. For this evaluation, the classifier target was defined as the experimental work-condition label binarized as Neutral vs.~(Time Pressure + Interruption), using physiology-only features (ECG/EDA). Satisfying RA by lowering resolution (e.g., to a 5-min trend) corrects the resolution mismatch but does not inherently validate the physiological quality of the signal. Notably, the minute-level resolution ($R_P=15$) leads to an apparent performance inflation under the replicated-window evaluation ($\text{Acc} \approx 0.90$), whereas the audited 15-minute block claim ($R_P=1$) yields a more realistic performance estimate ($\text{Acc} \approx 0.71$), as detailed in Table \ref{tab:swell_performance}. Confidence intervals for SWELL-KW were estimated by subject-level bootstrapping over LOSO predictions ($B=1000$). The performance decrease from 1-min to 15-min evaluation should not be interpreted as a pure estimate of pseudo-replication bias; rather, it demonstrates that predictive performance is highly sensitive to the mismatch between the modeling unit and the independent label unit.
 
 \begin{table*}[t]
 \caption{SWELL-KW Performance Inflation Analysis. Metrics: Random Forest (100 trees), LOSO split, Binary target: Neutral vs. (TP+Intr.).}
