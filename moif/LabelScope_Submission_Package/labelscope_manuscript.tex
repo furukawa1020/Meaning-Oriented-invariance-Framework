@@ -54,7 +54,7 @@ Physiology-based HMS are deeply rooted in the foundational goals of affective co
 Surveys of the field, such as those by Calvo and D'Mello \cite{Calvo2010} and Bota et al. \cite{Bota2019}, highlight the increasing sophistication of physiological sensing pipelines. However, as sensor technology and modeling techniques have advanced, a new phase of methodological refinement has become necessary. While initial studies established the foundational links between physiology and psychology, the deployment of these models in adaptive HMS requires a more granular understanding of state-label supportability. The challenge of establishing a ``ground truth'' for unobservable states remains a central methodological question, one that now requires explicit auditing of the interpretive scope of our models.
 
 \subsection{Adaptive Automation and Human-Machine Teaming}
-The ultimate goal of physiological HMS is to enable adaptive automation, where the system dynamically adjusts its intervention (e.g., task offloading, alert suppression) based on the operator's cognitive or affective state \cite{parasuraman2000,kaber2018}. A critical challenge in human-machine teaming is trust calibration \cite{lee2004,lohani2019}. When an adaptive system intervenes, LabelScope addresses this through a pre-intervention audit, providing a basis for constraining the system's action policy according to the audited claim level, which may help reduce the risk of trust degradation by preventing over-interpretation of unverified operational proxies.
+The ultimate goal of physiological HMS is to enable adaptive automation, where the system dynamically adjusts its intervention (e.g., task offloading, alert suppression) based on the operator's cognitive or affective state \cite{parasuraman2000,kaber2018}. A critical challenge in human-machine teaming is trust calibration \cite{lee2004,lohani2019}. When an adaptive system intervenes based on a spurious state inference, it may degrade operator trust and situational awareness. LabelScope addresses this risk through a pre-intervention audit, providing a basis for constraining the system's action policy according to the audited claim level, which may help reduce the risk of trust degradation by preventing over-interpretation of unverified operational proxies.
 
 \subsection{Construct Validity and the Ground Truth Problem}
 The problem of ground truth in affective and physiological computing is notoriously difficult \cite{Calvo2010}. Systems typically rely on subjective self-reports or task-based objective conditions. This challenge relates to the broader theory of Construct Validity \cite{messick1989}, which emphasizes that validity is a property of the \textit{interpretations} of scores, not the scores themselves. LabelScope does not replace construct validation; it provides computable audit checks for whether an operational label can support a specified HMS claim under a given modeling setup. We treat the operational label as a weak or proxy label \cite{zhou2018} that should be audited for its supportability at a specific resolution before state claims are made.
@@ -184,7 +184,7 @@ SWELL-KW \cite{swell2014} contains physiological recordings from 25 participants
 \subsection{WESAD Case Study: Resolution and Proxy Risk}
 
 \subsubsection{Resolution Audit (RA) Results}
-For WESAD, the RA was evaluated under a claim of momentary 60-s internal-state detection. Because the operational label is derived from protocol blocks (Stress, Baseline, Amusement), we define $N_{ind\_obs}$ as the number of independent label segments across all subjects ($N_{ind\_obs} = 15 \text{ subjects} \times 3 \text{ blocks} = 45$). The replication ratio $R_P = 1110/45 \approx 24.7$ substantially exceeds the threshold $\tau_{RA} = 5.0$. Therefore, the WESAD case study does not support real-time 60-s internal-state detection, and the momentary claim is capped at \textbf{Level 0} by RA. We subsequently evaluate the audit outcome for a weakened \textbf{protocol-linked stress-proxy claim}, for which window-level performance serves as an auxiliary learnability metric rather than a momentary sensing validation (see Table \ref{tab:wesad_claim_outcomes}).
+For WESAD, the RA was evaluated under a claim of momentary 60-s internal-state detection. Because the operational label is derived from protocol blocks (Stress, Baseline, Amusement), we define $N_{ind\_obs}$ as the number of independent label segments across all subjects ($N_{ind\_obs} = 15 \text{ subjects} \times 3 \text{ blocks} = 45$). The replication ratio $R_P = 1110/45 \approx 24.7$ substantially exceeds the threshold $\tau_{RA} = 5.0$. Therefore, the WESAD case study does not support real-time 60-s internal-state detection, and the momentary claim is capped at \textbf{Level 0} by RA. We subsequently evaluate the audit outcome for a weakened \textbf{protocol-linked stress-proxy claim}, for which window-level performance serves as an auxiliary learnability metric rather than a momentary sensing validation (see Table \ref{tab:wesad_claim_outcomes}). For this weakened claim, LabelScope reports an interpretive Level 2 cap based on the observed window-level proxy structure; a full protocol-level reassignment would require re-running the PA and SA modules on aggregated protocol-level units.
 
 \begin{table}[h]
 \caption{WESAD Audit Outcomes by Claim Specification}
@@ -267,10 +267,10 @@ ACC only (S vs A)         & 0.70 & 0.69 & 0.73 [0.70, 0.76] & Level 2 \\
 \end{table*}
 
 \subsection{SWELL-KW Case Study: Redesigning Label Resolution}
-The initial minute-level claim on SWELL-KW resulted in $R_P = 15$, capping the claim at \textbf{Level 0}. Table \ref{tab:swell_redesign} illustrates how claim redesign can remove the RA-imposed cap. Table \ref{tab:swell_performance} details the performance inflation that occurs at higher resolutions.
+The initial minute-level claim on SWELL-KW resulted in $R_P = 15$, capping the claim at \textbf{Level 0}. Table \ref{tab:swell_redesign} illustrates how claim redesign can remove the RA-imposed cap. Table \ref{tab:swell_performance} details the performance inflation that occurs at higher resolutions. These values are not intended as a direct model-selection comparison across resolutions, because the aggregation unit and effective sample size change with the claim specification. Rather, the analysis shows that predictive performance is highly sensitive to the mismatch between the modeling unit and the independent label unit. This analysis is intended as an evaluation-unit sensitivity check rather than a classifier optimization experiment.
 
 \begin{table*}[t]
-\caption{SWELL-KW Resolution Redesign Comparison}
+\caption{SWELL-KW Resolution Redesign Comparison. Audit demonstrates how claim redesign at coarser resolutions can resolve RA-imposed caps.}
 \label{tab:swell_redesign}
 \centering
 \begin{tabular}{@{}lccc@{}}
@@ -278,14 +278,14 @@ The initial minute-level claim on SWELL-KW resulted in $R_P = 15$, capping the c
 \textbf{Claim Spec.} & \textbf{Resolution} & \textbf{$R_P$} & \textbf{RA Outcome} \\
 \midrule
 Minute-level effort & 1 min & 15 & Fail; Level 0 \\
-5-min trend         & 5 min & 3 & No RA cap$^*$ \\
-Block-level effort  & 15 min & 1 & No RA cap$^*$ \\
+5-min trend         & 5 min & 3 & No RA-imposed cap$^*$ \\
+Block-level effort  & 15 min & 1 & No RA-imposed cap$^*$ \\
 \bottomrule
 \end{tabular}
 \smallskip
-\begin{minipage}{\columnwidth}
+\begin{center}
 \small $^*$Requires PA/SA re-audit under new resolution.
-\end{minipage}
+\end{center}
 \end{table*}
 
 \begin{table*}[t]
@@ -306,7 +306,7 @@ Block-level effort  & 15 min & 1 & No RA cap$^*$ \\
 \section{Discussion: Implications for HMS Design}
 \label{sec:discussion}
 
-Table \ref{tab:reporting_comparison} illustrates how LabelScope changes the interpretation of a typical WESAD result. Without the audit, a researcher might report a binary stress classifier evaluated primarily through classification performance. With the audit, the same result is bounded at Level 2, conveying that the model likely tracks task-linked activity rather than movement-independent physiological state.
+Table \ref{tab:reporting_comparison} illustrates how LabelScope changes the interpretation of a typical WESAD result. Without the audit, a researcher might report a binary stress classifier evaluated primarily through classification performance. With the audit, the same result is bounded at Level 2, conveying that the model likely tracks task-linked activity rather than movement-independent physiological state. Fig. 2 visually summarizes the same shift from accuracy-only reporting to claim-capped interpretation.
 
 \begin{table*}[t]
 \caption{Reporting Comparison: Accuracy-Only vs.\ LabelScope-Audited (Typical reporting patterns for a dataset like WESAD \cite{wesad2018})}
@@ -316,12 +316,17 @@ Table \ref{tab:reporting_comparison} illustrates how LabelScope changes the inte
 \toprule
 \textbf{Aspect} & \textbf{Accuracy-only reporting} & \textbf{With LabelScope} \\
 \midrule
-Reported metric & Classification performance & Performance metric + $L_{Final} = 2$ \\
+Reported metric & Classification performance & Performance metric + claim-specific cap$^\dagger$ \\
 Potential over-interpretation & ``Stress detector'' & Task-condition proxy \\
 Prohibited claim & (unspecified) & Internal state monitor \\
 Recommended next step & (unspecified) & Refine hardware or restate claim \\
 \bottomrule
 \end{tabular}
+\smallskip
+
+\begin{minipage}{\textwidth}
+\small $^\dagger$For WESAD, the momentary 60-s claim is capped at Level 0; Level 2 applies only to the weakened protocol-linked proxy claim.
+\end{minipage}
 \end{table*}
 
 \begin{figure}[h]
@@ -340,19 +345,24 @@ Beyond its role as a reporting discipline, LabelScope serves as a pre-deployment
 \caption{HMS Action Policy Gating by Claim Level}
 \label{tab:action_policy}
 \centering
-\begin{tabular}{@{}llp{4cm}@{}}
+\begin{tabular}{@{}lp{3cm}p{3cm}p{3cm}p{3.5cm}@{}}
 \toprule
-\textbf{Level} & \textbf{Permitted Action} & \textbf{Rationale} \\
+\textbf{Level} & \textbf{Permitted Action} & \textbf{Prohibited Action} & \textbf{Example} & \textbf{Rationale} \\
 \midrule
-Level 0 & None & Unsupported resolution/link. \\
-Level 1 & Local UI adjustment & Context-only recognition. \\
-Level 2 & Protocol-aware adaptation & Behavioral-proxy entanglement. \\
-Level 3 & System-wide intervention & Robust physiological support. \\
+Level 0 & Offline dataset desc. & Real-time adaptation & No min-level UI & Unsupported resolution. \\
+Level 1 & Dataset monitoring & Psych-state adaptation & No stress intervention & Unsupported structure. \\
+Level 2 & Behavior-aware adapt. & Internal-state interv. & Posture-aware cue & Behavioral entanglement. \\
+Level 3 & Cautious adaptation & Ground-truth diagnosis & Adaptive support & No audit failure detected.$^*$ \\
 \bottomrule
 \end{tabular}
+\smallskip
+
+\begin{minipage}{\textwidth}
+\small $^*$No audit-imposed cap under tested configuration.
+\end{minipage}
 \end{table*}
 
-For example, if a virtual HMS uses the WESAD stress classifier to trigger interventions, LabelScope (at Level 2) prohibits interpreting the trigger as movement-independent internal stress. The permitted action is restricted to task/protocol-aware adaptation (e.g., suggesting a posture change). This proactive auditing helps reduce the risk of trust degradation by preventing misdirected interventions based on over-interpreted physiological proxies.
+For example, if a virtual HMS uses the WESAD stress classifier to trigger interventions, LabelScope (at Level 2) prohibits interpreting the trigger as movement-independent internal stress. The permitted action is restricted to task/protocol-aware adaptation (e.g., suggesting a posture change). This proactive auditing may help reduce the risk of trust degradation by preventing misdirected interventions based on over-interpreted physiological proxies.
 
 \section{Limitations and Future Work}
 While LabelScope provides a rigorous foundation, it is not a ``validity oracle.'' Its results are sensitive to the choice of features, neighborhood definitions, and audit thresholds. Table \ref{tab:pa_sensitivity} reports the sensitivity of the WESAD PA outcome to the threshold $\tau_{PA}$. The Level 2 group-level cap is stable across $\tau_{PA} = 0.20$--$0.60$. At $\tau_{PA} \ge 0.70$, the group-mean rule no longer imposes a group-level cap, although subject-level reporting remains necessary.
