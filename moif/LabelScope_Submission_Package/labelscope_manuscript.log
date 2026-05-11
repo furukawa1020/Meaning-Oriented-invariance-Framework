@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.3)  11 MAY 2026 22:15
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.3)  11 MAY 2026 22:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -583,7 +583,12 @@ Underfull \hbox (badness 1902) in paragraph at lines 170--170
 []\T1/ptm/m/n/8 No ev-i-dence found to cap the
  []
 
-[3] [4]
+[3]
+Overfull \hbox (29.47832pt too wide) in paragraph at lines 193--201
+ [][] 
+ []
+
+[4]
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
@@ -597,9 +602,6 @@ Package pdftex.def Info: C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83
 e-4952-83ec-ee1bebcb4352/fig2_comparison_1778499261087.png  used on input line 
 321.
 (pdftex.def)             Requested size: 214.20154pt x 214.2085pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
 [5 <c:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4
 352/fig2_comparison_1778499261087.png>]
 Underfull \hbox (badness 2744) in paragraph at lines 347--347
@@ -635,16 +637,16 @@ LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
 Package rerunfilecheck Info: File `labelscope_manuscript.out' has not changed.
-(rerunfilecheck)             Checksum: 309D44CA5E8548580B866A1451105D7E;6235.
+(rerunfilecheck)             Checksum: 73DF9A9527DAE3CEBE69DB548C89FF53;6274.
  ) 
 Here is how much of TeX's memory you used:
  13368 strings out of 467533
- 204082 string characters out of 5423669
- 645960 words of memory out of 5000000
+ 204072 string characters out of 5423669
+ 645996 words of memory out of 5000000
  41954 multiletter control sequences out of 15000+600000
  753834 words of font info for 181 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,13n,79p,1524b,460s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,13n,79p,1524b,588s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/tex
 live/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2025
 /texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb><c:/texlive/2025/texm
@@ -666,7 +668,7 @@ st/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2025/texmf-dist/f
 onts/type1/urw/times/utmb8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/tim
 es/utmbi8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:
 /texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on labelscope_manuscript.pdf (9 pages, 1190948 bytes).
+Output written on labelscope_manuscript.pdf (9 pages, 1191325 bytes).
 PDF statistics:
  444 PDF objects out of 1000 (max. 8388607)
  379 compressed objects within 4 object streams
