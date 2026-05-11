@@ -67,6 +67,7 @@ R_P = \frac{N_{samples}}{N_{independent\_observations}}
 \end{equation}
 If $R_P$ exceeds the RA threshold $\tau_{RA}$, the claim is capped at Level 0. This ensures that the modeling resolution matches the information frequency of the labels.
 
+\subsection{Audit Module 2: Proxy Audit (PA)}
 Proxy Audit (PA) detects behavioral-proxy risk. Physiological signals are highly sensitive to physical activity. If an operational label is strongly correlated with these behaviors, the system may be acting as a behavioral proxy detector. We define the proxy index $\rho_{LC}$ as:
 \begin{equation}
 \rho_{LC} = \max_{k \in \{1 \dots K\}} |\mathrm{Corr}(y, c_k)|
