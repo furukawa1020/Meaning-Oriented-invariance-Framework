@@ -232,7 +232,7 @@ Structure Audit (SA) & 89.7\% & 5.4\% & 2.5 s \\
 \end{table}
 
 \subsection{Prototyping: The LabelScope Real-time Dashboard}
-We developed a web-based dashboard (Figure 4) that visualizes the continuous "Claim Confidence Trail." The dashboard provides real-time indicators for each audit module. As shown in the 10-minute simulation trace, the dashboard effectively detects bursts of physical movement, causing the PA Index ($\rho_{LC}$) to spike. This immediately "caps" the claim at Level 2, automatically blocking the HMS from initiating an unsupported psychological intervention based on movement-confounded data. 
+We developed a web-based dashboard (Fig. \ref{fig:dashboard}) that visualizes the continuous "Claim Confidence Trail." The dashboard provides real-time indicators for each audit module. As shown in the 10-minute simulation trace, the dashboard effectively detects bursts of physical movement, causing the PA Index ($\rho_{LC}$) to spike. This immediately "caps" the claim at Level 2, automatically blocking the HMS from initiating an unsupported psychological intervention based on movement-confounded data. 
 
 \begin{figure}[h]
 \centering
@@ -460,44 +460,41 @@ ACC (Behav) & Mean Accel & Average acceleration across X, Y, and Z axes. \\
 \end{table*}
 
 \subsection{Threshold Sensitivity and Audit Stability}
-We evaluated the stability of the final claim level as a function of the audit thresholds. Figure 5 (omitted for brevity but available in the code repository) illustrates that the "Level 2" cap for the WESAD dataset is invariant to the choice of $\tau_{PA}$ within the range [0.3, 0.7], reinforcing the robustness of the audit findings.
+We evaluated the stability of the final claim level as a function of the audit thresholds. Fig. \ref{fig:sensitivity} illustrates that the "Level 2" cap for the WESAD dataset is invariant to the choice of $\tau_{PA}$ within the range [0.3, 0.7], reinforcing the robustness of the audit findings.
 \section{Advanced Algorithmic Logic}
 
 The following procedures detail the extension of LabelScope to dynamic and longitudinal HMS contexts.
 
 \begin{algorithm}
 \caption{Longitudinal Recalibration Trigger (LRT)}
-\begin{algorithmic}[1]
-\REQUIRE Sequence of SA p-values $\{\hat{p}_t\}_{t=1}^T$, Drift Threshold $\gamma$, Grace Period $k$
-\ENSURE Recalibration Alert $A$
-\STATE $count \gets 0$
-\FOR{$t = T-k+1$ \TO $T$}
-    \IF{$\hat{p}_t > \gamma$}
-        \STATE $count \gets count + 1$
-    \ENDIF
-\ENDFOR
-\IF{$count / k > 0.5$}
-    \STATE $A \gets \text{TRUE}$ (Trigger Recalibration)
-\ELSE
-    \STATE $A \gets \text{FALSE}$
-\ENDIF
-\RETURN $A$
-\end{algorithmic}
+\begin{lstlisting}[language=Python, numbers=left, breaklines=true, basicstyle=\small\ttfamily, frame=single]
+REQUIRE Sequence of SA p-values {p_t}, Drift Threshold gamma, Grace Period k
+ENSURE Recalibration Alert A
+count = 0
+for t = T-k+1 to T:
+    if p_t > gamma:
+        count = count + 1
+if count / k > 0.5:
+    A = TRUE (Trigger Recalibration)
+else:
+    A = FALSE
+return A
+\end{lstlisting}
 \end{algorithm}
 
 \begin{algorithm}
 \caption{Dynamic Threshold Optimization (DTO)}
-\begin{algorithmic}[1]
-\REQUIRE System Risk Level $R \in [0, 1]$, Baseline Threshold $\tau_{base}$
-\ENSURE Optimized Threshold $\tau_{opt}$
-\STATE $k_{sensitivity} \gets \text{calculate\_sensitivity}(R)$
-\STATE $\tau_{opt} \gets \tau_{base} \times (1 + k_{sensitivity} \times R)$
-\IF{$\tau_{opt} > \text{Max\_Allowed\_Tolerance}$}
-    \STATE $\tau_{opt} \gets \text{Max\_Allowed\_Tolerance}$
-\ENDIF
-\RETURN $\tau_{opt}$
-\end{algorithmic}
+\begin{lstlisting}[language=Python, numbers=left, breaklines=true, basicstyle=\small\ttfamily, frame=single]
+REQUIRE System Risk Level R in [0, 1], Baseline Threshold tau_base
+ENSURE Optimized Threshold tau_opt
+k_sensitivity = calculate_sensitivity(R)
+tau_opt = tau_base * (1 + k_sensitivity * R)
+if tau_opt > Max_Allowed_Tolerance:
+    tau_opt = Max_Allowed_Tolerance
+return tau_opt
+\end{lstlisting}
 \end{algorithm}
+
 \bibliographystyle{IEEEtran}
 \begin{thebibliography}{30}
 
@@ -545,8 +542,7 @@ The following procedures detail the extension of LabelScope to dynamic and longi
 
 \end{thebibliography}
 
-\begin{IEEEbiographynophoto}{Kotaro Furukawa}
-is currently pursuing the B.S. degree. Their research interests include affective computing, physiological signal processing, and the development of robust human-machine systems. They are the lead developer of the LabelScope audit framework for physiological computing.
-\end{IEEEbiographynophoto}
+\section*{Author Biographies}
+\textbf{Kotaro Furukawa} is currently pursuing the B.S. degree. Their research interests include affective computing, physiological signal processing, and the development of robust human-machine systems. They are the lead developer of the LabelScope audit framework for physiological computing.
 
 \end{document}
