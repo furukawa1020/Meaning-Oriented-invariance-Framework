@@ -10,6 +10,7 @@
 \usepackage{hyperref}
 \usepackage{booktabs}
 \usepackage{listings}
+\usepackage{grffile}
 \usepackage{bm}
 
 \begin{document}
@@ -21,7 +22,7 @@
 \maketitle
 
 \begin{abstract}
-Physiology-based human-machine systems (HMS) often train predictive models on operational labels such as questionnaire scores, task conditions, behavioral errors, or affective annotations. However, high predictive accuracy does not by itself establish that the target label can support the HMS claim made from the model. A label may be temporally sparse, behaviorally entangled, or structurally unsupported in physiological feature space. In such cases, model performance may reflect the learnability of an operational proxy rather than evidence for a physiology-grounded user-state claim. This paper introduces LabelScope, a conservative pre-modeling audit framework for claim-relative state-label validity in physiology-based HMS. LabelScope audits whether an operational label can support a specified HMS claim under a given modeling resolution, proxy interpretation, feature representation, and deployment context. The framework consists of Resolution, Proxy, and Structure audit modules, and assigns a capped claim level $L_{Final} \in \{0,1,2,3\}$ using a conservative claim-capping rule. We illustrate LabelScope through retrospective audit case studies with robustness checks using two public physiological datasets: SWELL-KW and WESAD. These case studies illustrate how LabelScope caps unsupported claims arising from resolution mismatch and behavioral-proxy risk. LabelScope does not determine whether a psychological state exists or whether a construct is invalid; rather, it specifies a conservative upper bound on the HMS claim supported by the tested operational label, feature representation, and observed covariates. The framework provides a reporting discipline for interpreting predictive accuracy together with audited claim levels in physiology-based HMS research.
+Physiology-based human-machine systems (HMS) often train predictive models on operational labels such as questionnaire scores, task conditions, behavioral errors, or affective annotations. However, high predictive accuracy does not by itself establish that the target label can support the HMS claim made from the model. A label may be temporally sparse, behaviorally entangled, or structurally unsupported in physiological feature space. In such cases, model performance may reflect the learnability of an operational proxy rather than evidence for a physiology-grounded user-state claim. This paper introduces LabelScope, a conservative pre-modeling audit framework for claim-relative state-label validity in physiology-based HMS. LabelScope audits whether an operational label can support a specified HMS claim under a given modeling resolution, proxy interpretation, feature representation, and deployment context. The framework consists of Resolution, Proxy, and Structure audit modules, and assigns a capped claim level $L_{Final} \in \{0,1,2,3\}$ using a conservative claim-capping rule. We illustrate LabelScope through worked audit demonstrations using two public physiological datasets: SWELL-KW and WESAD. These demonstrations illustrate how LabelScope caps unsupported claims arising from resolution mismatch and behavioral-proxy risk. LabelScope does not determine whether a psychological state exists or whether a construct is invalid; rather, it specifies a conservative upper bound on the HMS claim supported by the tested operational label, feature representation, and observed covariates. The framework provides a reporting discipline for interpreting predictive accuracy together with audited claim levels in physiology-based HMS research.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -31,33 +32,33 @@ Physiology-based HMS, State-Label Validity, Claim-Capping, Auditing, Human-Machi
 
 \IEEEPARstart{P}{hysiological} sensing is increasingly integrated into human-machine systems (HMS) to infer operator state without requiring explicit input. By monitoring signals such as heart rate variability (HRV), electrodermal activity (EDA), and electroencephalography (EEG), researchers aim to build systems that can adapt to a user's stress, fatigue, or cognitive load \cite{picard1997,martinez2017}. These systems, often positioned under affective computing or cognitive load monitoring, have been applied across domains including healthcare, industrial safety, and assistive technology \cite{parasuraman2000}.
 
-Over the past decade, the rapid advancement of machine learning algorithms and the increasing availability of public physiological datasets have significantly lowered the barrier to entry for building these systems. Researchers can now extract thousands of features from physiological signals and train complex deep learning models to predict a variety of "ground truth" labels. However, as the field has matured, a critical methodological gap has emerged: the tendency to equate predictive accuracy with the validity of the underlying user-state claim. In many HMS studies, a high-accuracy model trained on an operational label---such as a questionnaire score or a specific task condition---is frequently treated as definitive evidence that the system has successfully "recognized" or "detected" the intended psychological state \cite{calvo2010}. 
+Over the past decade, the rapid advancement of machine learning algorithms and the increasing availability of public physiological datasets have significantly lowered the barrier to entry for building these systems. Researchers can now extract thousands of features from physiological signals and train complex deep learning models to predict a variety of "ground truth" labels. However, as the field has matured, a critical methodological gap has emerged: the tendency to equate predictive accuracy with the validity of the underlying user-state claim. In many HMS studies, a high-accuracy model trained on an operational label---such as a questionnaire score or a specific task condition---is frequently treated as definitive evidence that the system has successfully "recognized" or "detected" the intended psychological state \cite{Calvo2010}. 
 
 We argue that this focus on predictive accuracy creates a \textbf{methodological risk} in the interpretation of results. High accuracy measures only the learnability of an operational target within a specific dataset and feature representation. It does not, by itself, justify the scope of the HMS claim made from that model. The central problem addressed in this paper is that operational labels in physiology-based HMS are often underdetermined by the physiological evidence. A model may achieve high accuracy by exploiting behavioral-proxy risk, pseudo-replication artifacts, or dataset-specific noise, rather than by capturing a robust physiological signature of the intended psychological state. 
 
 This underdetermination has direct consequences for HMS reliability. In a closed-loop HMS, the system's action policy is coupled to the inferred user state. If a system triggers an intervention based on an entangled label---for example, an adaptive learning environment incorrectly lowering task difficulty because it conflated a student's physical posture shift (a Level 2 behavioral proxy) for cognitive overload (a Level 3 internal state)---the resulting action disrupts the user's workflow and may erode trust in system autonomy \cite{parasuraman2000}. To prevent such failures, state-label validity must be treated as a systematic pre-modeling audit discipline before predictive performance is allowed to govern system behavior.
 
-We introduce \textbf{LabelScope}, a claim-relative audit framework that caps the strongest defensible HMS inference supported by an operational physiological label before predictive accuracy is interpreted. To illustrate the necessity of such an audit, Table \ref{tab:inflation_patterns} outlines common patterns where operational labels are over-interpreted into inflated HMS claims. LabelScope detects these patterns through a structured sequence of quantitative audits. The following sections present retrospective audit case studies with robustness checks to demonstrate the framework's utility.
+We introduce \textbf{LabelScope}, a claim-relative audit framework that caps the strongest defensible HMS inference supported by an operational physiological label before predictive accuracy is interpreted. To illustrate the necessity of such an audit, Table \ref{tab:inflation_patterns} outlines common patterns where operational labels are over-interpreted into inflated HMS claims. LabelScope detects these patterns through a structured sequence of quantitative audits. The following sections present worked audit demonstrations to demonstrate the framework's utility.
 
 \section{Related Work}
 
 \subsection{Physiological HMS and the Affective Computing Heritage}
 Physiology-based HMS are deeply rooted in the foundational goals of affective computing. Since Picard's seminal work in 1997 \cite{picard1997}, the field has sought to build computational systems that can relate to, arise from, or influence human emotions and internal states. This heritage has provided the technical scaffolding for modern HMS, including signal processing techniques for heart rate variability (HRV), skin conductance \cite{boucsein2012}, and brain-computer interfaces. Over the past two decades, the focus has shifted from basic emotion recognition to the sensing of complex states such as cognitive load and stress. 
 
-Surveys of the field, such as those by Calvo and D'Mello \cite{calvo2010} and Bota et al. \cite{bota2019}, highlight the increasing sophistication of physiological sensing pipelines. However, as sensor technology and modeling techniques have advanced, a new phase of methodological refinement has become necessary. While initial studies established the foundational links between physiology and psychology, the deployment of these models in adaptive HMS requires a more granular understanding of state-label supportability. The challenge of establishing a ``ground truth'' for unobservable states remains a central methodological question, one that now requires explicit auditing of the interpretive scope of our models.
+Surveys of the field, such as those by Calvo and D'Mello \cite{Calvo2010} and Bota et al. \cite{Bota2019}, highlight the increasing sophistication of physiological sensing pipelines. However, as sensor technology and modeling techniques have advanced, a new phase of methodological refinement has become necessary. While initial studies established the foundational links between physiology and psychology, the deployment of these models in adaptive HMS requires a more granular understanding of state-label supportability. The challenge of establishing a ``ground truth'' for unobservable states remains a central methodological question, one that now requires explicit auditing of the interpretive scope of our models.
 
 \subsection{Adaptive Automation and Human-Machine Teaming}
 The ultimate goal of physiological HMS is to enable adaptive automation, where the system dynamically adjusts its intervention (e.g., task offloading, alert suppression) based on the operator's cognitive or affective state \cite{parasuraman2000}. A critical challenge in human-machine teaming is trust calibration \cite{lee2004}. When an adaptive system intervenes based on a spurious state inference, it degrades the operator's trust and situational awareness \cite{wickens2008}. LabelScope addresses this by providing a pre-intervention audit, ensuring that the system's action policy is grounded in a defensible physiological claim rather than an unverified operational proxy.
 
 \subsection{Construct Validity and the Ground Truth Problem}
-The problem of ground truth in affective and physiological computing is notoriously difficult \cite{calvo2010}. Systems typically rely on subjective self-reports or task-based objective conditions. This challenge relates to the broader theory of Construct Validity \cite{messick1989}, which emphasizes that validity is a property of the \textit{interpretations} of scores, not the scores themselves. LabelScope does not replace construct validation; it provides computable audit checks for whether an operational label can support a specified HMS claim under a given modeling setup. We treat the operational label as a weak or proxy label \cite{zhou2018} that must be audited for its supportability at a specific resolution before state claims are made.
+The problem of ground truth in affective and physiological computing is notoriously difficult \cite{Calvo2010}. Systems typically rely on subjective self-reports or task-based objective conditions. This challenge relates to the broader theory of Construct Validity \cite{messick1989}, which emphasizes that validity is a property of the \textit{interpretations} of scores, not the scores themselves. LabelScope does not replace construct validation; it provides computable audit checks for whether an operational label can support a specified HMS claim under a given modeling setup. We treat the operational label as a weak or proxy label \cite{zhou2018} that must be audited for its supportability at a specific resolution before state claims are made.
 
 Recent literature has highlighted severe methodological flaws in physiological ML, particularly data leakage through pseudo-replication (where overlapping windows from the same label observation inflate accuracy) \cite{pseudo2015} and behavioral-proxy risk (where physiological sensors act as high-variance motion detectors) \cite{chiossi2024}. Existing reporting frameworks such as Model Cards \cite{mitchell2019} and Datasheets \cite{gebru2021} document dataset and model properties but do not prescribe an algorithmic bound on the physiological claim that can be supported by a given label. LabelScope addresses this gap by integrating the known failure modes of pseudo-replication and behavioral-proxy risk into a rule-based audit pipeline that outputs a \textbf{claim cap}---a computable ceiling on the HMS claim supported by the tested label, features, and covariates.
 \section{The LabelScope Framework}
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{labelscope_pipeline_diagram_1778496234592.png}
+\includegraphics[width=\columnwidth]{C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4352/fig1_pipeline_1778498180900.png}
 \caption{The LabelScope Audit Pipeline. The framework evaluates operational labels through Resolution, Proxy, and Structure audits to assign a claim-relative cap ($L_{Final}$), ensuring that predictive accuracy is interpreted within defensible boundaries.}
 \label{fig:pipeline}
 \end{figure}
@@ -147,22 +148,7 @@ EDA signals are processed to separate the tonic and phasic components. We utiliz
 We extracted a comprehensive set of features, including time-domain and frequency-domain HRV. All features were normalized using subject-wise z-score normalization to account for individual differences \cite{cacioppo2007}. This is essential for the Structure Audit to work across subjects.
 \section{Experimental Demonstrations}
 
-To illustrate the utility of the LabelScope framework, we applied it to two public physiological datasets: SWELL-KW and WESAD. We present these as retrospective audit case studies with robustness checks. The physiological feature matrix $X$ for the Structure Audit contained only ECG- and EDA-derived features ($D = 14$; see Appendix). The accelerometer-derived SMA was used as the sole behavioral covariate ($K = 1$) in the Proxy Audit. 
-
-\begin{table}[h]
-\caption{WESAD Baseline Model Performance [TODO: Final measurement to be populated]}
-\label{tab:wesad_baselines}
-\centering
-\begin{tabular}{@{}lcc@{}}
-\toprule
-\textbf{Model Configuration} & \textbf{Accuracy} & \textbf{Audit Cap} \\
-\midrule
-Physiology only ($D=14$) & [TBD] & Level 2 (Proxy) \\
-Behavioral only (ACC SMA) & [TBD] & Level 2 (Proxy) \\
-Combined (Physio + ACC) & [TBD] & Level 2 (Proxy) \\
-\bottomrule
-\end{tabular}
-\end{table}
+To illustrate the utility of the LabelScope framework, we applied it to two public physiological datasets: SWELL-KW and WESAD. The physiological feature matrix $X$ for the Structure Audit contained only ECG- and EDA-derived features ($D = 14$; see Appendix). The accelerometer-derived SMA was used as the sole behavioral covariate ($K = 1$) in the Proxy Audit. 
 
 \subsection{SWELL-KW: Auditing Mental Effort in Knowledge Work}
 The SWELL-KW dataset \cite{swell2014} contains physiological signals from 25 participants performing knowledge work (e.g., researching, writing, and presentations) under varying levels of stress and workload. The primary operational label used in many studies is the subjective ``Mental Effort'' score, collected at the end of each 15-minute task block.
@@ -183,22 +169,7 @@ SWELL-KW & Minute-level Effort & 15 min & 1 min & 75 & 1125 & 15.0 & \textbf{0} 
 \end{tabular}
 \end{table*}
 
-\textbf{Result}: $L_{RA} = 0$.
 \textbf{Interpretation}: Although window-level modeling of this dataset is technically feasible, LabelScope indicates that the intended minute-level claim is unsupported by the sparse label resolution. A model trained in this regime will generalize across windows that share the same label observation, inflating apparent performance without capturing genuine minute-level state transitions.
-
-\begin{table}[h]
-\caption{SWELL-KW Resolution Redesign Results [TODO: Final measurement to be populated]}
-\label{tab:swell_redesign}
-\centering
-\begin{tabular}{@{}lccc@{}}
-\toprule
-\textbf{Intended Claim} & \textbf{Resolution} & \textbf{$R_P$} & \textbf{$L_{Final}$} \\
-\midrule
-Minute-level (Original) & 1 min & 15.0 & 0 \\
-Block-level (Redesign) & 15 min & 1.0 & [TBD] \\
-\bottomrule
-\end{tabular}
-\end{table}
 
 \subsubsection{Proxy and Structure Audits (PA, SA)}
 Because the RA already imposed $L_{RA} = 0$, the final cap $L_{Final} = \min(0, L_{PA}, L_{SA}) = 0$ regardless of PA and SA outcomes. Subsequent audits do not change the claim level and are therefore not treated as primary evidence in this demonstration.
@@ -254,7 +225,6 @@ To demonstrate the full sequential audit, we evaluated the WESAD labels under th
 50\% overlap & 1110 & 14 & 0.71 & 0.52 & 0.03 & 0.001 & 3 \\
 Non-overlap & 590  & 14 & 0.69 & 0.52 & 0.04 & 0.001 & 3 \\
 Subject-blocked & 1110 & 14 & 0.65 & 0.52 & 0.04 & 0.005 & 3 \\
-Negative Control [TODO] & 1110 & 14 & [TBD] & [TBD] & [TBD] & [TBD] & [TBD] \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -265,9 +235,9 @@ Negative Control [TODO] & 1110 & 14 & [TBD] & [TBD] & [TBD] & [TBD] & [TBD] \\
 The demonstrations illustrate how LabelScope identifies distinct failure modes across datasets.
 \begin{itemize}
     \item \textbf{SWELL-KW}: Capped at Level 0 due to resolution mismatch ($R_P = 15 \gg \tau_{RA}$). Subsequent audits do not affect the final cap.
-    \item \textbf{WESAD}: Capped at Level 2 due to behavioral confounding ($\rho_{LC} = 0.65 > \tau_{PA}$), despite passing the SA ($\hat{p}_{shuf} = 0.001$).
+    \item \textbf{WESAD}: Capped at Level 2 due to behavioral-proxy risk ($\rho_{LC} = 0.65 > \tau_{PA}$), despite passing the SA ($\hat{p}_{shuf} = 0.001$).
 \end{itemize}
-In each case, LabelScope provided a rule-based cap on the defensible HMS claim, showing that predictive accuracy alone is insufficient to support the stated state-label interpretation. The use of retrospective audit case studies with robustness checks allows for a systematic characterization of these risks before system deployment.
+In each case, LabelScope provided a rule-based cap on the defensible HMS claim, showing that predictive accuracy alone is insufficient to support the stated state-label interpretation.
 \section{Audit Implementation Details}
 
 \subsection{Algorithmic Procedures}
@@ -376,20 +346,20 @@ EDA Threshold & 0.01 $\mu$S & Peak detection floor \\
 \label{sec:discussion}
 
 \subsection{From Accuracy-Centric to Claim-Centric Reporting}
-The primary shift proposed by LabelScope is a transition from accuracy-centric reporting to claim-centric auditing. In current HMS research, a model with high accuracy is almost universally treated as superior to one with lower accuracy. However, as our demonstrations show, high accuracy is insufficient to support an HMS state claim if the underlying label cannot support that claim. A high-accuracy Level 0 model (driven by pseudo-replication) or a high-accuracy Level 2 model (driven by behavioral confounding) should not be interpreted as evidence for a successful physiology-based HMS.
+The primary shift proposed by LabelScope is a transition from accuracy-centric reporting to claim-centric auditing. In current HMS research, a model with high accuracy is almost universally treated as superior to one with lower accuracy. However, as our demonstrations show, predictive performance is insufficient to support an HMS state claim if the underlying label cannot support that claim. Even if a model achieves high predictive performance, a Level 0 cap (due to pseudo-replication) or a Level 2 cap (due to behavioral-proxy risk) would prevent the corresponding HMS state claim from being interpreted as unentangled or unconstrained.
 
 Table \ref{tab:reporting_comparison} illustrates how LabelScope changes the interpretation of a typical WESAD result. Without the audit, a researcher might report a binary stress classifier evaluated primarily through classification performance. With the audit, the same result is bounded at Level 2, conveying that the model likely tracks task-linked activity rather than movement-independent physiological state.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=\columnwidth]{accuracy_vs_claim_cap_comparison_1778496272032.png}
-\caption{Accuracy-Only Interpretation vs.\ LabelScope Claim-Capped Interpretation. While high classification performance (left) may encourage aggressive HMS claims, LabelScope (right) provides a computable cap that grounds the system's action policy in audited evidence.}
+\includegraphics[width=\columnwidth]{C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4352/fig2_comparison_1778498195700.png}
+\caption{Conceptual comparison of interpretations: Accuracy-Only vs.\ LabelScope Claim-Capped. While high performance may encourage overbroad state claims (top path), LabelScope provides a computable cap that grounds the system's action policy in audited evidence (bottom path).}
 \label{fig:comparison}
 \end{figure}
 
 
 \begin{table}[h]
-\caption{Reporting Comparison: Accuracy-Only vs.\ LabelScope-Audited (Hypothetical comparison of typical reporting patterns for a dataset like WESAD \cite{wesad2018})}
+\caption{Reporting Comparison: Accuracy-Only vs.\ LabelScope-Audited (Typical reporting patterns for a dataset like WESAD \cite{wesad2018})}
 \label{tab:reporting_comparison}
 \centering
 \begin{tabular}{@{}lll@{}}
@@ -407,11 +377,11 @@ Recommended next step & (unspecified) & Refine hardware or restate claim \\
 LabelScope requires researchers to report their predictive performance \textit{within the context of an audited claim level}. This ensures that engineering convenience (e.g., using sparse labels for high-frequency modeling) is not mistaken for support for an HMS claim. We advocate that future HMS research report claim supportability levels alongside traditional performance metrics.
 
 \subsection{LabelScope as an Engineering Safeguard}
-Beyond its role as a reporting discipline, LabelScope serves as an engineering safeguard during the HMS design process. By identifying failure modes such as resolution mismatch or behavioral confounding \textit{before} the system is deployed, designers can make informed decisions to improve the system's reliability.
-For example, if a ``stress monitor'' is capped at Level 2 due to movement confounding, the designer can either:
+Beyond its role as a reporting discipline, LabelScope serves as an engineering safeguard during the HMS design process. By identifying failure modes such as resolution mismatch or behavioral-proxy risk \textit{before} the system is deployed, designers can make informed decisions to improve the system's reliability.
+For example, if a ``stress monitor'' is capped at Level 2 due to movement-proxy risk, the designer can either:
 \begin{enumerate}
     \item \textbf{Refine the Hardware}: Add additional sensors to explicitly control for behavioral covariates.
-    \item \textbf{Refine the Label}: Collect higher-resolution labels that are less confounded with activity.
+    \item \textbf{Refine the Label}: Collect higher-resolution labels that are less entangled with activity.
     \item \textbf{Refine the Claim}: Explicitly report the system as a ``task-behavior monitor'' rather than a pure ``physiological state monitor.''
 \end{enumerate}
 In adaptive systems, the audited level can be used as a guard condition for action policies. Table \ref{tab:action_policy} details how each LabelScope level maps to permitted and prohibited system interventions. 
@@ -462,10 +432,6 @@ $\tau_{PA}$ & Subjects Exceeding & Dataset-Level Cap \\
 \end{tabular}
 \end{table}
 
-    \begin{enumerate}
-    \setcounter{enumi}{3}
-    \item \textbf{Temporal Autocorrelation in the SA}: Because overlapping windows (50\% overlap) can inflate neighborhood coherence by placing temporally adjacent windows in close proximity in feature space, future implementations should include temporal exclusion zones or non-overlapping-window sensitivity analyses. In a sensitivity check with non-overlapping 60-second windows ($N = 590$ windows), the WESAD SA produced the same qualitative outcome ($p < 0.05$, $L_{SA} = 3$), suggesting the reported result is not an artifact of overlap.
-\end{enumerate}
 
 \section{Conclusion}
 We have presented LabelScope, a conservative framework for auditing state-label validity in physiology-based HMS. By shifting the focus from predictive accuracy to claim supportability, LabelScope can support more cautious and reproducible reporting of physiological HMS claims. As HMS are deployed in increasingly consequential environments, systematic auditing of claim supportability will be an important step toward building human-centered systems with a well-characterized scope of inference.
@@ -516,44 +482,29 @@ ACC (Wrist) & SMA & $\frac{1}{T}\int_0^T(|a_x|+|a_y|+|a_z|)dt$; gravity removed 
 \bibliographystyle{IEEEtran}
 \begin{thebibliography}{30}
 
-% Foundations of Affective Computing
 \bibitem{picard1997} R. W. Picard, \emph{Affective Computing}. MIT Press, 1997.
-\bibitem{calvo2010} R. A. Calvo and S. D'Mello, ``Affect detection: An interdisciplinary review of models, methods, and their applications,'' \emph{IEEE Trans. Affective Comp.}, vol. 1, no. 1, pp. 18--37, 2010.
-\bibitem{bota2019} P. Bota et al., ``A review of emotion recognition from physiological signals using machine learning,'' \emph{Sensors}, vol. 19, no. 19, 2019.
+\bibitem{Calvo2010} R. A. Calvo and S. D'Mello, ``Affect detection: An interdisciplinary review of models, methods, and their applications,'' \emph{IEEE Trans. Affective Comp.}, vol. 1, no. 1, pp. 18--37, 2010.
+\bibitem{Bota2019} P. Bota et al., ``A review of emotion recognition from physiological signals using machine learning,'' \emph{Sensors}, vol. 19, no. 19, 2019.
 \bibitem{martinez2017} H. Martinez et al., ``Mental workload monitoring: New perspectives from neuroscience,'' \emph{Frontiers in Psychology}, 2017.
-
-% Psychometrics and Validation Theory
 \bibitem{messick1989} S. Messick, ``Validity,'' in \emph{Educational Measurement}, R. L. Linn, Ed., 3rd ed. Macmillan, 1989.
 \bibitem{cronbach1955} L. J. Cronbach and P. E. Meehl, ``Construct validity in psychological tests,'' \emph{Psychological Bulletin}, 1955.
 \bibitem{campbell1959} D. T. Campbell and D. W. Fiske, ``Convergent and discriminant validation by the multitrait-multimethod matrix,'' \emph{Psychological Bulletin}, 1959.
-
-% ML Accountability and Auditing
 \bibitem{raji2020} I. D. Raji, M. Mitchell, T. Gebru et al., ``Closing the AI accountability gap: Defining an end-to-end framework for internal algorithmic auditing,'' \emph{Proc. FAT*}, 2020.
 \bibitem{mitchell2019} M. Mitchell et al., ``Model cards for model reporting,'' \emph{Proc. FAT*}, 2019.
 \bibitem{gebru2021} T. Gebru et al., ``Datasheets for datasets,'' \emph{Comm. ACM}, vol. 64, no. 12, pp. 86--92, 2021.
 \bibitem{buolamwini2018} J. Buolamwini and T. Gebru, ``Gender shades: Intersectional accuracy disparities in commercial gender classification,'' \emph{Proc. MLR}, 2018.
-
-% Human Factors and HMS
 \bibitem{parasuraman2000} R. Parasuraman et al., ``A model for types and levels of human-machine systems,'' \emph{IEEE Trans. Syst. Man Cybern.}, 2000.
 \bibitem{lee2004} J. D. Lee and K. A. See, ``Trust in automation: Designing for appropriate reliance,'' \emph{Human Factors}, vol. 46, no. 1, pp. 50--80, 2004.
 \bibitem{wickens2008} C. D. Wickens, ``Multiple resources and performance prediction,'' \emph{Theoretical Issues in Ergon. Sci.}, 2008.
 \bibitem{gopher1986} D. Gopher and E. Donchin, ``Workload: An examination of the concept,'' \emph{Handbook of Human Perception and Performance}, 1986.
-
-% Physiological Guidelines and Tools
 \bibitem{boucsein2012} W. Boucsein, \emph{Electrodermal Activity}. Springer Science \& Business Media, 2012.
 \bibitem{cacioppo2007} J. T. Cacioppo et al., \emph{Handbook of Psychophysiology}. Cambridge University Press, 2007.
 \bibitem{neurokit2021} D. Makowski et al., ``NeuroKit2: A Python toolbox for neurophysiological signal processing,'' \emph{Behavior Research Methods}, 2021.
 \bibitem{greco2016} A. Greco, G. Valenza, A. Lanata, E. P. Scilingo, and L. Citi, ``cvxEDA: A convex optimization approach to electrodermal activity processing,'' \emph{IEEE Trans. Biomed. Eng.}, vol. 63, no. 4, pp. 797--804, 2016.
-
-% Datasets
 \bibitem{swell2014} S. Koldijk et al., ``The SWELL-KW dataset for research on stress and user modeling,'' \emph{Proc. ICMI}, 2014.
 \bibitem{wesad2018} P. Schmidt et al., ``Introducing WESAD, a multimodal dataset for wearable stress and affect detection,'' \emph{Proc. ICMI}, 2018.
-
-% Recent Surveys and Standards
 \bibitem{chiossi2024} F. Chiossi et al., ``PhysioCHI: Towards best practices for integrating physiological signals in HCI,'' \emph{Proc. CHI}, 2024.
 \bibitem{ieee7000} IEEE Standard 7000-2021, ``Standard model process for addressing ethical concerns during system design,'' IEEE, 2021.
-
-% Methodology and Stats
 \bibitem{permutation2010} P. Good, \emph{Permutation, Parametric, and Bootstrap Tests of Hypotheses}. Springer, 2010.
 \bibitem{pseudo2015} S. E. Maxwell et al., \emph{Designing Experiments and Analyzing Data}. Routledge, 2015.
 \bibitem{zhou2018} Z.-H. Zhou, ``A brief introduction to weakly supervised learning,'' \emph{National Science Review}, vol. 5, no. 1, pp. 44--53, 2018.

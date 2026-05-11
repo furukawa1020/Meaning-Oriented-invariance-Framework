@@ -1,0 +1,2 @@
+cp "C:\Users\hatake\.gemini\antigravity\brain\f49ccbea-e83e-4952-83ec-ee1bebcb4352\labelscope_pipeline_diagram_1778496234592.png" "c:\Projects\Meaning-Oriented invariance Framework\moif\LabelScope_Submission_Package\fig1_pipeline.png"
+cp "C:\Users\hatake\.gemini\antigravity\brain\f49ccbea-e83e-4952-83ec-ee1bebcb4352\accuracy_vs_claim_cap_comparison_1778496272032.png" "c:\Projects\Meaning-Oriented invariance Framework\moif\LabelScope_Submission_Package\fig2_comparison.png"
