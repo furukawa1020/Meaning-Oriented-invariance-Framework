@@ -475,7 +475,7 @@ The following procedures detail the extension of LabelScope to dynamic and longi
     \IF{$\hat{p}_t > \gamma$}
         \STATE $count \gets count + 1$
     \ENDIF
-ENDFOR
+\ENDFOR
 \IF{$count / k > 0.5$}
     \STATE $A \gets \text{TRUE}$ (Trigger Recalibration)
 \ELSE
@@ -498,20 +498,6 @@ ENDFOR
 \RETURN $\tau_{opt}$
 \end{algorithmic}
 \end{algorithm}
-
-\section*{Author Biographies}
-
-\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{author1.png}}]{Lead Researcher} 
-(Senior Member, IEEE) received the Ph.D. degree in human-machine interaction. They are currently a Full Professor with the Institute of Trusted HMS. Their research interests include affective computing, physiological signal processing, and the ethical design of autonomous systems. They have authored over 100 technical articles and serve as an Associate Editor for several IEEE Transactions.
-\end{IEEEbiography}
-
-\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{author2.png}}]{Senior Auditor} 
-received the M.S. degree in computer science. They are a Research Scientist specializing in algorithmic accountability and AI safety. Their work focuses on the development of standardized audit protocols for high-stakes machine learning applications. They have been a key contributor to the IEEE P7000 series standards development.
-\end{IEEEbiography}
-
-\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{author3.png}}]{Technical Architect} 
-is a Senior Software Engineer with a background in real-time embedded systems. They have led the development of several large-scale physiological monitoring platforms for industrial safety applications. Their current focus is on the optimization of permutation-based audit engines for low-power wearable devices.
-\end{IEEEbiography}
 \bibliographystyle{IEEEtran}
 \begin{thebibliography}{30}
 
@@ -558,5 +544,9 @@ is a Senior Software Engineer with a background in real-time embedded systems. T
 \bibitem{pseudo2015} S. E. Maxwell et al., \emph{Designing Experiments and Analyzing Data}. Routledge, 2015.
 
 \end{thebibliography}
+
+\begin{IEEEbiographynophoto}{Kotaro Furukawa}
+is currently pursuing the B.S. degree. Their research interests include affective computing, physiological signal processing, and the development of robust human-machine systems. They are the lead developer of the LabelScope audit framework for physiological computing.
+\end{IEEEbiographynophoto}
 
 \end{document}
