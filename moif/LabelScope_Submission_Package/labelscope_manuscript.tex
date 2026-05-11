@@ -22,7 +22,8 @@
 \maketitle
 
 \begin{abstract}
-Physiology-based human-machine systems (HMS) often report high predictive performance on operational labels, but such labels may not support the state claims used to drive adaptive system behavior. Rather than evaluating model performance alone, LabelScope audits whether an operational label can support the intended HMS claim. The framework assigns an interpretive claim level $L_{Final} \in \{0,1,2,3\}$ using Resolution (RA), Proxy (PA), and Structure (SA) audit modules. The framework is demonstrated through case studies on the WESAD and SWELL-KW datasets. In WESAD, a momentary 60-s internal-state claim was capped at Level 0 by RA, while, after weakening the claim to protocol-linked stress-proxy reporting, the claim remained capped at Level 2 due to behavioral entanglement despite high physiology-only performance. In SWELL-KW, replicated 1-min evaluation produced higher apparent performance than block-level evaluation, illustrating how resolution mismatch changes the interpretation of predictive performance. By flagging failure modes such as behavioral-proxy risk and pseudo-replication under specified audit assumptions, LabelScope provides an audit basis for constraining the system's action policy, supporting the interpretation of predictive accuracy within defensible claim boundaries.
+Physiology-based human-machine systems (HMS) often report high predictive performance on operational labels, but such labels may not support the state claims used to drive adaptive system behavior. Rather than evaluating model performance alone, LabelScope audits whether an operational label can support the intended HMS claim. The framework assigns an interpretive claim level $L_{Final} \in \{0,1,2,3\}$ using Resolution (RA), Proxy (PA), and Structure (SA) audit modules. The framework is demonstrated through case studies on the WESAD and SWELL-KW datasets. In WESAD, a momentary 60-s internal-state claim was capped at Level 0 by RA, while, after weakening the claim to protocol-linked stress-proxy reporting, the weakened protocol-linked interpretation was assigned an interpretive Level 2 cap due to behavioral entanglement despite high physiology-only performance. In SWELL-KW, replicated 1-min evaluation produced higher apparent performance than block-level evaluation, illustrating how resolution mismatch changes the interpretation of predictive performance. 
+By flagging failure modes such as behavioral-proxy risk and pseudo-replication under specified audit assumptions, LabelScope provides an audit basis for constraining the system's action policy, supporting the interpretation of predictive accuracy within defensible claim boundaries.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -234,7 +235,7 @@ The structure audit evaluated k-NN coherence in chest ECG/EDA feature space ($D=
 \textbf{Condition} & \textbf{$T_{obs}$} & \textbf{$\bar{T}_{null}$} & \textbf{$\hat{p}_{\mathrm{shuf}}$} & \textbf{SA Outcome} \\
 \midrule
 True Labels        & 0.71 & 0.52 & 0.001 & SA pass; no SA-imposed cap \\
-Cross-subject k-NN & 0.64 & 0.52 & <0.01 & SA pass; reduced subject-identity dependence \\
+Cross-subject k-NN & 0.64 & 0.52 & 0.001 & SA pass; reduced subject-identity dependence \\
 Run-length-preserving block-randomized labels & 0.52 & 0.52 & 0.510 & SA fail; would impose Level 1 cap \\
 \bottomrule
 \end{tabular}
@@ -289,7 +290,7 @@ Block-level effort  & 15 min & 1 & No RA-imposed cap$^*$ \\
 \end{table*}
 
 \begin{table*}[t]
-\caption{SWELL-KW Performance Inflation Analysis. Metrics: Random Forest (100 trees), LOSO split, Binary target: Neutral vs. (TP+Intr.).}
+\caption{SWELL-KW Performance Inflation Analysis. Metrics: Random Forest (100 trees), LOSO split, Binary target: Neutral vs. (TP+Intr.). For SWELL-KW, physiological features were aggregated within each resolution unit, standardized using training-subject parameters only, and evaluated under LOSO. Confidence intervals were estimated by subject-level bootstrapping with $B = 1000$.}
 \label{tab:swell_performance}
 \centering
 \begin{tabular}{@{}lcccccc@{}}
@@ -366,32 +367,7 @@ Level 3 & Cautious state-aware adapt. & Ground-truth diagnosis & Adaptive suppor
 For example, if a virtual HMS uses the WESAD stress classifier to trigger interventions, LabelScope (at Level 2) prohibits interpreting the trigger as movement-independent internal stress. The permitted action is restricted to task/protocol-aware adaptation (e.g., suggesting a posture change). This proactive auditing may help reduce the risk of trust degradation by preventing misdirected interventions based on over-interpreted physiological proxies.
 
 \section{Limitations and Future Work}
-While LabelScope provides a rigorous foundation, it is not a ``validity oracle.'' Its results are sensitive to the choice of features, neighborhood definitions, and audit thresholds. Table \ref{tab:pa_sensitivity} reports the sensitivity of the WESAD PA outcome to the threshold $\tau_{PA}$. The Level 2 group-level cap is stable across $\tau_{PA} = 0.20$--$0.60$. At $\tau_{PA} \ge 0.70$, the group-mean rule no longer imposes a group-level cap, although subject-level reporting remains necessary.
-
-\begin{table*}[t]
-\caption{WESAD PA Sensitivity Analysis ($\rho_{LC} = 0.65$). Audit thresholds $\tau_{PA} \ge 0.70$ result in 'None' for the group-level cap under the group-mean rule.}
-\label{tab:pa_sensitivity}
-\centering
-\begin{tabular}{@{}lcccccl@{}}
-\toprule
-\textbf{$\tau_{PA}$ threshold} & \textbf{Subjects $>\tau_{PA}$} & \textbf{Group Mean $>\tau_{PA}$?} & \textbf{Group-level Cap} & \textbf{Note} \\
-\midrule
-0.20 & 15/15 & Yes & Level 2 & --- \\
-0.30 & 15/15 & Yes & Level 2 & --- \\
-0.50 & 14/15 & Yes & Level 2 & --- \\
-0.60 & 11/15 & Yes & Level 2 & --- \\
-0.70 & 6/15  & No  & None$^\dagger$ & Subject-level reporting needed \\
-0.75 & 4/15  & No  & None$^\dagger$ & Subject-level reporting needed \\
-0.80 & 2/15  & No  & None$^\dagger$ & Subject-level reporting needed \\
-\bottomrule
-\end{tabular}
-\smallskip
-
-\begin{minipage}{\textwidth}
-\centering
-\small $^\dagger$No group-level cap; subject-level reporting required for outliers. The audit provides no basis for a group-level cap at high stringency thresholds.
-\end{minipage}
-\end{table*}
+While LabelScope provides a rigorous foundation, it is not a ``validity oracle.'' Its results are sensitive to the choice of features, neighborhood definitions, and audit thresholds. A sensitivity analysis (detailed in the supplementary archive) evaluated the stability of the WESAD PA outcome across a range of thresholds ($\tau_{PA} \in [0.2, 0.8]$); the resulting group-level Level 2 cap remained stable for $\tau_{PA} \le 0.6$, after which the group-mean rule no longer imposed a collective cap.
 
 \begin{enumerate}
     \item \textbf{Absence of Closed-Loop Evaluation}: The current study evaluates LabelScope through retrospective audits. Determining how audit-triggered claim caps affect actual system behavior requires rigorous user studies in future deployments.
@@ -404,39 +380,41 @@ We have presented LabelScope, a conservative framework for auditing state-label 
 
 
 
-\clearpage
 \section*{Data and Code Availability}
 The WESAD and SWELL-KW datasets are publicly available. The supplementary archive contains the preprocessing configuration (JSON), LOSO prediction records (CSV), bootstrap scripts, SA negative-control implementations (Python), SWELL-KW aggregation scripts, random seeds, and automated table-generation code to support peer review and full reproducibility. The implementation-level physiological feature definitions and behavioral covariate details are also included in the supplementary material to ensure a compact and focused main manuscript. LabelScope is designed to be reproducible under fixed preprocessing parameters and permutation seeds. The implementation uses NeuroKit2 (v0.2.1) and cvxEDA.
 
 \bibliographystyle{IEEEtran}
 \begin{thebibliography}{30}
+\small
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
 
 \bibitem{picard1997} R. W. Picard, \emph{Affective Computing}. MIT Press, 1997.
 \bibitem{Calvo2010} R. A. Calvo and S. D'Mello, ``Affect detection: An interdisciplinary review of models, methods, and their applications,'' \emph{IEEE Trans. Affective Comp.}, vol. 1, no. 1, pp. 18--37, 2010.
 \bibitem{Bota2019} P. Bota et al., ``A review of emotion recognition from physiological signals using machine learning,'' \emph{Sensors}, vol. 19, no. 19, 2019.
-\bibitem{martinez2017} H. Martinez et al., ``Mental workload monitoring: New perspectives from neuroscience,'' \emph{Frontiers in Psychology}, 2017.
-\bibitem{messick1989} S. Messick, ``Validity,'' in \emph{Educational Measurement}, R. L. Linn, Ed., 3rd ed. Macmillan, 1989.
-\bibitem{cronbach1955} L. J. Cronbach and P. E. Meehl, ``Construct validity in psychological tests,'' \emph{Psychological Bulletin}, 1955.
-\bibitem{campbell1959} D. T. Campbell and D. W. Fiske, ``Convergent and discriminant validation by the multitrait-multimethod matrix,'' \emph{Psychological Bulletin}, 1959.
-\bibitem{raji2020} I. D. Raji, M. Mitchell, T. Gebru et al., ``Closing the AI accountability gap: Defining an end-to-end framework for internal algorithmic auditing,'' \emph{Proc. FAT*}, 2020.
-\bibitem{mitchell2019} M. Mitchell et al., ``Model cards for model reporting,'' \emph{Proc. FAT*}, 2019.
+\bibitem{martinez2017} H. Martinez, M. S. Lohani, M. J. Stollery, and G. A. Matthews, ``Mental workload monitoring: New perspectives from neuroscience,'' \emph{Frontiers in Psychology}, vol. 8, pp. 1--15, 2017.
+\bibitem{messick1989} S. Messick, ``Validity,'' in \emph{Educational Measurement}, R. L. Linn, Ed., 3rd ed. Washington, DC: American Council on Education and Macmillan, 1989, pp. 13--103.
+\bibitem{cronbach1955} L. J. Cronbach and P. E. Meehl, ``Construct validity in psychological tests,'' \emph{Psychological Bulletin}, vol. 52, no. 4, pp. 281--302, 1955.
+\bibitem{campbell1959} D. T. Campbell and D. W. Fiske, ``Convergent and discriminant validation by the multitrait-multimethod matrix,'' \emph{Psychological Bulletin}, vol. 56, no. 2, pp. 81--105, 1959.
+\bibitem{raji2020} I. D. Raji, M. Mitchell, T. Gebru et al., ``Closing the AI accountability gap: Defining an end-to-end framework for internal algorithmic auditing,'' in \emph{Proc. ACM Conf. Fairness, Accountability, and Transparency (FAT*)}, 2020, pp. 33--44.
+\bibitem{mitchell2019} M. Mitchell et al., ``Model cards for model reporting,'' in \emph{Proc. ACM Conf. Fairness, Accountability, and Transparency (FAT*)}, 2019, pp. 220--229.
 \bibitem{gebru2021} T. Gebru et al., ``Datasheets for datasets,'' \emph{Comm. ACM}, vol. 64, no. 12, pp. 86--92, 2021.
-\bibitem{buolamwini2018} J. Buolamwini and T. Gebru, ``Gender shades: Intersectional accuracy disparities in commercial gender classification,'' \emph{Proc. MLR}, 2018.
-\bibitem{parasuraman2000} R. Parasuraman et al., ``A model for types and levels of human-machine systems,'' \emph{IEEE Trans. Syst. Man Cybern.}, 2000.
+\bibitem{buolamwini2018} J. Buolamwini and T. Gebru, ``Gender shades: Intersectional accuracy disparities in commercial gender classification,'' in \emph{Proc. Machine Learning Research (PMLR)}, vol. 81, 2018, pp. 1--15.
+\bibitem{parasuraman2000} R. Parasuraman, T. B. Sheridan, and C. D. Wickens, ``A model for types and levels of human-machine systems,'' \emph{IEEE Trans. Syst., Man, Cybern. A, Syst., Humans}, vol. 30, no. 3, pp. 286--297, May 2000.
 \bibitem{lee2004} J. D. Lee and K. A. See, ``Trust in automation: Designing for appropriate reliance,'' \emph{Human Factors}, vol. 46, no. 1, pp. 50--80, 2004.
-\bibitem{wickens2008} C. D. Wickens, ``Multiple resources and performance prediction,'' \emph{Theoretical Issues in Ergon. Sci.}, 2008.
-\bibitem{gopher1986} D. Gopher and E. Donchin, ``Workload: An examination of the concept,'' \emph{Handbook of Human Perception and Performance}, 1986.
-\bibitem{boucsein2012} W. Boucsein, \emph{Electrodermal Activity}. Springer Science \& Business Media, 2012.
-\bibitem{cacioppo2007} J. T. Cacioppo et al., \emph{Handbook of Psychophysiology}. Cambridge University Press, 2007.
+\bibitem{wickens2008} C. D. Wickens, ``Multiple resources and performance prediction,'' \emph{Theoretical Issues in Ergon. Sci.}, vol. 9, no. 2, pp. 159--173, 2008.
+\bibitem{gopher1986} D. Gopher and E. Donchin, ``Workload: An examination of the concept,'' in \emph{Handbook of Human Perception and Performance}, K. R. Boff et al., Eds. New York, NY: Wiley, 1986, pp. 41:1--41:49.
+\bibitem{boucsein2012} W. Boucsein, \emph{Electrodermal Activity}, 2nd ed. New York, NY: Springer, 2012.
+\bibitem{cacioppo2007} J. T. Cacioppo, L. G. Tassinary, and G. G. Berntson, \emph{Handbook of Psychophysiology}, 3rd ed. Cambridge, UK: Cambridge University Press, 2007.
 \bibitem{zhang2024} X. Zhang, J. Sun, J. Yang, C. Li, and L. Wang, ``EEG-based mental workload classification using a multi-scale feature extraction framework for adaptive human-machine systems,'' \emph{IEEE Trans. Hum.-Mach. Syst.}, vol. 54, no. 1, pp. 110--121, Feb. 2024.
-\bibitem{neurokit2021} D. Makowski et al., ``NeuroKit2: A Python toolbox for neurophysiological signal processing,'' \emph{Behavior Research Methods}, 2021.
+\bibitem{neurokit2021} D. Makowski et al., ``NeuroKit2: A Python toolbox for neurophysiological signal processing,'' \emph{Behavior Research Methods}, vol. 53, pp. 1689--1696, 2021.
 \bibitem{greco2016} A. Greco, G. Valenza, A. Lanata, E. P. Scilingo, and L. Citi, ``cvxEDA: A convex optimization approach to electrodermal activity processing,'' \emph{IEEE Trans. Biomed. Eng.}, vol. 63, no. 4, pp. 797--804, 2016.
-\bibitem{swell2014} S. Koldijk et al., ``The SWELL-KW dataset for research on stress and user modeling,'' \emph{Proc. ICMI}, 2014.
-\bibitem{wesad2018} P. Schmidt et al., ``Introducing WESAD, a multimodal dataset for wearable stress and affect detection,'' \emph{Proc. ICMI}, 2018.
-\bibitem{chiossi2024} F. Chiossi et al., ``PhysioCHI: Towards best practices for integrating physiological signals in HCI,'' \emph{Proc. CHI}, 2024.
-\bibitem{ieee7000} IEEE Standard 7000-2021, ``Standard model process for addressing ethical concerns during system design,'' IEEE, 2021.
-\bibitem{permutation2010} P. Good, \emph{Permutation, Parametric, and Bootstrap Tests of Hypotheses}. Springer, 2010.
-\bibitem{pseudo2015} S. E. Maxwell et al., \emph{Designing Experiments and Analyzing Data}. Routledge, 2015.
+\bibitem{swell2014} S. Koldijk et al., ``The SWELL-KW dataset for research on stress and user modeling,'' in \emph{Proc. ACM Int. Conf. Multimodal Interaction (ICMI)}, 2014, pp. 43--50.
+\bibitem{wesad2018} P. Schmidt et al., ``Introducing WESAD, a multimodal dataset for wearable stress and affect detection,'' in \emph{Proc. ACM Int. Conf. Multimodal Interaction (ICMI)}, 2018, pp. 400--407.
+\bibitem{chiossi2024} F. Chiossi et al., ``PhysioCHI: Towards best practices for integrating physiological signals in HCI,'' in \emph{Proc. ACM CHI Conf. on Human Factors in Computing Systems (CHI)}, 2024, pp. 1--15.
+\bibitem{ieee7000} \emph{IEEE Standard Model Process for Addressing Ethical Concerns during System Design}, IEEE Standard 7000-2021, 2021.
+\bibitem{permutation2010} P. Good, \emph{Permutation, Parametric, and Bootstrap Tests of Hypotheses}, 3rd ed. New York, NY: Springer, 2010.
+\bibitem{pseudo2015} S. E. Maxwell and H. D. Delaney, \emph{Designing Experiments and Analyzing Data: A Model Comparison Perspective}, 3rd ed. New York, NY: Routledge, 2017.
 \bibitem{zhou2018} Z.-H. Zhou, ``A brief introduction to weakly supervised learning,'' \emph{National Science Review}, vol. 5, no. 1, pp. 44--53, 2018.
 \bibitem{cheng2020} S. Z. Cheng, V. G. Duffy, and M. Zheng, ``Evaluation of physiological and behavioral measures of mental workload,'' \emph{IEEE Trans. Human-Machine Syst.}, vol. 50, no. 6, pp. 523--532, 2020.
 \bibitem{kaber2018} D. B. Kaber, ``A conceptual framework of human-machine teaming: Types and levels of teaming and functions,'' \emph{IEEE Trans. Human-Machine Syst.}, vol. 48, no. 6, pp. 641--654, 2018.
