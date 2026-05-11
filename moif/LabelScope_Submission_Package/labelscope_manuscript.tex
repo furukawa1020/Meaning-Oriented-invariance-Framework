@@ -183,7 +183,7 @@ SWELL-KW \cite{swell2014} contains physiological recordings from 25 participants
 \subsection{WESAD Case Study: Resolution and Proxy Risk}
 
 \subsubsection{Resolution Audit (RA) Results}
-For WESAD, the RA was evaluated under a claim of momentary 60-s internal-state detection. Because the operational label is derived from protocol blocks (Stress, Baseline, Amusement), we define $N_{ind\_obs}$ as the number of independent label segments across all subjects ($N_{ind\_obs} = 15 \text{ subjects} \times 3 \text{ blocks} = 45$). The replication ratio $R_P = 1110/45 \approx 24.7$ substantially exceeds the threshold $\tau_{RA} = 5.0$. Therefore, the WESAD case study does not support real-time 60-s internal-state detection, and the momentary claim is capped at \textbf{Level 0} by RA. This outcome is robust across $\tau_{RA} = 2.0$--$20.0$. We subsequently evaluate the audit outcome for a weakened \textbf{protocol-linked stress-proxy claim}, for which window-level performance serves as an auxiliary learnability metric rather than a momentary sensing validation (see Table \ref{tab:wesad_claim_outcomes}). For this weakened claim, LabelScope reports an interpretive Level 2 cap based on the observed window-level proxy structure; a full protocol-level reassignment would require re-running the PA and SA modules on aggregated protocol-level units.
+For WESAD, the RA was evaluated under a claim of momentary 60-s internal-state detection. Because the operational label is derived from protocol blocks (Stress, Baseline, Amusement), we define $N_{ind\_obs}$ as the number of independent label segments across all subjects ($N_{ind\_obs} = 15 \text{ subjects} \times 3 \text{ blocks} = 45$). The replication ratio $R_P = 1110/45 \approx 24.7$ substantially exceeds the threshold $\tau_{RA} = 5.0$. Therefore, the WESAD case study does not support real-time 60-s internal-state detection, and the momentary claim is capped at \textbf{Level 0} by RA. This RA outcome is unchanged across $\tau_{RA} = 2.0$--$20.0$. We subsequently evaluate the audit outcome for a weakened \textbf{protocol-linked stress-proxy claim}, for which window-level performance serves as an auxiliary learnability metric rather than a momentary sensing validation (see Table \ref{tab:wesad_claim_outcomes}). For this weakened claim, LabelScope reports an interpretive Level 2 cap based on the observed window-level proxy structure; a full protocol-level reassignment would require re-running the PA and SA modules on aggregated protocol-level units.
 
 \begin{table}[h]
 \caption{WESAD Audit Outcomes by Claim Specification}
@@ -224,7 +224,7 @@ Stress vs. Amuse.  & 0.54 & 0.38--0.68 & 15/15 & Level 2 \\
 \textbf{Interpretation}: $L_{PA} = 2$. The audited label cannot support a claim of movement-independent internal stress sensing; it should instead be reported as a task-linked stress proxy. 
 
 \subsubsection{Structure Audit (SA) Results}
-The structure audit evaluated k-NN coherence in chest ECG/EDA feature space ($D=14$, $k=50$, $B=1000$, $L=60$\,s blocks, seed=42). To ensure that the coherence was not driven by temporal autocorrelation of adjacent windows, the k-NN candidate set for each query $x_i$ was restricted to windows outside the immediate $\pm 60$\,s temporal neighborhood. Furthermore, a cross-subject SA was performed by restricting the k-NN candidate set to windows from other subjects only; the resulting coherence remained statistically significant ($T_{obs}=0.64$, $\hat{p} < 0.01$), suggesting that the observed organization is not solely driven by subject-specific temporal drift or protocol-block structure. To validate the SA's sensitivity to spurious structure, a \textbf{stricter negative control} was performed using \textbf{run-length-preserving block-level label shuffling}. This procedure permutes contiguous task blocks \textit{within each subject}, thereby preserving both the subject-specific class balance and the internal temporal structure of the labels while explicitly breaking feature-label associations. As shown in Table \ref{tab:wesad_sa}, the observed coherence $T_{obs}=0.71$ was higher than the block-shuffled null mean $\bar{T}_{null}=0.52$ under the SA test ($\hat{p}_{shuf}=0.001$), indicating statistically significant non-random organization in the tested ECG/EDA feature representation. The SA does not impose a cap. However, because $L_{PA}=2$, the weakened protocol-linked interpretation is reported with an interpretive Level 2 cap ($L_{Final} = 2$).
+The structure audit evaluated k-NN coherence in chest ECG/EDA feature space ($D=14$, $k=50$, $B=1000$, $L=60$\,s blocks, seed=42). To ensure that the coherence was not driven by temporal autocorrelation of adjacent windows, the k-NN candidate set for each query $x_i$ was restricted to windows outside the immediate $\pm 60$\,s temporal neighborhood. Furthermore, a cross-subject SA was performed by restricting the k-NN candidate set to windows from other subjects only; the resulting coherence remained statistically significant ($T_{obs}=0.64$, $p < 0.01$), suggesting that the observed organization is not solely driven by subject-specific temporal drift, although protocol-block structure cannot be fully excluded. To validate the SA's sensitivity to spurious structure, a \textbf{stricter negative control} was performed using \textbf{run-length-preserving block-level label shuffling}. This procedure permutes contiguous task blocks \textit{within each subject}, thereby preserving both the subject-specific class balance and the internal temporal structure of the labels while explicitly breaking feature-label associations. As shown in Table \ref{tab:wesad_sa}, the observed coherence $T_{obs}=0.71$ was higher than the block-shuffled null mean $\bar{T}_{null}=0.52$ under the SA test ($\hat{p}_{shuf}=0.001$), indicating statistically significant non-random organization in the tested ECG/EDA feature representation. The SA does not impose a cap. However, because $L_{PA}=2$, the weakened protocol-linked interpretation is reported with an interpretive Level 2 cap ($L_{Final} = 2$).
 \begin{table*}[t]
 \caption{WESAD SA Result (with Negative Control). Params: $D=14, k=50, B=1000, L=60$\,s. Note: SA pass does not imply $L_{Final}=3$ if PA fails.}
 \label{tab:wesad_sa}
@@ -234,6 +234,7 @@ The structure audit evaluated k-NN coherence in chest ECG/EDA feature space ($D=
 \textbf{Condition} & \textbf{$T_{obs}$} & \textbf{$\bar{T}_{null}$} & \textbf{$\hat{p}_{\mathrm{shuf}}$} & \textbf{SA Outcome} \\
 \midrule
 True Labels        & 0.71 & 0.52 & 0.001 & SA pass; no SA-imposed cap \\
+Cross-subject k-NN & 0.64 & ...  & <0.01 & SA pass; subject-identity control \\
 Run-length-preserving block-randomized labels & 0.52 & 0.52 & 0.510 & SA fail; would impose Level 1 cap \\
 \bottomrule
 \end{tabular}
@@ -266,7 +267,7 @@ ACC only (S vs A)         & 0.70 & 0.69 & 0.73 [0.70, 0.76] & Level 2 \\
 \end{table*}
 
 \subsection{SWELL-KW: Resolution Audit Case Study}
-The SWELL-KW evaluation is intended as a primary case study for the Resolution Audit (RA). The initial minute-level claim on SWELL-KW resulted in $R_P = 15$, capping the claim at \textbf{Level 0}. Table \ref{tab:swell_redesign} illustrates how claim redesign can remove the RA-imposed cap. Table \ref{tab:swell_performance} details the performance inflation that occurs at higher resolutions. This outcome is robust across $\tau_{RA} = 2.0$--$10.0$; for $\tau_{RA} \ge 15.0$, the 1-min claim would not be capped by RA, highlighting the importance of setting $\tau_{RA}$ according to the desired replication safety margin. These values are not intended as a direct model-selection comparison across resolutions, because the aggregation unit and effective sample size change with the claim specification. Rather, the analysis shows that predictive performance is highly sensitive to the mismatch between the modeling unit and the independent label unit. This analysis is intended as an evaluation-unit sensitivity check rather than a classifier optimization experiment.
+The SWELL-KW evaluation is intended as a primary case study for the Resolution Audit (RA). The initial minute-level claim on SWELL-KW resulted in $R_P = 15$, capping the claim at \textbf{Level 0}. Table \ref{tab:swell_redesign} illustrates how claim redesign can remove the RA-imposed cap. Table \ref{tab:swell_performance} details the performance inflation that occurs at higher resolutions. This RA outcome is unchanged across $\tau_{RA} = 2.0$--$10.0$; for $\tau_{RA} \ge 15.0$, the 1-min claim would not be capped by RA, highlighting the importance of setting $\tau_{RA}$ according to the desired replication safety margin. These values are not intended as a direct model-selection comparison across resolutions, because the aggregation unit and effective sample size change with the claim specification. Rather, the analysis shows that predictive performance is highly sensitive to the mismatch between the modeling unit and the independent label unit. This analysis is intended as an evaluation-unit sensitivity check rather than a classifier optimization experiment.
 
 \begin{table*}[t]
 \caption{SWELL-KW Resolution Redesign Comparison. Audit demonstrates how claim redesign at coarser resolutions can resolve RA-imposed caps.}
@@ -400,53 +401,11 @@ While LabelScope provides a rigorous foundation, it is not a ``validity oracle.'
 \section{Conclusion}
 We have presented LabelScope, a conservative framework for auditing state-label validity in physiology-based HMS. By shifting the focus from predictive accuracy to claim supportability, LabelScope supports more cautious and reproducible reporting. As HMS are deployed in increasingly consequential environments, systematic auditing of claim supportability will be an important step toward building human-centered systems with a well-characterized scope of inference.
 
-\clearpage
-\appendices
-\section{Audit Implementation Details}
-This appendix summarizes implementation-level details used for the audit modules, including sensitivity thresholds, physiological feature definitions, and behavioral covariates.
 
-\begin{table*}[t!]
-\caption{Physiological Features Used in Structure Audit ($X$, $D = 14$)}
-\label{tab:features}
-\centering
-\begin{tabular}{@{}lll@{}}
-\toprule
-Signal Domain & Feature Name & Mathematical Definition / Description \\
-\midrule
-HRV (Time) & Mean RR & Mean of the intervals between successive R-peaks. \\
-HRV (Time) & SDNN & Standard deviation of the NN intervals. \\
-HRV (Time) & RMSSD & Root mean square of successive RR interval differences. \\
-HRV (Time) & pNN50 & Percentage of successive RR intervals that differ by more than 50 ms. \\
-HRV (Freq) & LF Power & Power in the low frequency range (0.04--0.15 Hz). \\
-HRV (Freq) & HF Power & Power in the high frequency range (0.15--0.4 Hz). \\
-HRV (Non-lin) & SD1 & Short-term variability from the Poincar\'{e} plot. \\
-HRV (Non-lin) & SD2 & Long-term variability from the Poincar\'{e} plot. \\
-HRV (Non-lin) & Sample Entropy & Measure of the complexity/regularity of the RR time series. \\
-EDA (Tonic) & SCL Mean & Mean level of the tonic skin conductance component. \\
-EDA (Tonic) & SCL SD & Standard deviation of the tonic skin conductance component. \\
-EDA (Phasic) & SCR Peak Count & Number of phasic peaks detected in the window. \\
-EDA (Phasic) & SCR Amplitude & Mean amplitude of the detected phasic peaks. \\
-EDA (Phasic) & SCR AUC & Area under the curve of the phasic component. \\
-\bottomrule
-\end{tabular}
-\end{table*}
-
-\begin{table}[h]
-\caption{Behavioral Covariate Used in Proxy Audit ($C_B$, $K = 1$)}
-\label{tab:covariates}
-\centering
-\begin{tabular}{@{}llp{4.5cm}@{}}
-\toprule
-Source & Feature & Description \\
-\midrule
-ACC (Wrist) & SMA & $\frac{1}{T}\int_0^T(|a_x|+|a_y|+|a_z|)dt$; gravity removed via mean subtraction. \\
-\bottomrule
-\end{tabular}
-\end{table}
 
 \clearpage
 \section*{Data and Code Availability}
-The WESAD and SWELL-KW datasets are publicly available. The supplementary archive contains the preprocessing configuration (JSON), LOSO prediction records (CSV), bootstrap scripts, SA negative-control implementations (Python), SWELL-KW aggregation scripts, random seeds, and automated table-generation code to support peer review and full reproducibility. LabelScope is designed to be reproducible under fixed preprocessing parameters and permutation seeds. The implementation uses NeuroKit2 (v0.2.1) and cvxEDA.
+The WESAD and SWELL-KW datasets are publicly available. The supplementary archive contains the preprocessing configuration (JSON), LOSO prediction records (CSV), bootstrap scripts, SA negative-control implementations (Python), SWELL-KW aggregation scripts, random seeds, and automated table-generation code to support peer review and full reproducibility. The implementation-level physiological feature definitions and behavioral covariate details are also included in the supplementary material to ensure a compact and focused main manuscript. LabelScope is designed to be reproducible under fixed preprocessing parameters and permutation seeds. The implementation uses NeuroKit2 (v0.2.1) and cvxEDA.
 
 \bibliographystyle{IEEEtran}
 \begin{thebibliography}{30}
