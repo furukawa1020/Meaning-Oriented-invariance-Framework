@@ -202,7 +202,7 @@ EDA Threshold & 0.01 $\mu$S & Peak detection floor \\
 \bottomrule
 \end{tabular}
 \end{table}
-\section{System Implementation: Online Audit and Real-time Operation}
+\section{Simulated Online Architecture and Feasibility}
 
 To evaluate the feasibility of LabelScope in active human-machine interaction, we implemented the audit engine as a real-time monitoring service integrated into a streaming physiological pipeline. Unlike offline retrospective analysis, the \textbf{Online Audit} must process incoming signal segments within strict latency constraints to provide timely feedback for system intervention.
 
@@ -418,9 +418,9 @@ The use of physiological sensing in HMS raises significant ethical concerns rega
 While LabelScope provides a rigorous foundation, it is not a "validity oracle." Its results are sensitive to the choice of features, neighborhood definitions, and audit thresholds. Two critical limitations must be highlighted:
 
 \begin{enumerate}
+    \item \textbf{Absence of Human-in-the-Loop Evaluation}: The current study establishes the computational feasibility of the LabelScope architecture via offline dataset streaming and simulated edge-host deployment. However, it lacks evaluation in a physical, closed-loop human experiment. While the "failsafe" capping logic is theoretically sound, determining how such automated interventions affect actual user experience, task performance, and cognitive load requires rigorous user studies in future physical deployments.
     \item \textbf{Epistemological Limits of the Proxy Audit}: As discussed, the PA only audits against \textit{observed} covariates. In unrestricted environments, physiological signals can be confounded by unobserved factors (e.g., room temperature, undocumented postural shifts, caffeine intake). A "Level 4" claim indicates that the state is unconfounded by measured behaviors, but it cannot absolutely guarantee the absence of unmeasured confounders. Future work must integrate causal inference techniques to estimate the potential impact of unobserved variables.
     \item \textbf{Threshold Standardization}: Establishing domain-specific thresholds for RA and PA through large-scale meta-analysis is required.
-    \item \textbf{Automated Auditing}: Integrating LabelScope into AutoML pipelines to provide real-time feedback to developers.
 \end{enumerate}
 
 \section{Conclusion}
