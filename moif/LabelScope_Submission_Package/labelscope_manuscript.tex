@@ -29,13 +29,13 @@ Physiology-based HMS, State-Label Validity, Claim-Capping, Auditing, Human-Machi
 \end{IEEEkeywords}
 \section{Introduction}
 
-\IEEEPARstart{T}{he} integration of physiological sensing into human-machine systems (HMS) represents one of the most promising frontiers in the design of intelligent interaction. By monitoring signals such as heart rate variability (HRV), electrodermal activity (EDA), and electroencephalography (EEG), researchers aim to build systems that can sense and respond to a user's internal state in real-time. These systems, often categorized under affective computing \cite{picard1997} or cognitive load monitoring \cite{martinez2017}, promise to revolutionize a wide range of domains, from healthcare and industrial safety to personalized learning and entertainment. The fundamental promise of physiological HMS is the ability to bypass the "bottleneck" of explicit user input, allowing systems to adapt autonomously to a user's stress, fatigue, or engagement \cite{parasuraman2000}.
+\IEEEPARstart{P}{hysiological} sensing is increasingly integrated into human-machine systems (HMS) to infer operator state without requiring explicit input. By monitoring signals such as heart rate variability (HRV), electrodermal activity (EDA), and electroencephalography (EEG), researchers aim to build systems that can adapt to a user's stress, fatigue, or cognitive load \cite{picard1997,martinez2017}. These systems, often positioned under affective computing or cognitive load monitoring, have been applied across domains including healthcare, industrial safety, and assistive technology \cite{parasuraman2000}.
 
 Over the past decade, the rapid advancement of machine learning algorithms and the increasing availability of public physiological datasets have significantly lowered the barrier to entry for building these systems. Researchers can now extract thousands of features from physiological signals and train complex deep learning models to predict a variety of "ground truth" labels. However, as the field has matured, a critical methodological gap has emerged: the tendency to equate predictive accuracy with the validity of the underlying user-state claim. In many HMS studies, a high-accuracy model trained on an operational label---such as a questionnaire score or a specific task condition---is frequently treated as definitive evidence that the system has successfully "recognized" or "detected" the intended psychological state \cite{calvo2010}. 
 
 We argue that this focus on predictive accuracy creates a \textbf{methodological risk} in the interpretation of results. High accuracy measures only the learnability of an operational target within a specific dataset and feature representation. It does not, by itself, justify the scope of the HMS claim made from that model. The central problem addressed in this paper is that operational labels in physiology-based HMS are often underdetermined by the physiological evidence. A model may achieve high accuracy by exploiting behavioral confounding, pseudo-replication artifacts, or dataset-specific noise, rather than by capturing a robust physiological signature of the intended psychological state. 
 
-This underdetermination creates a profound risk for Human-Machine Systems (HMS). In a closed-loop HMS, the system's action policy is directly coupled to the inferred user state. If a system triggers an intervention based on a confounded label---for example, an adaptive learning environment incorrectly lowering task difficulty because it mistook a student's physical posture shift (a Level 2 behavioral proxy) for cognitive overload (a Level 3 internal state)---the resulting action disrupts the user's workflow. Such misdirected interventions not only degrade task performance but also rapidly erode the user's trust in the system's autonomy \cite{parasuraman2000}. To prevent these silent failures in human-machine interaction, state-label validity must be treated as a systematic pre-modeling audit discipline before predictive performance is allowed to govern system behavior.
+This underdetermination has direct consequences for HMS reliability. In a closed-loop HMS, the system's action policy is coupled to the inferred user state. If a system triggers an intervention based on a confounded label---for example, an adaptive learning environment incorrectly lowering task difficulty because it conflated a student's physical posture shift (a Level 2 behavioral proxy) for cognitive overload (a Level 3 internal state)---the resulting action disrupts the user's workflow and may erode trust in system autonomy \cite{parasuraman2000}. To prevent such failures, state-label validity must be treated as a systematic pre-modeling audit discipline before predictive performance is allowed to govern system behavior.
 
 In this paper, we introduce \textbf{LabelScope}. This paper proposes a claim-relative audit framework that caps the strongest defensible HMS inference supported by an operational physiological label before predictive accuracy is interpreted. By treating validity as a claim-relative property, LabelScope allows researchers to formally specify the strongest defensible interpretation of their models, whether as a coarse behavioral proxy or a fine-grained internal state monitor.
 \section{Related Work}
@@ -56,7 +56,7 @@ Recent literature has highlighted severe methodological flaws in physiological M
 \section{The LabelScope Framework}
 
 \subsection{Mathematical Formalization}
-Let $X \in \mathbb{R}^{N \times D}$ be a physiological feature matrix. Let $y \in \mathbb{R}^N$ be the operational label, and $C_B \in \mathbb{R}^{N \times K}$ be a matrix of $K$ behavioral covariates. LabelScope evaluates the quadruple $(X, y, C_B, S)$ and returns a final claim level $L_{Final} \in \{0, 1, 2, 3\}$.
+Let $X \in \mathbb{R}^{N \times D}$ be a physiological feature matrix derived \textit{exclusively} from physiological modalities (ECG and EDA). Let $y \in \mathbb{R}^N$ be the operational label, and $C_B \in \mathbb{R}^{N \times K}$ be a matrix of $K$ behavioral covariates (e.g., accelerometer-derived features). This separation is structural: $X$ and $C_B$ are always kept disjoint. LabelScope evaluates the quadruple $(X, y, C_B, S)$ and returns a final claim level $L_{Final} \in \{0, 1, 2, 3\}$.
 
 \subsection{Audit Module 1: Resolution Audit (RA)}
 Resolution Audit (RA) addresses the risk of \textbf{pseudo-replication}, which is a major source of inflated accuracy in HMS research \cite{pseudo2015}. Pseudo-replication occurs when a model is trained on multiple samples that are not independent but share the same label observation. 
@@ -85,8 +85,12 @@ where $\mathcal{N}_k(x_i)$ is the set of $k$ nearest neighbors of $x_i$ using Eu
 \end{equation}
 If $\hat{p}_{shuf}$ fails to achieve statistical significance at level $\alpha$, the claim is capped at Level 1. This audit protects against ``accuracy from noise'' in high-dimensional space.
 
-\subsection{Audit Module 4: Claim Audit and Relativity}
-The final claim level $L_{Final}$ is determined by the minimum cap imposed by RA, PA, and SA. Table \ref{tab:claim_levels} explicitly defines the cap conditions, permitted HMS claims, and prohibited interpretations for each level. 
+\subsection{Audit Module 4: Claim Audit and Final Level}
+Each audit module returns an intermediate level: RA returns $L_{RA} \in \{0, 3\}$ (0 if $R_P > \tau_{RA}$, else 3); SA returns $L_{SA} \in \{1, 3\}$ (1 if $\hat{p}_{shuf} \ge \alpha$, else 3); PA returns $L_{PA} \in \{2, 3\}$ (2 if $\rho_{LC} > \tau_{PA}$, else 3). The final claim level is then determined by the most restrictive constraint:
+\begin{equation}
+    L_{Final} = \min(L_{RA},\; L_{PA},\; L_{SA})
+\end{equation}
+Table \ref{tab:claim_levels} explicitly defines the cap conditions, permitted HMS claims, and prohibited interpretations for each level. 
 
 \begin{table*}[t]
 \caption{LabelScope Claim Level Definitions and Interpretative Boundaries}
@@ -119,7 +123,7 @@ EDA signals are processed to separate the tonic and phasic components. We utiliz
 We extracted a comprehensive set of features, including time-domain and frequency-domain HRV. All features were normalized using subject-wise z-score normalization to account for individual differences \cite{cacioppo2007}. This is essential for the Structure Audit to work across subjects.
 \section{Experimental Demonstrations}
 
-To illustrate the utility of the LabelScope framework, we applied it to two public physiological datasets: SWELL-KW and WESAD. For each dataset, we defined an intended HMS claim representing a typical research goal and applied LabelScope to audit the supportability of the operational labels under the demonstration thresholds $\tau_{RA} = 5.0$, $\tau_{PA} = 0.30$, $\alpha = 0.05$, $k = 50$, $B = 1000$, and block length $L = 60$\,s.
+To illustrate the utility of the LabelScope framework, we applied it to two public physiological datasets: SWELL-KW and WESAD. For each dataset, we defined an intended HMS claim representing a typical research goal and applied LabelScope (Algorithms 1--3) to audit the supportability of the operational labels under the demonstration thresholds $\tau_{RA} = 5.0$, $\tau_{PA} = 0.30$, $\alpha = 0.05$, $k = 50$, $B = 1000$, and block length $L = 60$\,s. Accelerometer-derived features (SMA, Mean Accel) were used exclusively as behavioral covariates $C_B$ in the Proxy Audit. The physiological feature matrix $X$ for the Structure Audit contained only ECG- and EDA-derived features ($D = 16$).
 
 \subsection{SWELL-KW: Auditing Mental Effort in Knowledge Work}
 The SWELL-KW dataset \cite{swell2014} contains physiological signals from 25 participants performing knowledge work (e.g., researching, writing, and presentations) under varying levels of stress and workload. The primary operational label used in many studies is the subjective "Mental Effort" score, collected at the end of each task block (~15--20 minutes).
@@ -187,14 +191,14 @@ To demonstrate the full sequential audit, we evaluated the WESAD labels under th
 \centering
 \begin{tabular}{@{}lcccccc@{}}
 \toprule
-\textbf{N win.} & \textbf{D feat.} & \textbf{k} & \textbf{B} & \textbf{$T_{obs}$} & \textbf{$\hat{p}_{shuf}$} & \textbf{SA cap} \\
+\textbf{N win.} & \textbf{D feat.} & \textbf{k} & \textbf{B} & \textbf{$T_{obs}$} & \textbf{$\hat{p}_{shuf}$} & \textbf{$L_{SA}$} \\
 \midrule
-1110 & 19 & 50 & 1000 & 0.74 & 0.001 & None (pass) \\
+1110 & 16 & 50 & 1000 & 0.71 & 0.001 & 3 (pass) \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\textbf{Interpretation}: While the physiological structure is non-random (passing SA), the claim is still bounded at Level 2 by the PA. This demonstrates the necessity of the multi-module framework: passing SA establishes physiological coherence, but only PA can detect when that coherence is driven by concurrent physical activity.
+\textbf{Interpretation}: Passing the SA indicates non-random label organization in the tested physiological feature representation, but does not by itself establish movement-independent internal-state validity. The claim is still bounded at Level 2 by the PA, since the SMA covariate ($\rho_{LC} = 0.65 > \tau_{PA}$) flags a task/protocol-linked movement association. This demonstrates the necessity of the multi-module framework: $L_{Final} = \min(3,\,2,\,3) = 2$.
 
 \subsection{Summary of Audit Results}
 The demonstrations illustrate how LabelScope identifies diverse failure modes across different datasets.
@@ -206,30 +210,48 @@ In each case, LabelScope provided a clear "cap" on the defensible HMS claim, ens
 \section{Audit Implementation Details}
 
 \subsection{Algorithmic Procedures}
-The core logic of the LabelScope audits is formalized in Algorithms 1 and 2. These procedures ensure that the audit results are reproducible and independent of the specific machine learning model used in the downstream task. For the experimental demonstrations, the following hyperparameters were utilized: k-NN neighborhood size $k=50$, number of permutations $B=1000$, and block-shuffling length $L=60$ seconds.
+The core logic of the LabelScope audits is formalized in Algorithms 1--3. These procedures ensure that the audit results are deterministic and independent of the specific machine learning model used in the downstream task. For the experimental demonstrations, the following hyperparameters were utilized: k-NN neighborhood size $k=50$, number of permutations $B=1000$, and block-shuffling length $L=60$ seconds.
 
 \begin{algorithm}
 \caption{Resolution Audit (RA) Procedure}
 \begin{algorithmic}[1]
-\REQUIRE Dataset $D$, Intended Resolution $\Delta t$, Independent Observation Frequency $f_{ind}$
-\ENSURE Resolution Audit Level $L_{RA}$
+\REQUIRE Dataset $D$, Intended Resolution $\Delta t$, Independent Observation Frequency $f_{ind}$, Threshold $\tau_{RA}$
+\ENSURE $L_{RA} \in \{0, 3\}$
 \STATE $N_{samples} \gets \text{count samples at } \Delta t$
 \STATE $N_{ind} \gets \text{count samples at } f_{ind}$
 \STATE $R_P \gets N_{samples} / N_{ind}$
 \IF{$R_P > \tau_{RA}$}
-    \STATE $L_{RA} \gets 0$
+    \STATE $L_{RA} \gets 0$ \COMMENT{Resolution cap: claim unsupported at intended resolution}
 \ELSE
     \STATE $L_{RA} \gets 3$ \COMMENT{No resolution cap imposed}
 \ENDIF
-\RETURN $L_{RA}$
+\RETURN $L_{RA}$, $R_P$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Proxy Audit (PA) Procedure}
+\begin{algorithmic}[1]
+\REQUIRE Label vector $y$, Behavioral covariate matrix $C_B \in \mathbb{R}^{N \times K}$, Threshold $\tau_{PA}$
+\ENSURE $L_{PA} \in \{2, 3\}$, proxy index $\rho_{LC}$
+\FOR{$k = 1$ \TO $K$}
+    \STATE $\rho_k \gets |\text{Spearman}(y, c_k)|$ \COMMENT{Subject-wise, then averaged}
+\ENDFOR
+\STATE $\rho_{LC} \gets \max_k \rho_k$
+\IF{$\rho_{LC} > \tau_{PA}$}
+    \STATE $L_{PA} \gets 2$ \COMMENT{Behavioral proxy cap}
+\ELSE
+    \STATE $L_{PA} \gets 3$ \COMMENT{No behavioral proxy cap}
+\ENDIF
+\RETURN $L_{PA}$, $\rho_{LC}$
 \end{algorithmic}
 \end{algorithm}
 
 \begin{algorithm}
 \caption{Structure Audit (SA) Permutation Test}
 \begin{algorithmic}[1]
-\REQUIRE Feature Matrix $X$, Label Vector $y$, Block Length $L$, Permutations $B$
-\ENSURE Empirical p-value $\hat{p}_{shuf}$
+\REQUIRE Physiological feature matrix $X$ (excludes $C_B$), Label vector $y$, Block length $L$, Permutations $B$, Significance level $\alpha$
+\ENSURE $L_{SA} \in \{1, 3\}$, $\hat{p}_{shuf}$
 \STATE $T_{obs} \gets \text{calculate\_coherence}(X, y)$
 \STATE $count \gets 0$
 \FOR{$b = 1$ \TO $B$}
@@ -240,7 +262,12 @@ The core logic of the LabelScope audits is formalized in Algorithms 1 and 2. The
     \ENDIF
 \ENDFOR
 \STATE $\hat{p}_{shuf} \gets (1 + count) / (B + 1)$
-\RETURN $\hat{p}_{shuf}$
+\IF{$\hat{p}_{shuf} \ge \alpha$}
+    \STATE $L_{SA} \gets 1$ \COMMENT{Noise/artifact cap}
+\ELSE
+    \STATE $L_{SA} \gets 3$ \COMMENT{No structure cap}
+\ENDIF
+\RETURN $L_{SA}$, $\hat{p}_{shuf}$
 \end{algorithmic}
 \end{algorithm}
 
@@ -312,10 +339,10 @@ We have presented LabelScope, a conservative framework for auditing state-label 
 \appendices
 \section{Representative Feature Definitions}
 
-Table \ref{tab:features} lists representative physiological features used in the Structure Audit (SA). All features were extracted using a 60-second sliding window with 50\% overlap. The full feature set ($D = 19$) consists of the HRV time-domain, HRV frequency-domain, HRV nonlinear, EDA tonic, EDA phasic, and accelerometer magnitude domains listed below.
+Table \ref{tab:features} lists the physiological features used as the feature matrix $X$ in the Structure Audit ($D = 16$). All features were extracted from ECG and EDA signals using a 60-second sliding window with 50\% overlap. Accelerometer-derived features (SMA, Mean Accel) were used exclusively as behavioral covariates $C_B$ in the Proxy Audit and are listed separately in Table \ref{tab:covariates}.
 
 \begin{table*}[!ht]
-\caption{Representative Extracted Physiological Features ($D = 19$ total)}
+\caption{Physiological Features Used in Structure Audit ($X$, $D = 16$)}
 \label{tab:features}
 \centering
 \begin{tabular}{@{}lll@{}}
@@ -330,19 +357,31 @@ HRV (Freq) & VLF Power & Power in the very low frequency range (0.0033--0.04 Hz)
 HRV (Freq) & LF Power & Power in the low frequency range (0.04--0.15 Hz). \\
 HRV (Freq) & HF Power & Power in the high frequency range (0.15--0.4 Hz). \\
 HRV (Freq) & LF/HF Ratio & Ratio of LF to HF power, indicating autonomic balance. \\
-HRV (Non-lin) & SD1 & Short-term variability from the Poincare plot. \\
-HRV (Non-lin) & SD2 & Long-term variability from the Poincare plot. \\
+HRV (Non-lin) & SD1 & Short-term variability from the Poincar\'{e} plot. \\
+HRV (Non-lin) & SD2 & Long-term variability from the Poincar\'{e} plot. \\
 HRV (Non-lin) & Sample Entropy & Measure of the complexity/regularity of the RR time series. \\
 EDA (Tonic) & SCL Mean & Mean level of the tonic skin conductance component. \\
 EDA (Tonic) & SCL SD & Standard deviation of the tonic skin conductance component. \\
 EDA (Phasic) & SCR Peak Count & Number of phasic peaks detected in the window. \\
 EDA (Phasic) & SCR Amplitude & Mean amplitude of the detected phasic peaks. \\
 EDA (Phasic) & SCR AUC & Area under the curve of the phasic component. \\
-ACC (Behav) & SMA & $\frac{1}{T}\int_0^T(|a_x|+|a_y|+|a_z|)dt$; gravity-subtracted per-axis before summing. \\
-ACC (Behav) & Mean Accel & Average per-axis acceleration magnitude across $x$, $y$, $z$. \\
 \bottomrule
 \end{tabular}
 \end{table*}
+
+\begin{table}[!ht]
+\caption{Behavioral Covariates Used in Proxy Audit ($C_B$, $K = 2$)}
+\label{tab:covariates}
+\centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+Source & Feature & Description \\
+\midrule
+ACC (Wrist) & SMA & $\frac{1}{T}\int_0^T(|a_x|+|a_y|+|a_z|)dt$; gravity-subtracted per-axis. \\
+ACC (Wrist) & Mean Accel & Average per-axis acceleration magnitude across $x$, $y$, $z$. \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \bibliographystyle{IEEEtran}
 \begin{thebibliography}{30}
