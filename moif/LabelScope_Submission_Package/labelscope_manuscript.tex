@@ -22,7 +22,7 @@
 \maketitle
 
 \begin{abstract}
-This paper introduces LabelScope, a conservative pre-interpretation audit framework that assigns a capped claim level $L_{Final} \in \{0,1,2,3\}$ using Resolution (RA), Proxy (PA), and Structure (SA) audit modules. The framework is demonstrated through case studies on the WESAD and SWELL-KW datasets. In WESAD, high physiology-only performance was observed across pooled and condition-wise contrasts (AUROC = 0.88 pooled; 0.93 stress vs. baseline; 0.79 stress vs. amusement), while the intended HMS claim remained capped at Level 2 due to behavioral entanglement. By detecting failure modes such as behavioral-proxy risk and pseudo-replication, LabelScope provides an audit basis for constraining the system's action policy, supporting the interpretation of predictive accuracy within defensible claim boundaries.
+Physiology-based human-machine systems (HMS) often report high predictive performance on operational labels, but such labels may not support the state claims used to drive adaptive system behavior. This paper introduces LabelScope, a conservative pre-interpretation audit framework that assigns a capped claim level $L_{Final} \in \{0,1,2,3\}$ using Resolution (RA), Proxy (PA), and Structure (SA) audit modules. The framework is demonstrated through case studies on the WESAD and SWELL-KW datasets. In WESAD, high physiology-only performance was observed across pooled and condition-wise contrasts (AUROC = 0.88 pooled; 0.93 stress vs. baseline; 0.79 stress vs. amusement), while the intended HMS claim remained capped at Level 2 due to behavioral entanglement. By detecting failure modes such as behavioral-proxy risk and pseudo-replication, LabelScope provides an audit basis for constraining the system's action policy, supporting the interpretation of predictive accuracy within defensible claim boundaries.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -239,19 +239,19 @@ Physiology only (S vs A)  & 0.74 & 0.73 & 0.79 [0.76, 0.82] & Level 2 \\
 $^\dagger$The cap refers to the operational WESAD stress label under the audited HMS claim, not to the classifier input modality.
 
 \subsection{SWELL-KW Case Study: Redesigning Label Resolution}
-The initial minute-level claim on SWELL-KW resulted in $R_P = 15$, capping the claim at \textbf{Level 0}. Table \ref{tab:swell_redesign} illustrates how claim redesign can remove the RA-imposed cap. Satisfying RA by lowering resolution (e.g., to a 5-min trend) corrects the resolution mismatch but does not inherently validate the physiological quality of the signal. Notably, the minute-level resolution ($R_P=15$) leads to an apparent performance inflation ($\text{Acc} \approx 0.90$) due to window-level pseudo-replication, whereas the audited 15-minute block claim ($R_P=1$) yields a more realistic performance estimate ($\text{Acc} \approx 0.71$), as detailed in Table \ref{tab:swell_performance}.
+The initial minute-level claim on SWELL-KW resulted in $R_P = 15$, capping the claim at \textbf{Level 0}. Table \ref{tab:swell_redesign} illustrates how claim redesign can remove the RA-imposed cap. For this evaluation, the classifier target was defined as a binary stress proxy: Neutral vs.~(Time Pressure + Interruption), using physiology-only features (ECG/EDA). Satisfying RA by lowering resolution (e.g., to a 5-min trend) corrects the resolution mismatch but does not inherently validate the physiological quality of the signal. Notably, the minute-level resolution ($R_P=15$) leads to an apparent performance inflation ($\text{Acc} \approx 0.90$) due to window-level pseudo-replication, whereas the audited 15-minute block claim ($R_P=1$) yields a more realistic performance estimate ($\text{Acc} \approx 0.71$), as detailed in Table \ref{tab:swell_performance}. The purpose of this analysis is to demonstrate that the interpretation of predictive performance is highly sensitive to the modeling unit; without RA, engineering convenience in data windowing can be mistaken for evidence of physiological state supportability.
 
 \begin{table*}[t]
-\caption{SWELL-KW Performance Inflation Analysis. Metrics: Random Forest (100 trees), LOSO split, Physiology only.}
+\caption{SWELL-KW Performance Inflation Analysis. Metrics: Random Forest (100 trees), LOSO split, Binary target: Neutral vs. (TP+Intr.).}
 \label{tab:swell_performance}
 \centering
-\begin{tabular}{@{}lcccc@{}}
+\begin{tabular}{@{}lcccccc@{}}
 \toprule
-\textbf{Res.} & \textbf{$R_P$} & \textbf{Acc.} & \textbf{B-Acc.} & \textbf{AUROC [95\% CI]} \\
+\textbf{Res.} & \textbf{$N_{samples}$} & \textbf{$N_{ind}$} & \textbf{$R_P$} & \textbf{Acc.} & \textbf{B-Acc.} & \textbf{AUROC [95\% CI]} \\
 \midrule
-1 min  & 15 & 0.90 & 0.89 & 0.94 [0.91, 0.96] \\
-5 min  & 3  & 0.82 & 0.81 & 0.87 [0.84, 0.90] \\
-15 min & 1  & 0.71 & 0.69 & 0.76 [0.72, 0.80] \\
+1 min  & 1125 & 75 & 15 & 0.90 & 0.89 & 0.94 [0.91, 0.96] \\
+5 min  & 225  & 75 & 3  & 0.82 & 0.81 & 0.87 [0.84, 0.90] \\
+15 min & 75   & 75 & 1  & 0.71 & 0.69 & 0.76 [0.72, 0.80] \\
 \bottomrule
 \end{tabular}
 \end{table*}
@@ -330,7 +330,7 @@ In adaptive systems, the audited level can be used as a guard condition for acti
 
 
 
-For example, if a virtual HMS uses the WESAD stress classifier to trigger interventions, LabelScope (at Level 2) prohibits interpreting the trigger as movement-independent internal stress. The permitted action is restricted to task/protocol-aware adaptation (e.g., suggesting a posture change). This proactive auditing reduces the risk of misdirected interventions and improves the overall trust in adaptive human-machine systems.
+For example, if a virtual HMS uses the WESAD stress classifier to trigger interventions, LabelScope (at Level 2) prohibits interpreting the trigger as movement-independent internal stress. The permitted action is restricted to task/protocol-aware adaptation (e.g., suggesting a posture change). This proactive auditing may help reduce the risk of trust degradation in adaptive human-machine systems by preventing misdirected interventions based on over-interpreted physiological proxies.
 
 \subsection{Limitations and Future Work}
 While LabelScope provides a rigorous foundation, it is not a ``validity oracle.'' Its results are sensitive to the choice of features, neighborhood definitions, and audit thresholds.
@@ -339,6 +339,7 @@ While LabelScope provides a rigorous foundation, it is not a ``validity oracle.'
     \item \textbf{Absence of Closed-Loop Evaluation}: The current study evaluates LabelScope only through retrospective audits of public datasets. It does not evaluate the framework in a closed-loop HMS or with human participants. Determining how audit-triggered claim caps affect actual system behavior, user experience, and task performance requires rigorous user studies in future deployments.
     \item \textbf{Epistemological Limits of the Proxy Audit}: The PA only audits against \textit{observed} covariates ($C_B$). In unrestricted environments, physiological signals can be sensitive to unobserved factors (e.g., room temperature, undocumented postural shifts, caffeine intake). A ``Level 3'' claim indicates only that no evidence of proxy risk was found under the tested covariates; it cannot guarantee the absence of unmeasured entanglements. Future work should integrate causal inference techniques to bound the impact of unobserved variables.
     \item \textbf{Threshold Standardization and Sensitivity}: The default values of $\tau_{RA} = 5.0$ and $\tau_{PA} = 0.30$ were chosen conservatively. Table \ref{tab:pa_sensitivity} reports the PA cap outcome for WESAD across a range of $\tau_{PA}$ values. The Level 2 cap is insensitive to $\tau_{PA}$ within $[0.20, 0.60]$ under the group-mean rule, since the group mean ($\rho_{LC} = 0.65$) exceeds all thresholds in this range. At $\tau_{PA} = 0.70$, the group mean no longer exceeds the threshold; however, 6 of 15 subjects individually exceed it, warranting subject-level reporting in that regime.
+    \item \textbf{Negative Control Specificity}: While the run-length-preserving block-level shuffle provides a stricter negative control than fully random label permutations, additional controls that preserve higher-order temporal structure (e.g., transition matrices or task-cycle periodicity) should be evaluated in future work to further refine the SA module.
 \end{enumerate}
 
 \begin{table}[h]

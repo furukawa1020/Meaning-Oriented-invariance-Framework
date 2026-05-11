@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.3)  11 MAY 2026 21:53
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.3)  11 MAY 2026 21:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -621,14 +621,12 @@ Underfull \hbox (badness 2310) in paragraph at lines 326--327
  []
 
 
-Underfull \vbox (badness 2894) has occurred while \output is active []
+Underfull \vbox (badness 8056) has occurred while \output is active []
 
  [5 <c:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb
-4352/fig2_comparison_1778499261087.png>]
+4352/fig2_comparison_1778499261087.png>] [6] [7] [8
 
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[6] [7] [8
+] [9
 
 
 ] (./labelscope_manuscript.aux)
@@ -636,17 +634,21 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package rerunfilecheck Info: File `labelscope_manuscript.out' has not changed.
 (rerunfilecheck)             Checksum: BD88B0A632FE231C80BC73A4C23EACC8;6050.
  ) 
 Here is how much of TeX's memory you used:
- 13362 strings out of 467533
- 203995 string characters out of 5423669
- 645624 words of memory out of 5000000
+ 13364 strings out of 467533
+ 204008 string characters out of 5423669
+ 646624 words of memory out of 5000000
  41952 multiletter control sequences out of 15000+600000
  753834 words of font info for 181 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,13n,79p,1144b,586s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,13n,79p,1186b,499s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/tex
 live/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2025
 /texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb><c:/texlive/2025/texm
@@ -668,10 +670,10 @@ st/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2025/texmf-dist/f
 onts/type1/urw/times/utmb8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/tim
 es/utmbi8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:
 /texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on labelscope_manuscript.pdf (8 pages, 1185601 bytes).
+Output written on labelscope_manuscript.pdf (9 pages, 1188072 bytes).
 PDF statistics:
- 432 PDF objects out of 1000 (max. 8388607)
- 368 compressed objects within 4 object streams
- 120 named destinations out of 1000 (max. 500000)
+ 438 PDF objects out of 1000 (max. 8388607)
+ 373 compressed objects within 4 object streams
+ 122 named destinations out of 1000 (max. 500000)
  235 words of extra memory for PDF output out of 10000 (max. 10000000)
 
