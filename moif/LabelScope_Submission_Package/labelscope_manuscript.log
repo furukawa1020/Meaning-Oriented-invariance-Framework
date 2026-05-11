@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.3)  11 MAY 2026 20:41
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.3)  11 MAY 2026 20:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -556,7 +556,7 @@ Overfull \hbox (19.16576pt too wide) in paragraph at lines 64--72
  []
 
 <C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4352
-/fig1_pipeline_1778498543035.png, id=140, 246.6816pt x 246.6816pt>
+/fig1_pipeline_1778498543035.png, id=152, 246.6816pt x 246.6816pt>
 File: C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebc
 b4352/fig1_pipeline_1778498543035.png Graphic file (type png)
 <use C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb
@@ -569,142 +569,130 @@ Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
 put line 90.
 [2 <c:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4
 352/fig1_pipeline_1778498543035.png>]
-Underfull \hbox (badness 4673) in paragraph at lines 156--156
+Underfull \hbox (badness 4673) in paragraph at lines 157--157
 []\T1/ptm/m/n/8 Recognition of spe-cific dataset
  []
 
 
-Underfull \hbox (badness 3386) in paragraph at lines 157--158
+Underfull \hbox (badness 3386) in paragraph at lines 158--159
 []\T1/ptm/m/n/8 Direct mea-sure-ment of in-ter-nal
  []
 
 
-Underfull \hbox (badness 1902) in paragraph at lines 158--158
+Underfull \hbox (badness 1902) in paragraph at lines 159--159
 []\T1/ptm/m/n/8 No ev-i-dence found to cap the
  []
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
+[3]
+Overfull \hbox (14.04872pt too wide) in paragraph at lines 206--214
+ [][] 
+ []
 
 <C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4352
-/fig2_comparison_1778499261087.png, id=170, 246.6816pt x 246.6816pt>
+/fig2_comparison_1778499261087.png, id=225, 246.6816pt x 246.6816pt>
 File: C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebc
 b4352/fig2_comparison_1778499261087.png Graphic file (type png)
 <use C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb
 4352/fig2_comparison_1778499261087.png>
 Package pdftex.def Info: C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83
 e-4952-83ec-ee1bebcb4352/fig2_comparison_1778499261087.png  used on input line 
-216.
+226.
 (pdftex.def)             Requested size: 214.20154pt x 214.2085pt.
 
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-Overfull \hbox (65.07457pt too wide) in paragraph at lines 225--235
+Overfull \hbox (65.07457pt too wide) in paragraph at lines 235--245
  [][] 
  []
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[3]
-Underfull \hbox (badness 10000) in paragraph at lines 255--255
+[4 <c:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4
+352/fig2_comparison_1778499261087.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 265--265
 []\T1/ptm/b/n/8 Permitted
  []
 
 
-Underfull \hbox (badness 6428) in paragraph at lines 255--255
+Underfull \hbox (badness 6428) in paragraph at lines 265--265
 []\T1/ptm/b/n/8 Prohibited Ac-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 257--257
+Underfull \hbox (badness 10000) in paragraph at lines 267--267
 []\T1/ptm/m/n/8 Offline dataset
  []
 
 
-Underfull \hbox (badness 6332) in paragraph at lines 257--257
+Underfull \hbox (badness 6332) in paragraph at lines 267--267
 []\T1/ptm/m/n/8 Real-time adap-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 257--258
+Underfull \hbox (badness 10000) in paragraph at lines 267--268
 []\T1/ptm/m/n/8 No minute-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 258--258
+Underfull \hbox (badness 10000) in paragraph at lines 268--268
 []\T1/ptm/m/n/8 Dataset-specific
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 258--258
+Underfull \hbox (badness 10000) in paragraph at lines 268--268
 []\T1/ptm/m/n/8 Psych. state
  []
 
 
-Underfull \hbox (badness 1831) in paragraph at lines 258--259
+Underfull \hbox (badness 1831) in paragraph at lines 268--269
 []\T1/ptm/m/n/8 No stress in-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 259--259
+Underfull \hbox (badness 10000) in paragraph at lines 269--269
 []\T1/ptm/m/n/8 Behavior-aware
  []
 
 
-Underfull \hbox (badness 1577) in paragraph at lines 259--259
+Underfull \hbox (badness 1577) in paragraph at lines 269--269
 []\T1/ptm/m/n/8 Internal-state in-
  []
 
 
-Overfull \hbox (4.31764pt too wide) in paragraph at lines 259--260
+Overfull \hbox (4.31764pt too wide) in paragraph at lines 269--270
 []\T1/ptm/m/n/8 Posture/activity-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 260--260
+Underfull \hbox (badness 10000) in paragraph at lines 270--270
 []\T1/ptm/m/n/8 Cautious state-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 260--260
+Underfull \hbox (badness 10000) in paragraph at lines 270--270
 \T1/ptm/m/n/8 contingent
  []
 
 
-Underfull \hbox (badness 1558) in paragraph at lines 260--260
+Underfull \hbox (badness 1558) in paragraph at lines 270--270
 []\T1/ptm/m/n/8 Ground-truth di-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 260--261
+Underfull \hbox (badness 10000) in paragraph at lines 270--271
 []\T1/ptm/m/n/8 Adaptive
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 260--261
+Underfull \hbox (badness 10000) in paragraph at lines 270--271
 \T1/ptm/m/n/8 work-load
  []
 
 
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-Underfull \vbox (badness 6141) has occurred while \output is active []
-
- [4 <c:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb
-4352/fig2_comparison_1778499261087.png>]
-Overfull \hbox (117.40536pt too wide) in paragraph at lines 333--340
+Overfull \hbox (117.40536pt too wide) in paragraph at lines 343--350
  [][] 
  []
 
-[5] [6
-
-] [7
+[5] [6] [7
 
 
 ] (./labelscope_manuscript.aux)
@@ -712,21 +700,17 @@ Overfull \hbox (117.40536pt too wide) in paragraph at lines 333--340
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `labelscope_manuscript.out' has not changed.
-(rerunfilecheck)             Checksum: 64454FBD41C12EEFE5C7E4287E37A07D;5179.
+(rerunfilecheck)             Checksum: BE5AB60D324D7E1A50237C04A138103A;5670.
  ) 
 Here is how much of TeX's memory you used:
- 13331 strings out of 467533
- 203578 string characters out of 5423669
- 648040 words of memory out of 5000000
- 41940 multiletter control sequences out of 15000+600000
+ 13337 strings out of 467533
+ 203688 string characters out of 5423669
+ 645225 words of memory out of 5000000
+ 41943 multiletter control sequences out of 15000+600000
  753834 words of font info for 181 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,13n,79p,1574b,549s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,13n,79p,1574b,580s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/tex
 live/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2025
 /texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb><c:/texlive/2025/texm
@@ -740,17 +724,18 @@ c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive
 -dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/texlive/2025/texmf-dist/fonts
 /type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/publ
 ic/amsfonts/cm/cmr9.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmsy10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7
-.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/t
-exlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb><c:/texlive/202
-5/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2025/te
-xmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2025/texmf-dist/fonts/typ
-e1/urw/times/utmbi8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr
-8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on labelscope_manuscript.pdf (7 pages, 1165710 bytes).
+/cm/cmsy10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6
+.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><c:/t
+exlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/202
+5/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb><c:/texlive/2025/texmf-di
+st/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2025/texmf-dist/f
+onts/type1/urw/times/utmb8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/tim
+es/utmbi8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:
+/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on labelscope_manuscript.pdf (7 pages, 1179517 bytes).
 PDF statistics:
- 378 PDF objects out of 1000 (max. 8388607)
- 317 compressed objects within 4 object streams
- 101 named destinations out of 1000 (max. 500000)
- 203 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 401 PDF objects out of 1000 (max. 8388607)
+ 338 compressed objects within 4 object streams
+ 104 named destinations out of 1000 (max. 500000)
+ 227 words of extra memory for PDF output out of 10000 (max. 10000000)
 

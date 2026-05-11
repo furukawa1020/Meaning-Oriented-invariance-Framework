@@ -22,7 +22,7 @@
 \maketitle
 
 \begin{abstract}
-Physiology-based human-machine systems (HMS) often train predictive models on operational labels such as questionnaire scores, task conditions, behavioral errors, or affective annotations. However, high predictive accuracy does not by itself establish that the target label can support the HMS claim made from the model. A label may be temporally sparse, behaviorally entangled, or structurally unsupported in physiological feature space. In such cases, model performance may reflect the learnability of an operational proxy rather than evidence for a physiology-grounded user-state claim. This paper introduces LabelScope, a conservative pre-modeling audit framework for claim-relative state-label validity in physiology-based HMS. LabelScope audits whether an operational label can support a specified HMS claim under a given modeling resolution, proxy interpretation, feature representation, and deployment context. The framework consists of Resolution, Proxy, and Structure audit modules, and assigns a capped claim level $L_{Final} \in \{0,1,2,3\}$ using a conservative claim-capping rule. The case studies on the WESAD and SWELL-KW datasets illustrate how LabelScope can cap overbroad state claims under specified audit assumptions. By detecting failure modes such as behavioral-proxy risk and pseudo-replication, LabelScope grounds the system's action policy in audited evidence, supporting the interpretation of predictive accuracy within defensible claim boundaries.
+Physiology-based human-machine systems (HMS) often train predictive models on operational labels such as questionnaire scores, task conditions, behavioral errors, or affective annotations. However, high predictive accuracy does not by itself establish that the target label can support the HMS claim made from the model. A label may be temporally sparse, behaviorally entangled, or structurally unsupported in physiological feature space. In such cases, model performance may reflect the learnability of an operational proxy rather than evidence for a physiology-grounded user-state claim. This paper introduces LabelScope, a conservative pre-modeling audit framework for claim-relative state-label validity in physiology-based HMS. LabelScope audits whether an operational label can support a specified HMS claim under a given modeling resolution, proxy interpretation, feature representation, and deployment context. The framework consists of Resolution, Proxy, and Structure audit modules, and assigns a capped claim level $L_{Final} \in \{0,1,2,3\}$ using a conservative claim-capping rule. The case studies on the WESAD and SWELL-KW datasets illustrate how LabelScope can cap overbroad state claims under specified audit assumptions. By detecting failure modes such as behavioral-proxy risk and pseudo-replication, LabelScope provides an audit basis for constraining the system's action policy, supporting the interpretation of predictive accuracy within defensible claim boundaries.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -143,6 +143,7 @@ The final claim level is determined by the most restrictive constraint:
 \begin{equation}
     L_{Final} = \min(L_{RA},\; L_{PA},\; L_{SA})
 \end{equation}
+Table \ref{tab:claim_levels} specifies the designation, cap condition, permitted HMS claim, and prohibited interpretation for each level. A Level 3 outcome indicates that no evidence was found to cap the claim under the tested configuration; it does not constitute absolute construct validation.
 
 \begin{table*}[t]
 \caption{LabelScope Claim Level Definitions and Interpretative Boundaries}
@@ -161,6 +162,14 @@ The final claim level is determined by the most restrictive constraint:
 \end{table*}
 
 \section{Retrospective Audit Case Studies}
+
+\subsection{Experimental Protocol and Dataset Parameters}
+
+\subsubsection{WESAD}
+WESAD \cite{wesad2018} is a multimodal wearable dataset collected from 15 subjects (S2--S17, $N=15$). For this audit, we use chest-worn ECG and EDA signals for the Structure Audit and wrist-worn accelerometer-derived SMA as the behavioral covariate for the Proxy Audit. The binary label is defined as Stress ($y=1$) vs.~Non-Stress ($y=0$), where Non-Stress comprises both Baseline and Amusement conditions, following the common binary stress-vs-non-stress framing of WESAD \cite{wesad2018}. Because pooling these conditions may obscure condition-specific structure, condition-wise SA audits are recommended as a future robustness check. Signal processing used a 60\,s sliding window with 50\% overlap ($\Delta t = 60\,\text{s}$, $n_{win} = 1110$ total windows). Feature extraction employed NeuroKit2 \cite{neurokit2021} for HRV and cvxEDA \cite{greco2016} for EDA decomposition, yielding $D=14$ physiology-only features (see Appendix). All features were subject-wise z-score normalized before SA computation. The SMA covariate is computed as $\mathrm{SMA} = \frac{1}{T}\int_0^T(|a_x|+|a_y|+|a_z|)\,dt$ with gravity removed via within-window mean subtraction. Audit thresholds: $\tau_{RA}=5.0$, $\tau_{PA}=0.30$, $\alpha=0.05$, $k=50$, $B=1000$.
+
+\subsubsection{SWELL-KW}
+SWELL-KW \cite{swell2014} contains physiological recordings from 25 participants under three work conditions (Neutral, Time Pressure, Interruption) with questionnaire-based labels administered once per 15-minute work block. For the minute-level claim audit, $N_{ind\_obs} = $ (number of label observations per subject) = 3, while $N_{samples}$ = 45 (15 windows per block $\times$ 3 blocks), yielding $R_P = 15 > \tau_{RA}$. For the redesigned 15-minute block claim, windowing is coarsened to one feature vector per block per subject, reducing $R_P$ to 1.
 
 \subsection{WESAD Case Study: Proxy Risk and Structure Auditing}
 
@@ -189,9 +198,9 @@ S9  & 0.65 & \textbf{Mean} & \textbf{0.65} \\
 \textbf{Interpretation}: $L_{PA} = 2$. The audited label cannot support a claim of movement-independent internal stress sensing; it should instead be reported as a task-linked stress proxy. 
 
 \subsubsection{Structure Audit (SA) Results}
-The structure audit evaluated coherence in ECG/EDA space ($D=14, k=50, B=1000, L=60s$). As shown in Table \ref{tab:wesad_sa}, the observed physiological coherence was significantly higher than the block-shuffled null distribution.
+The structure audit evaluated k-NN coherence in chest ECG/EDA feature space ($D=14$, $k=50$, $B=1000$, $L=60$\,s blocks, seed=42). As shown in Table \ref{tab:wesad_sa}, the observed coherence $T_{obs}=0.71$ was higher than the block-shuffled null mean $\bar{T}_{null}=0.52$ under the SA test ($\hat{p}_{shuf}=0.001$), indicating non-random organization in the tested ECG/EDA feature representation. The SA does not impose a cap. However, because $L_{PA}=2$, the final claim level is $L_{Final} = \min(3, 2, 3) = 2$.
 \begin{table}[h]
-\caption{WESAD SA Result (Physiology-only features; $D=14$, $k=50$, $B=1000$, $L=60$s). Note: SA pass does not imply $L_{Final}=3$; the final level is $\min(L_{RA}, L_{PA}, L_{SA}) = 2$ due to the PA cap.}
+\caption{WESAD SA Result. Params: $D=14$, $k=50$, $B=1000$, $L=60$\,s, seed=42. SA pass $\neq$ $L_{Final}=3$; the final level is $L_{Final}=2$ due to the PA cap ($L_{PA}=2$).}
 \label{tab:wesad_sa}
 \centering
 \begin{tabular}{@{}lcccc@{}}

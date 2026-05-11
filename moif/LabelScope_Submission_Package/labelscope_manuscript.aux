@@ -38,6 +38,9 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-A}}Mathematical Formalization}{2}{subsection.3.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-B}}Audit Module 1: Resolution Audit (RA)}{2}{subsection.3.2}\protected@file@percent }
 \citation{wesad2018}
+\citation{neurokit2021}
+\citation{greco2016}
+\citation{swell2014}
 \@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Resolution Audit (RA)}}{3}{algorithm.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-C}}Audit Module 2: Proxy Audit (PA)}{3}{subsection.3.3}\protected@file@percent }
 \@writefile{loa}{\contentsline {algorithm}{\numberline {2}{\ignorespaces Proxy Audit (PA)}}{3}{algorithm.2}\protected@file@percent }
@@ -45,29 +48,40 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-E}}Claim Level Assignment}{3}{subsection.3.5}\protected@file@percent }
 \@writefile{loa}{\contentsline {algorithm}{\numberline {3}{\ignorespaces Structure Audit (SA)}}{3}{algorithm.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {IV}Retrospective Audit Case Studies}{3}{section.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-A}}WESAD Case Study: Proxy Risk and Structure Auditing}{3}{subsection.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}1}Proxy Audit (PA) Results}{3}{subsubsection.4.1.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}2}Structure Audit (SA) Results}{3}{subsubsection.4.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-B}}SWELL-KW Case Study: Redesigning Label Resolution}{3}{subsection.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {V}Discussion: Implications for HMS Design}{3}{section.5}\protected@file@percent }
-\newlabel{sec:discussion}{{V}{3}{Discussion: Implications for HMS Design}{section.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-A}}LabelScope as an Engineering Safeguard}{3}{subsection.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-A}}Experimental Protocol and Dataset Parameters}{3}{subsection.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}1}WESAD}{3}{subsubsection.4.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}2}SWELL-KW}{3}{subsubsection.4.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-B}}WESAD Case Study: Proxy Risk and Structure Auditing}{3}{subsection.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-B}1}Proxy Audit (PA) Results}{3}{subsubsection.4.2.1}\protected@file@percent }
+\citation{wesad2018}
 \@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces LabelScope Claim Level Definitions and Interpretative Boundaries}}{4}{table.2}\protected@file@percent }
 \newlabel{tab:claim_levels}{{II}{4}{LabelScope Claim Level Definitions and Interpretative Boundaries}{table.2}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {III}{\ignorespaces WESAD Subject-wise Proxy Index ($\rho _{LC}$)}}{4}{table.3}\protected@file@percent }
 \newlabel{tab:wesad_pa}{{III}{4}{WESAD Subject-wise Proxy Index ($\rho _{LC}$)}{table.3}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {IV}{\ignorespaces WESAD SA Result (Physiology-only features; $D=14$, $k=50$, $B=1000$, $L=60$s). Note: SA pass does not imply $L_{Final}=3$; the final level is $\min (L_{RA}, L_{PA}, L_{SA}) = 2$ due to the PA cap.}}{4}{table.4}\protected@file@percent }
-\newlabel{tab:wesad_sa}{{IV}{4}{WESAD SA Result (Physiology-only features; $D=14$, $k=50$, $B=1000$, $L=60$s). Note: SA pass does not imply $L_{Final}=3$; the final level is $\min (L_{RA}, L_{PA}, L_{SA}) = 2$ due to the PA cap}{table.4}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-B}2}Structure Audit (SA) Results}{4}{subsubsection.4.2.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {IV}{\ignorespaces WESAD SA Result. Params: $D=14$, $k=50$, $B=1000$, $L=60$\,s, seed=42. SA pass $\neq  $ $L_{Final}=3$; the final level is $L_{Final}=2$ (PA cap). $\dagger $Negative control row: values to be filled upon script execution before submission.}}{4}{table.4}\protected@file@percent }
+\newlabel{tab:wesad_sa}{{IV}{4}{WESAD SA Result. Params: $D=14$, $k=50$, $B=1000$, $L=60$\,s, seed=42. SA pass $\neq $ $L_{Final}=3$; the final level is $L_{Final}=2$ (PA cap). $\dagger $Negative control row: values to be filled upon script execution before submission}{table.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-C}}SWELL-KW Case Study: Redesigning Label Resolution}{4}{subsection.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {V}Discussion: Implications for HMS Design}{4}{section.5}\protected@file@percent }
+\newlabel{sec:discussion}{{V}{4}{Discussion: Implications for HMS Design}{section.5}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Conceptual comparison of interpretations: Accuracy-Only (unconstrained) vs.\ LabelScope (audited). Path A leads to overbroad state claims, while Path B provides a computable cap for permitted action policies.}}{4}{figure.2}\protected@file@percent }
 \newlabel{fig:comparison}{{2}{4}{Conceptual comparison of interpretations: Accuracy-Only (unconstrained) vs.\ LabelScope (audited). Path A leads to overbroad state claims, while Path B provides a computable cap for permitted action policies}{figure.2}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {V}{\ignorespaces Reporting Comparison: Accuracy-Only vs.\ LabelScope-Audited (Typical reporting patterns for a dataset like WESAD \cite  {wesad2018})}}{4}{table.5}\protected@file@percent }
 \newlabel{tab:reporting_comparison}{{V}{4}{Reporting Comparison: Accuracy-Only vs.\ LabelScope-Audited (Typical reporting patterns for a dataset like WESAD \cite {wesad2018})}{table.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-B}}Limitations and Future Work}{4}{subsection.5.2}\protected@file@percent }
 \bibstyle{IEEEtran}
 \bibcite{picard1997}{1}
 \bibcite{Calvo2010}{2}
 \bibcite{Bota2019}{3}
 \bibcite{martinez2017}{4}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-A}}LabelScope as an Engineering Safeguard}{5}{subsection.5.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {VI}{\ignorespaces HMS Action Policy Gating by Claim Level}}{5}{table.6}\protected@file@percent }
+\newlabel{tab:action_policy}{{VI}{5}{HMS Action Policy Gating by Claim Level}{table.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-B}}Limitations and Future Work}{5}{subsection.5.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {VII}{\ignorespaces WESAD PA Sensitivity to $\tau _{PA}$ (group-mean rule)}}{5}{table.7}\protected@file@percent }
+\newlabel{tab:pa_sensitivity}{{VII}{5}{WESAD PA Sensitivity to $\tau _{PA}$ (group-mean rule)}{table.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {VI}Conclusion}{5}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{Appendix\nobreakspace  A: Representative Feature Definitions}{5}{section*.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{References}{5}{section*.2}\protected@file@percent }
 \bibcite{messick1989}{5}
 \bibcite{cronbach1955}{6}
 \bibcite{campbell1959}{7}
@@ -90,13 +104,6 @@
 \bibcite{permutation2010}{24}
 \bibcite{pseudo2015}{25}
 \bibcite{zhou2018}{26}
-\@writefile{lot}{\contentsline {table}{\numberline {VI}{\ignorespaces HMS Action Policy Gating by Claim Level}}{5}{table.6}\protected@file@percent }
-\newlabel{tab:action_policy}{{VI}{5}{HMS Action Policy Gating by Claim Level}{table.6}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {VII}{\ignorespaces WESAD PA Sensitivity to $\tau _{PA}$ (group-mean rule)}}{5}{table.7}\protected@file@percent }
-\newlabel{tab:pa_sensitivity}{{VII}{5}{WESAD PA Sensitivity to $\tau _{PA}$ (group-mean rule)}{table.7}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {VI}Conclusion}{5}{section.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{Appendix\nobreakspace  A: Representative Feature Definitions}{5}{section*.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{References}{5}{section*.2}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {VIII}{\ignorespaces Physiological Features Used in Structure Audit ($X$, $D = 14$)}}{6}{table.8}\protected@file@percent }
 \newlabel{tab:features}{{VIII}{6}{Physiological Features Used in Structure Audit ($X$, $D = 14$)}{table.8}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {IX}{\ignorespaces Behavioral Covariate Used in Proxy Audit ($C_B$, $K = 1$)}}{6}{table.9}\protected@file@percent }
