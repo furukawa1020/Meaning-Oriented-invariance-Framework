@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.3)  11 MAY 2026 19:31
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.3)  11 MAY 2026 19:45
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -407,7 +407,8 @@ LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 149.
 ) (c:/texlive/2025/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count332
-) (./labelscope_manuscript.aux)
+)
+No file labelscope_manuscript.aux.
 \openout1 = `labelscope_manuscript.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 15.
@@ -428,7 +429,6 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 15.
 LaTeX Font Info:    ... okay on input line 15.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 15.
 LaTeX Font Info:    ... okay on input line 15.
-
 -- Lines per column: 58 (exact).
 (c:/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -450,7 +450,6 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
 Package hyperref Info: Link coloring OFF on input line 15.
- (./labelscope_manuscript.out) (./labelscope_manuscript.out)
 \@outlinefile=\write3
 \openout3 = `labelscope_manuscript.out'.
 
@@ -462,212 +461,388 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 LaTeX Font Info:    Trying to load font information for U+msb on input line 24.
  (c:/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [1{c:/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc}
+)
+
+LaTeX Warning: Citation `picard1997' on page 1 undefined on input line 32.
 
 
-] [2]
-Underfull \hbox (badness 4673) in paragraph at lines 104--104
+LaTeX Warning: Citation `martinez2017' on page 1 undefined on input line 32.
+
+
+LaTeX Warning: Citation `parasuraman2000' on page 1 undefined on input line 32.
+
+
+LaTeX Warning: Citation `calvo2010' on page 1 undefined on input line 34.
+
+
+LaTeX Warning: Citation `parasuraman2000' on page 1 undefined on input line 38.
+
+
+LaTeX Warning: Reference `tab:inflation_patterns' on page 1 undefined on input line 40.
+
+
+LaTeX Warning: Citation `picard1997' on page 1 undefined on input line 45.
+
+
+LaTeX Warning: Citation `boucsein2012' on page 1 undefined on input line 45.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [1{c:/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc}
+
+
+]
+
+LaTeX Warning: Citation `calvo2010' on page 2 undefined on input line 47.
+
+
+LaTeX Warning: Citation `bota2019' on page 2 undefined on input line 47.
+
+
+LaTeX Warning: Citation `parasuraman2000' on page 2 undefined on input line 50.
+
+
+LaTeX Warning: Citation `lee2004' on page 2 undefined on input line 50.
+
+
+LaTeX Warning: Citation `wickens2008' on page 2 undefined on input line 50.
+
+
+LaTeX Warning: Citation `calvo2010' on page 2 undefined on input line 53.
+
+
+LaTeX Warning: Citation `messick1989' on page 2 undefined on input line 53.
+
+
+LaTeX Warning: Citation `zhou2018' on page 2 undefined on input line 53.
+
+
+LaTeX Warning: Citation `pseudo2015' on page 2 undefined on input line 55.
+
+
+LaTeX Warning: Citation `chiossi2024' on page 2 undefined on input line 55.
+
+
+LaTeX Warning: Citation `mitchell2019' on page 2 undefined on input line 55.
+
+
+LaTeX Warning: Citation `gebru2021' on page 2 undefined on input line 55.
+
+
+LaTeX Warning: File `labelscope_pipeline_diagram_1778496234592.png' not found on input line 60.
+
+
+c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_Package/labelscope_manuscript.tex:60: Package pdftex.def Error: File `labelscope_pipeline_diagram_1778496234592.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.60 ...lscope_pipeline_diagram_1778496234592.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+LaTeX Font Info:    Trying to load font information for T1+pcr on input line 60.
+(c:/texlive/2025/texmf-dist/tex/latex/psnfss/t1pcr.fd
+File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
+)
+
+LaTeX Warning: Citation `pseudo2015' on page 2 undefined on input line 69.
+
+[2]
+
+LaTeX Warning: Reference `tab:claim_levels' on page 3 undefined on input line 100.
+
+
+Underfull \hbox (badness 4673) in paragraph at lines 111--111
 []\T1/ptm/m/n/8 Recognition of spe-cific dataset
  []
 
 
-Underfull \hbox (badness 3386) in paragraph at lines 105--106
+Underfull \hbox (badness 3386) in paragraph at lines 112--113
 []\T1/ptm/m/n/8 Direct mea-sure-ment of in-ter-nal
  []
 
 
-Underfull \hbox (badness 1902) in paragraph at lines 106--106
+Underfull \hbox (badness 1902) in paragraph at lines 113--113
 []\T1/ptm/m/n/8 No ev-i-dence found to cap the
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 119--120
+Underfull \hbox (badness 10000) in paragraph at lines 126--127
 []\T1/ptm/b/n/8 LabelScope
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 121--122
+Underfull \hbox (badness 10000) in paragraph at lines 128--129
 []\T1/ptm/m/n/8 Protocol
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 122--123
+Underfull \hbox (badness 10000) in paragraph at lines 129--130
 []\T1/ptm/m/n/8 Resolution
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 123--123
+Underfull \hbox (badness 10000) in paragraph at lines 130--130
 []\T1/ptm/m/n/8 Motion-sensitive phys-i-ol-ogy
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 123--124
+Underfull \hbox (badness 10000) in paragraph at lines 130--131
 []\T1/ptm/m/n/8 Behavioral-
  []
 
 
-Underfull \hbox (badness 6316) in paragraph at lines 124--124
+Underfull \hbox (badness 6316) in paragraph at lines 131--131
 []\T1/ptm/m/n/8 Within-subject win-dows $\OMS/cmsy/m/n/8 !$
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 124--125
+Underfull \hbox (badness 10000) in paragraph at lines 131--132
 []\T1/ptm/m/n/8 Pseudo-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 125--126
+Underfull \hbox (badness 10000) in paragraph at lines 132--133
 []\T1/ptm/m/n/8 Unsupported
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 125--126
+Underfull \hbox (badness 10000) in paragraph at lines 132--133
 \T1/ptm/m/n/8 gen-er-al-iza-
  []
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
+
+LaTeX Warning: Reference `sec:discussion' on page 3 undefined on input line 137.
+
+
+LaTeX Warning: Reference `tab:sensors' on page 3 undefined on input line 142.
+
+
+LaTeX Warning: Citation `neurokit2021' on page 3 undefined on input line 142.
+
+
+LaTeX Warning: Citation `greco2016' on page 3 undefined on input line 144.
+
+
+LaTeX Warning: Citation `neurokit2021' on page 3 undefined on input line 144.
+
+
+LaTeX Warning: Citation `cacioppo2007' on page 3 undefined on input line 147.
+
 [3]
-LaTeX Font Info:    Trying to load font information for T1+pcr on input line 174.
- (c:/texlive/2025/texmf-dist/tex/latex/psnfss/t1pcr.fd
-File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
-)
+
+LaTeX Warning: Citation `swell2014' on page 4 undefined on input line 168.
+
+
+LaTeX Warning: Reference `tab:swell_ra' on page 4 undefined on input line 171.
+
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
+LaTeX Warning: Citation `wesad2018' on page 4 undefined on input line 207.
+
+
+LaTeX Warning: Reference `tab:wesad_pa' on page 4 undefined on input line 216.
+
+
 LaTeX Warning: `h' float specifier changed to `ht'.
 
+[4]
 
-Underfull \vbox (badness 1342) has occurred while \output is active []
+LaTeX Warning: Reference `tab:wesad_sa' on page 5 undefined on input line 244.
 
- [4]
-Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 242.
 
-Overfull \hbox (73.70337pt too wide) in paragraph at lines 313--323
+Overfull \hbox (54.48694pt too wide) in paragraph at lines 250--260
  [][] 
  []
 
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 277.
 
-LaTeX Warning: `h' float specifier changed to `ht'.
+LaTeX Warning: Reference `tab:sensors' on page 5 undefined on input line 342.
 
 
-LaTeX Warning: `h' float specifier changed to `ht'.
+LaTeX Warning: Reference `tab:extraction' on page 5 undefined on input line 342.
 
 [5]
-Overfull \hbox (65.07457pt too wide) in paragraph at lines 352--362
+Overfull \hbox (73.70337pt too wide) in paragraph at lines 348--358
  [][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 382--382
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+LaTeX Warning: Reference `tab:reporting_comparison' on page 6 undefined on input line 381.
+
+
+LaTeX Warning: File `accuracy_vs_claim_cap_comparison_1778496272032.png' not found on input line 385.
+
+
+c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_Package/labelscope_manuscript.tex:385: Package pdftex.def Error: File `accuracy_vs_claim_cap_comparison_1778496272032.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.385 ...s_claim_cap_comparison_1778496272032.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: Citation `wesad2018' on page 6 undefined on input line 392.
+
+
+Overfull \hbox (65.07457pt too wide) in paragraph at lines 395--405
+ [][] 
+ []
+
+[6]
+
+LaTeX Warning: Reference `tab:action_policy' on page 7 undefined on input line 417.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 425--425
 []\T1/ptm/b/n/8 Permitted
  []
 
 
-Underfull \hbox (badness 6428) in paragraph at lines 382--382
+Underfull \hbox (badness 6428) in paragraph at lines 425--425
 []\T1/ptm/b/n/8 Prohibited Ac-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 384--384
+Underfull \hbox (badness 10000) in paragraph at lines 427--427
 []\T1/ptm/m/n/8 Offline dataset
  []
 
 
-Underfull \hbox (badness 6332) in paragraph at lines 384--384
+Underfull \hbox (badness 6332) in paragraph at lines 427--427
 []\T1/ptm/m/n/8 Real-time adap-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 384--385
+Underfull \hbox (badness 10000) in paragraph at lines 427--428
 []\T1/ptm/m/n/8 No minute-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 385--385
+Underfull \hbox (badness 10000) in paragraph at lines 428--428
 []\T1/ptm/m/n/8 Dataset-specific
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 385--385
+Underfull \hbox (badness 10000) in paragraph at lines 428--428
 []\T1/ptm/m/n/8 Psych. state
  []
 
 
-Underfull \hbox (badness 1831) in paragraph at lines 385--386
+Underfull \hbox (badness 1831) in paragraph at lines 428--429
 []\T1/ptm/m/n/8 No stress in-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 386--386
+Underfull \hbox (badness 10000) in paragraph at lines 429--429
 []\T1/ptm/m/n/8 Behavior-aware
  []
 
 
-Underfull \hbox (badness 1577) in paragraph at lines 386--386
+Underfull \hbox (badness 1577) in paragraph at lines 429--429
 []\T1/ptm/m/n/8 Internal-state in-
  []
 
 
-Overfull \hbox (4.31764pt too wide) in paragraph at lines 386--387
+Overfull \hbox (4.31764pt too wide) in paragraph at lines 429--430
 []\T1/ptm/m/n/8 Posture/activity-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 387--387
+Underfull \hbox (badness 10000) in paragraph at lines 430--430
 []\T1/ptm/m/n/8 Cautious state-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 387--387
+Underfull \hbox (badness 10000) in paragraph at lines 430--430
 \T1/ptm/m/n/8 contingent
  []
 
 
-Underfull \hbox (badness 1558) in paragraph at lines 387--387
+Underfull \hbox (badness 1558) in paragraph at lines 430--430
 []\T1/ptm/m/n/8 Ground-truth di-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 387--388
+Underfull \hbox (badness 10000) in paragraph at lines 430--431
 []\T1/ptm/m/n/8 Adaptive
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 387--388
+Underfull \hbox (badness 10000) in paragraph at lines 430--431
 \T1/ptm/m/n/8 work-load
  []
 
-[6]
-Overfull \hbox (117.40536pt too wide) in paragraph at lines 464--471
+
+LaTeX Warning: Reference `tab:pa_sensitivity' on page 7 undefined on input line 443.
+
+[7]
+
+LaTeX Warning: Reference `tab:features' on page 8 undefined on input line 475.
+
+
+LaTeX Warning: Reference `tab:covariates' on page 8 undefined on input line 475.
+
+
+Overfull \hbox (117.40536pt too wide) in paragraph at lines 507--514
  [][] 
  []
 
-[7] [8
+[8] [9
 
 ] (./labelscope_manuscript.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
-Package rerunfilecheck Info: File `labelscope_manuscript.out' has not changed.
-(rerunfilecheck)             Checksum: 3110B3EBA21028947190606A5C494098;7042.
+
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package rerunfilecheck Warning: File `labelscope_manuscript.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `labelscope_manuscript.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  3110B3EBA21028947190606A5C494098;7042.
  ) 
 Here is how much of TeX's memory you used:
- 13380 strings out of 467533
- 202693 string characters out of 5423669
- 651619 words of memory out of 5000000
- 41948 multiletter control sequences out of 15000+600000
+ 13411 strings out of 467533
+ 205613 string characters out of 5423669
+ 648610 words of memory out of 5000000
+ 41980 multiletter control sequences out of 15000+600000
  754455 words of font info for 183 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,13n,79p,1944b,545s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,13n,79p,1970b,520s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on labelscope_manuscript.pdf (8 pages, 311487 bytes).
+Output written on labelscope_manuscript.pdf (9 pages, 313866 bytes).
 PDF statistics:
- 465 PDF objects out of 1000 (max. 8388607)
- 402 compressed objects within 5 object streams
- 140 named destinations out of 1000 (max. 500000)
- 257 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 335 PDF objects out of 1000 (max. 8388607)
+ 273 compressed objects within 3 object streams
+ 145 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

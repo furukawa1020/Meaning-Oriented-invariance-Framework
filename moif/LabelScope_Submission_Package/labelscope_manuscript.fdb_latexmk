@@ -1,6 +1,7 @@
 # Fdb version 4
-["pdflatex"] 1778495462.40053 "c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_Package/labelscope_manuscript.tex" "labelscope_manuscript.pdf" "labelscope_manuscript" 1778495463.76581 0
-  "c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_Package/labelscope_manuscript.tex" 1778495462 45870 800dd7ccff9f18cc02794b1dc912c7c4 ""
+["pdflatex"] 1778496299.50605 "c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_Package/labelscope_manuscript.tex" "labelscope_manuscript.pdf" "labelscope_manuscript" 1778496300.87508 2
+  "accuracy_vs_claim_cap_comparison_1778496272032.png" 0 -1 0 ""
+  "c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_Package/labelscope_manuscript.tex" 1778496293 48066 e065cf77d000279b0b70e39b8cc27a51 ""
   "c:/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc" 1770093395 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "c:/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1770094395 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/adobe/courier/pcrr8r.tfm" 1770092863 1292 bd42be2f344128bff6d35d98474adfe3 ""
@@ -151,9 +152,10 @@
   "c:/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1770103547 5587484 49bd08ff372a6985d7d70778694ddaac ""
   "c:/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1770103868 3636162 afd28e82f1bc0291a2e045cd3ffa4474 ""
   "c:/texlive/2025/texmf.cnf" 1770103504 713 614551405fc44b98efbf516466e3c909 ""
-  "labelscope_manuscript.aux" 1778495463 9888 4aa670660f2859b35eb6e3eb884e1bab "pdflatex"
-  "labelscope_manuscript.out" 1778495463 7042 3110b3eba21028947190606a5c494098 "pdflatex"
-  "labelscope_manuscript.tex" 1778495462 45870 800dd7ccff9f18cc02794b1dc912c7c4 ""
+  "labelscope_manuscript.aux" 1778496300 11985 f8c734be6d45649683aebc6ec210bbbe "pdflatex"
+  "labelscope_manuscript.out" 1778496300 7042 3110b3eba21028947190606a5c494098 "pdflatex"
+  "labelscope_manuscript.tex" 1778496293 48066 e065cf77d000279b0b70e39b8cc27a51 ""
+  "labelscope_pipeline_diagram_1778496234592.png" 0 -1 0 ""
   (generated)
   "labelscope_manuscript.aux"
   "labelscope_manuscript.log"
