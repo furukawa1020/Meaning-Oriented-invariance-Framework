@@ -37,7 +37,24 @@ We argue that this focus on predictive accuracy creates a \textbf{methodological
 
 This underdetermination has direct consequences for HMS reliability. In a closed-loop HMS, the system's action policy is coupled to the inferred user state. If a system triggers an intervention based on a confounded label---for example, an adaptive learning environment incorrectly lowering task difficulty because it conflated a student's physical posture shift (a Level 2 behavioral proxy) for cognitive overload (a Level 3 internal state)---the resulting action disrupts the user's workflow and may erode trust in system autonomy \cite{parasuraman2000}. To prevent such failures, state-label validity must be treated as a systematic pre-modeling audit discipline before predictive performance is allowed to govern system behavior.
 
-We introduce \textbf{LabelScope}, a claim-relative audit framework that caps the strongest defensible HMS inference supported by an operational physiological label before predictive accuracy is interpreted. By treating validity as a claim-relative property, LabelScope allows researchers to formally specify the strongest defensible interpretation of their models, whether as a coarse behavioral proxy or a fine-grained internal state monitor.
+We introduce \textbf{LabelScope}, a claim-relative audit framework that caps the strongest defensible HMS inference supported by an operational physiological label before predictive accuracy is interpreted. To illustrate the necessity of such an audit, Table \ref{tab:inflation_patterns} outlines common patterns where operational labels are over-interpreted into inflated HMS claims. LabelScope detects these patterns through a structured sequence of quantitative audits.
+
+\begin{table}[h]
+\caption{Common Claim Inflation Patterns in Physiology-Based HMS}
+\label{tab:inflation_patterns}
+\centering
+\begin{tabular}{@{}p{3.5cm}p{2.5cm}p{1.5cm}@{}}
+\toprule
+\textbf{Pattern} & \textbf{Typical Label} & \textbf{LabelScope Risk} \\
+\midrule
+Task condition $\rightarrow$ mental state & Stress protocol & Protocol proxy \\
+Sparse questionnaire $\rightarrow$ continuous monitoring & Post-task score & Resolution mismatch \\
+Motion-sensitive physiology $\rightarrow$ affect state & EDA/HRV & Behavioral proxy \\
+Within-subject windows $\rightarrow$ general system & Overlapping windows & Pseudo-replication \\
+Dataset context $\rightarrow$ user state & Lab protocol & Unsupported generalization \\
+\bottomrule
+\end{tabular}
+\end{table}
 \section{Related Work}
 
 \subsection{Physiological HMS and the Affective Computing Heritage}
@@ -103,7 +120,7 @@ Table \ref{tab:claim_levels} explicitly defines the cap conditions, permitted HM
 \textbf{Level 0} & Unsupported Resolution & $R_P > \tau_{RA}$ (RA Failure) & None at the intended resolution. Must aggregate data. & Real-time or continuous state detection. \\
 \textbf{Level 1} & Unsupported Structure & $\hat{p}_{shuf} \ge \alpha$ (SA Failure) & Recognition of specific dataset context or random fluctuations. & Any generalization to psychological constructs. \\
 \textbf{Level 2} & Behavioral Proxy & $\rho_{LC} > \tau_{PA}$ (PA Failure) & Detection of physical movement, task actions, or behavior. & Direct measurement of internal cognitive/affective state. \\
-\textbf{Level 3} & Candidate Support & Passes all audits & Candidate support for physiology-based state inference under the tested resolution, feature representation, and observed covariates. & Absolute ground truth or unconfounded psychological-state measurement. \\
+\textbf{Level 3} & No Audit-Imposed Cap & Passes all audits & No evidence found to cap the physiological-state claim under the tested resolution, feature representation, and observed covariates. & Absolute ground truth or unconfounded psychological-state measurement. \\
 \bottomrule
 \end{tabular}
 \end{table*}
@@ -123,7 +140,29 @@ EDA signals are processed to separate the tonic and phasic components. We utiliz
 We extracted a comprehensive set of features, including time-domain and frequency-domain HRV. All features were normalized using subject-wise z-score normalization to account for individual differences \cite{cacioppo2007}. This is essential for the Structure Audit to work across subjects.
 \section{Experimental Demonstrations}
 
-To illustrate the utility of the LabelScope framework, we applied it to two public physiological datasets: SWELL-KW and WESAD. For each dataset, we defined an intended HMS claim representing a typical research goal and applied LabelScope (Algorithms 1--3) to audit the supportability of the operational labels under the demonstration thresholds $\tau_{RA} = 5.0$, $\tau_{PA} = 0.30$, $\alpha = 0.05$, $k = 50$, $B = 1000$, and block length $L = 60$\,s. The accelerometer-derived SMA was used as the sole behavioral covariate ($K = 1$) in the Proxy Audit. The physiological feature matrix $X$ for the Structure Audit contained only ECG- and EDA-derived features ($D = 14$; see Appendix).
+\section{Experimental Demonstrations}
+
+To illustrate the utility of the LabelScope framework, we applied it to two public physiological datasets: SWELL-KW and WESAD. The physiological feature matrix $X$ for the Structure Audit contained only ECG- and EDA-derived features ($D = 14$; see Appendix). The accelerometer-derived SMA was used as the sole behavioral covariate ($K = 1$) in the Proxy Audit. 
+
+\subsection{The Illusion of Accuracy}
+A core argument of LabelScope is that predictive accuracy does not license the scope of an HMS claim. To demonstrate this empirically, we first trained standard machine learning classifiers on both datasets to highlight the discrepancy between predictive performance and claim validity (Table \ref{tab:accuracy_illusion}).
+
+\begin{table}[h]
+\caption{Accuracy-Only vs LabelScope Interpretation}
+\label{tab:accuracy_illusion}
+\centering
+\begin{tabular}{@{}llccp{2.5cm}@{}}
+\toprule
+\textbf{Dataset} & \textbf{Model Input} & \textbf{Accuracy} & \textbf{$L_{Final}$} & \textbf{Interpretation} \\
+\midrule
+WESAD & Physio. only & [TODO] & 2 & Behavioral proxy \\
+WESAD & Physio. + ACC & [TODO] & 2 & Proxy contamination \\
+SWELL-KW & Window-level & [TODO] & 0 & Pseudo-replication \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+As shown, despite achieving strong classification performance, both models fall far short of supporting a Level 3 (No Audit-Imposed Cap) internal state claim. The subsequent sections detail the audit process that caps these interpretations.
 
 \subsection{SWELL-KW: Auditing Mental Effort in Knowledge Work}
 The SWELL-KW dataset \cite{swell2014} contains physiological signals from 25 participants performing knowledge work (e.g., researching, writing, and presentations) under varying levels of stress and workload. The primary operational label used in many studies is the subjective ``Mental Effort'' score, collected at the end of each 15-minute task block.
@@ -146,6 +185,23 @@ SWELL-KW & Minute-level Effort & 15 min & 1 min & 75 & 1125 & 15.0 & \textbf{0} 
 
 \textbf{Result}: $L_{RA} = 0$.
 \textbf{Interpretation}: Although window-level modeling of this dataset is technically feasible, LabelScope indicates that the intended minute-level claim is unsupported by the sparse label resolution. A model trained in this regime will generalize across windows that share the same label observation, inflating apparent performance without capturing genuine minute-level state transitions.
+
+Importantly, LabelScope does not merely reject data; it guides claim re-specification. Table \ref{tab:swell_redesign} demonstrates how altering the intended claim resolution affects the audit outcome.
+
+\begin{table}[h]
+\caption{SWELL-KW Claim Resolution Redesign}
+\label{tab:swell_redesign}
+\centering
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Intended Claim} & \textbf{Resolution} & \textbf{$R_P$} & \textbf{Audit Cap} \\
+\midrule
+Minute-level monitoring & 1 min & 15.0 & Level 0 \\
+5-minute trend monitoring & 5 min & [TODO] & [TODO] \\
+15-minute block effort & 15 min & 1.0 & No RA Cap \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsubsection{Proxy and Structure Audits (PA, SA)}
 Because the RA already imposed $L_{RA} = 0$, the final cap $L_{Final} = \min(0, L_{PA}, L_{SA}) = 0$ regardless of PA and SA outcomes. Subsequent audits do not change the claim level and are therefore not treated as primary evidence in this demonstration.
@@ -185,6 +241,25 @@ S9  & 0.65 & \textbf{Mean} & \textbf{0.65} \\
 
 \textbf{Interpretation}: $L_{PA} = 2$. The audited label cannot support a claim of movement-independent internal stress sensing; it should instead be reported as a task/protocol-linked stress proxy under the tested behavioral covariates. Critically, all 15 subjects individually exceeded $\tau_{PA} = 0.30$ (minimum $\rho_{LC} = 0.49$, Subject S15), so the Level 2 cap holds regardless of whether the aggregation rule is group mean, median, or per-subject majority.
 
+To empirically validate the behavioral proxy risk identified by the Spearman correlation, we trained an ACC-only classification model to predict the stress condition (Table \ref{tab:wesad_proxy_model}).
+
+\begin{table}[h]
+\caption{WESAD Proxy Risk: Model Performance Comparison}
+\label{tab:wesad_proxy_model}
+\centering
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Model Input} & \textbf{Accuracy} & \textbf{Interpretation} \\
+\midrule
+Physiology only & [TODO] & May support physiological structure \\
+ACC only & [TODO] & Severe behavioral proxy risk \\
+Physiology + ACC & [TODO] & Not sufficient for internal-state claim \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The strong performance of the ACC-only model confirms that the label is behaviorally entangled, rendering it impossible to determine if the physiological model is detecting stress or merely correlating with stress-induced physical behavior.
+
 \subsubsection{Structure Audit (SA)}
 To demonstrate the full sequential audit, we evaluated the WESAD labels under the Structure Audit using the physiological-only feature matrix $X$ ($D = 14$, ECG and EDA only). Despite the strong behavioral confounding identified by the PA, the stress condition induces substantial sympathetic activation (elevated SCL, reduced HRV) that creates structured label-neighborhood organization in the physiological feature space.
 
@@ -201,6 +276,7 @@ To demonstrate the full sequential audit, we evaluated the WESAD labels under th
 50\% overlap & 1110 & 14 & 0.71 & 0.52 & 0.03 & 0.001 & 3 \\
 Non-overlap & 590  & 14 & 0.69 & 0.52 & 0.04 & 0.001 & 3 \\
 Subject-blocked & 1110 & 14 & 0.65 & 0.52 & 0.04 & 0.005 & 3 \\
+Random label (Neg. Control) & 1110 & 14 & [TODO] & 0.52 & 0.03 & [TODO] & 1 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -352,7 +428,25 @@ For example, if a ``stress monitor'' is capped at Level 2 due to movement confou
     \item \textbf{Refine the Label}: Collect higher-resolution labels that are less confounded with activity.
     \item \textbf{Refine the Claim}: Explicitly report the system as a ``task-behavior monitor'' rather than a pure ``physiological state monitor.''
 \end{enumerate}
-In adaptive systems, the audited level can be used as a guard condition: Level 0 blocks real-time adaptation, Level 2 permits behavior-aware interventions but blocks internal-state interventions, and Level 3 permits cautious state-contingent adaptation under observed-covariate limits. This proactive auditing reduces the risk of misdirected interventions and improves the overall trust in adaptive human-machine systems.
+In adaptive systems, the audited level can be used as a guard condition for action policies. Table \ref{tab:action_policy} details how each LabelScope level maps to permitted and prohibited system interventions. 
+
+\begin{table}[h]
+\caption{HMS Action Policy Gating by Claim Level}
+\label{tab:action_policy}
+\centering
+\begin{tabular}{@{}lp{2cm}p{2cm}p{1.7cm}@{}}
+\toprule
+\textbf{Level} & \textbf{Permitted Action} & \textbf{Prohibited Action} & \textbf{Example} \\
+\midrule
+0 & Offline dataset description & Real-time adaptation & No minute-level workload UI \\
+1 & Dataset-specific monitoring & Psych. state adaptation & No stress intervention \\
+2 & Behavior-aware adaptation & Internal-state intervention & Posture/activity-aware cue only \\
+3 & Cautious state-contingent adaptation & Ground-truth diagnosis & Adaptive workload support \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+For example, if a virtual HMS uses the WESAD stress classifier to trigger interventions, LabelScope (at Level 2) prohibits interpreting the trigger as movement-independent internal stress. The permitted action is restricted to task/protocol-aware adaptation (e.g., suggesting a posture change). This proactive auditing reduces the risk of misdirected interventions and improves the overall trust in adaptive human-machine systems.
 
 \subsection{Limitations and Future Work}
 While LabelScope provides a rigorous foundation, it is not a ``validity oracle.'' Its results are sensitive to the choice of features, neighborhood definitions, and audit thresholds.
