@@ -110,7 +110,7 @@ Table \ref{tab:claim_levels} explicitly defines the cap conditions, permitted HM
 
 It is critical to emphasize the \textbf{relativity of the claim-cap}: the audit outcome is strictly relative to the specifically defined operational label and feature resolution. If a researcher alters the label definition (e.g., aggregating from a ``minute-level'' state to a ``block-level'' state), the pseudo-replication ratio ($R_P$) and the behavioral correlation ($\rho_{LC}$) fundamentally change. Therefore, the audit pipeline must be re-run, potentially resulting in a different cap. The cap is not an absolute property of the underlying psychological construct, but a bounded property of the specific label-feature pair evaluated.
 
-The thresholds $\tau_{RA}$, $\tau_{PA}$, and $\alpha$ are configurable defaults rather than universal constants; their appropriate values are domain-dependent. In the demonstrations that follow, we set $\tau_{RA} = 5.0$, $\tau_{PA} = 0.30$, and $\alpha = 0.05$ as conservative starting points, and discuss threshold standardization considerations in Section~\ref{sec:discussion}.
+The thresholds $\tau_{RA}$, $\tau_{PA}$, and $\alpha$ are configurable defaults rather than universal constants; their appropriate values are domain-dependent. In the demonstrations that follow, we set $\tau_{RA} = 5.0$, $\tau_{PA} = 0.30$, and $\alpha = 0.05$ as conservative starting points. We use $\tau_{PA} = 0.30$ because correlations above this range represent at least moderate behavioral association and are therefore treated conservatively for state-claim auditing. We discuss threshold standardization considerations in Section~\ref{sec:discussion}.
 
 \section{Signal Processing and Feature Engineering}
 
@@ -158,7 +158,7 @@ The intended claim was continuous sensing of internal stress. However, many of t
 \begin{equation}
 \text{SMA} = \frac{1}{T}\int_0^T\bigl(|a_x(t)|+|a_y(t)|+|a_z(t)|\bigr)\,dt
 \end{equation}
-where gravity was subtracted per-axis before summing. The proxy index $\rho_{LC} = |\mathrm{Spearman}(y, \mathrm{SMA})|$ was computed subject-wise over $\sim$60--90 sliding windows per subject (50\% overlap).
+where gravity was removed by subtracting the within-window mean from each axis before computing SMA. The proxy index $\rho_{LC} = |\mathrm{Spearman}(y, \mathrm{SMA})|$ was computed subject-wise over $\sim$60--90 sliding windows per subject (50\% overlap).
 
 \textbf{Result}: $\rho_{LC}$ values were computed subject-wise; Table \ref{tab:wesad_pa} reports individual Spearman correlations. The group mean was $\rho_{LC} = 0.65$ ($\sigma = 0.12$, 95\% CI $[0.59, 0.71]$).
 
@@ -200,6 +200,7 @@ To demonstrate the full sequential audit, we evaluated the WESAD labels under th
 \midrule
 50\% overlap & 1110 & 14 & 0.71 & 0.52 & 0.03 & 0.001 & 3 \\
 Non-overlap & 590  & 14 & 0.69 & 0.52 & 0.04 & 0.001 & 3 \\
+Subject-blocked & 1110 & 14 & 0.65 & 0.52 & 0.04 & 0.005 & 3 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -216,7 +217,7 @@ In each case, LabelScope provided a rule-based cap on the defensible HMS claim, 
 \section{Audit Implementation Details}
 
 \subsection{Algorithmic Procedures}
-The core logic of the LabelScope audits is formalized in Algorithms 1--3. These procedures are model-independent and reproducible under fixed preprocessing parameters and permutation seeds. For the experimental demonstrations, the following hyperparameters were utilized: k-NN neighborhood size $k=50$, number of permutations $B=1000$, and block-shuffling length $L=60$ seconds.
+The core logic of the LabelScope audits is formalized in Algorithms 1--3. These procedures are model-independent and designed to be reproducible under fixed preprocessing parameters and permutation seeds. For the experimental demonstrations, the following hyperparameters were utilized: k-NN neighborhood size $k=50$, number of permutations $B=1000$, and block-shuffling length $L=60$ seconds.
 
 \begin{algorithm}
 \caption{Resolution Audit (RA) Procedure}
@@ -331,10 +332,10 @@ Table \ref{tab:reporting_comparison} illustrates how LabelScope changes the inte
 \centering
 \begin{tabular}{@{}lll@{}}
 \toprule
-\textbf{Aspect} & \textbf{Without Audit} & \textbf{With LabelScope} \\
+\textbf{Aspect} & \textbf{Accuracy-only reporting} & \textbf{With LabelScope} \\
 \midrule
 Reported metric & Classification performance & Performance metric + $L_{Final} = 2$ \\
-Potential interpretation & ``Stress detector'' & Task-condition proxy \\
+Potential over-interpretation & ``Stress detector'' & Task-condition proxy \\
 Prohibited claim & (unspecified) & Internal state monitor \\
 Recommended next step & (unspecified) & Refine hardware or restate claim \\
 \bottomrule
@@ -427,7 +428,7 @@ EDA (Phasic) & SCR AUC & Area under the curve of the phasic component. \\
 \toprule
 Source & Feature & Description \\
 \midrule
-ACC (Wrist) & SMA & $\frac{1}{T}\int_0^T(|a_x|+|a_y|+|a_z|)dt$; gravity-subtracted per-axis. \\
+ACC (Wrist) & SMA & $\frac{1}{T}\int_0^T(|a_x|+|a_y|+|a_z|)dt$; gravity removed via within-window mean subtraction. \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -480,7 +481,7 @@ ACC (Wrist) & SMA & $\frac{1}{T}\int_0^T(|a_x|+|a_y|+|a_z|)dt$; gravity-subtract
 \end{thebibliography}
 
 \section*{Data and Code Availability}
-The WESAD and SWELL-KW datasets are publicly available. We support reproducible auditing under fixed preprocessing parameters and permutation seeds. The implementation uses NeuroKit2 (v0.2.1) and cvxEDA. Code for the demonstrations will be made available upon publication.
+The WESAD and SWELL-KW datasets are publicly available. We provide the preprocessing configuration, exact feature lists, and auditing scripts in the supplementary material to support peer review. LabelScope is designed to be reproducible under fixed preprocessing parameters and permutation seeds. The implementation uses NeuroKit2 (v0.2.1) and cvxEDA.
 
 \section*{Author Biographies}
 \textbf{Kotaro Furukawa} is currently pursuing the B.S. degree. Their research interests include affective computing, physiological signal processing, and human-machine systems.
