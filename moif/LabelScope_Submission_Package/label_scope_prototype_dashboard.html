@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LabelScope Audit Dashboard</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --accent: #38bdf8;
+            --text: #f8fafc;
+            --fail: #ef4444;
+            --warn: #f59e0b;
+            --pass: #10b981;
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 2rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .card { background: var(--card); padding: 1.5rem; border-radius: 12px; border: 1px solid #334155; }
+        h1 { font-size: 1.5rem; margin-bottom: 2rem; color: var(--accent); }
+        h2 { font-size: 1rem; margin-top: 0; opacity: 0.8; }
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.9rem; }
+        th, td { text-align: left; padding: 0.75rem; border-bottom: 1px solid #334155; }
+        .status { padding: 0.25rem 0.5rem; border-radius: 4px; font-weight: bold; }
+        .status-fail { background: #450a0a; color: #f87171; }
+        .status-warn { background: #451a03; color: #fbbf24; }
+        .status-pass { background: #064e3b; color: #34d399; }
+        .formula { font-family: 'JetBrains Mono', monospace; color: var(--accent); font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+    <h1>LabelScope Audit Dashboard (UI Mockup)</h1>
+    
+    <div class="grid">
+        <div class="card">
+            <h2>Current Audit Summary</h2>
+            <div style="font-size: 2rem; font-weight: bold; margin: 1rem 0;">Level 2</div>
+            <div class="status status-warn">Capped by Proxy Confounding</div>
+        </div>
+        
+        <div class="card" style="grid-column: span 2;">
+            <h2>Audit Modules (Metric View)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Module</th>
+                        <th>Metric</th>
+                        <th>Formula</th>
+                        <th>Trigger</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Resolution Audit</td>
+                        <td>R_P</td>
+                        <td class="formula">N_model / N_ind</td>
+                        <td>R_P >= tau_R</td>
+                        <td><span class="status status-pass">Pass</span></td>
+                    </tr>
+                    <tr>
+                        <td>Proxy Audit</td>
+                        <td>rho_LC</td>
+                        <td class="formula">max |Assoc(y, c)|</td>
+                        <td>rho_LC >= tau_PA</td>
+                        <td><span class="status status-fail">Fail (Level 2)</span></td>
+                    </tr>
+                    <tr>
+                        <td>SA-Structure</td>
+                        <td>p_hat_shuf</td>
+                        <td class="formula">(1+count(T_shuf >= T_obs))/(B+1)</td>
+                        <td>p_hat_shuf >= alpha</td>
+                        <td><span class="status status-pass">Pass</span></td>
+                    </tr>
+                    <tr>
+                        <td>SA-Ambiguity</td>
+                        <td>A_local</td>
+                        <td class="formula">Local Conflict Rate</td>
+                        <td>A_low <= A_local <= A_high</td>
+                        <td><span class="status status-warn">Level 3 Candidate</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top: 1.5rem;">
+        <h2>Diagnostic Insight</h2>
+        <p>The candidate label <strong>'MentalEffort'</strong> shows significant association with <strong>'TaskIntensity'</strong> (rho_LC = 0.72). 
+        While the physiological structure test passed (p_hat_shuf < 0.01), the claim must be capped at <strong>Level 2</strong> to avoid overclaiming internal state modeling when activity proxies are dominant.</p>
+    </div>
+</body>
+</html>
