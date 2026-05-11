@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.3)  11 MAY 2026 22:41
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.3)  11 MAY 2026 22:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -556,7 +556,7 @@ Overfull \hbox (19.16576pt too wide) in paragraph at lines 70--78
  []
 
 <C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4352
-/fig1_pipeline_1778498543035.png, id=160, 246.6816pt x 246.6816pt>
+/fig1_pipeline_1778498543035.png, id=159, 246.6816pt x 246.6816pt>
 File: C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebc
 b4352/fig1_pipeline_1778498543035.png Graphic file (type png)
 <use C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb
@@ -583,13 +583,9 @@ Underfull \hbox (badness 1902) in paragraph at lines 170--170
 []\T1/ptm/m/n/8 No ev-i-dence found to cap the
  []
 
-[3]
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[4]
+[3] [4]
 <C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4352
-/fig2_comparison_1778499261087.png, id=254, 246.6816pt x 246.6816pt>
+/fig2_comparison_1778499261087.png, id=252, 246.6816pt x 246.6816pt>
 File: C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebc
 b4352/fig2_comparison_1778499261087.png Graphic file (type png)
 <use C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb
@@ -602,17 +598,18 @@ e-4952-83ec-ee1bebcb4352/fig2_comparison_1778499261087.png  used on input line
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
+[5]
+Underfull \hbox (badness 1418) in paragraph at lines 396--397
+[]\T1/ptm/m/n/10 This ap-pendix sum-ma-rizes implementation-level de-tails
+ []
 
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[5 <c:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4
-352/fig2_comparison_1778499261087.png>]
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [6] [7
 
-] [8
+ <c:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb435
+2/fig2_comparison_1778499261087.png>] [8
 
 ] (./labelscope_manuscript.aux)
  ***********
@@ -629,7 +626,7 @@ Here is how much of TeX's memory you used:
  41951 multiletter control sequences out of 15000+600000
  754912 words of font info for 182 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,13n,79p,1323b,460s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,13n,79p,1323b,549s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/tex
 live/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2025
 /texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb><c:/texlive/2025/texm
@@ -651,10 +648,10 @@ st/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2025/texmf-dist/f
 onts/type1/urw/times/utmb8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/tim
 es/utmbi8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:
 /texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on labelscope_manuscript.pdf (8 pages, 1186603 bytes).
+Output written on labelscope_manuscript.pdf (8 pages, 1186834 bytes).
 PDF statistics:
- 425 PDF objects out of 1000 (max. 8388607)
- 361 compressed objects within 4 object streams
+ 424 PDF objects out of 1000 (max. 8388607)
+ 360 compressed objects within 4 object streams
  117 named destinations out of 1000 (max. 500000)
  227 words of extra memory for PDF output out of 10000 (max. 10000000)
 
