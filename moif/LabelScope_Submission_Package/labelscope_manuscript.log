@@ -1,9 +1,12 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.3)  11 MAY 2026 21:20
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.3)  11 MAY 2026 21:31
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**labelscope_manuscript.tex
-(./labelscope_manuscript.tex
+**"c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission
+_Package/labelscope_manuscript.tex"
+
+(c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_P
+ackage/labelscope_manuscript.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
 (c:/texlive/2025/texmf-dist/tex/latex/ieeetran/IEEEtran.cls
@@ -483,7 +486,7 @@ LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 149.
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count332
 )
-(./labelscope_manuscript.aux)
+(C:\Users\hatake\.gemini\antigravity\scratch/labelscope_manuscript.aux)
 \openout1 = `labelscope_manuscript.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 16.
@@ -530,7 +533,8 @@ e
 ))
 Package hyperref Info: Link coloring OFF on input line 16.
 
-(./labelscope_manuscript.out) (./labelscope_manuscript.out)
+(C:\Users\hatake\.gemini\antigravity\scratch/labelscope_manuscript.out)
+(C:\Users\hatake\.gemini\antigravity\scratch/labelscope_manuscript.out)
 \@outlinefile=\write3
 \openout3 = `labelscope_manuscript.out'.
 
@@ -556,7 +560,7 @@ Overfull \hbox (19.16576pt too wide) in paragraph at lines 70--78
  []
 
 <C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4352
-/fig1_pipeline_1778498543035.png, id=159, 246.6816pt x 246.6816pt>
+/fig1_pipeline_1778498543035.png, id=164, 246.6816pt x 246.6816pt>
 File: C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebc
 b4352/fig1_pipeline_1778498543035.png Graphic file (type png)
 <use C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb
@@ -680,7 +684,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 303--304
  []
 
 <C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4352
-/fig2_comparison_1778499261087.png, id=242, 246.6816pt x 246.6816pt>
+/fig2_comparison_1778499261087.png, id=250, 246.6816pt x 246.6816pt>
 File: C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebc
 b4352/fig2_comparison_1778499261087.png Graphic file (type png)
 <use C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb
@@ -706,7 +710,8 @@ Overfull \hbox (65.91774pt too wide) in paragraph at lines 385--392
 ] [8
 
 
-] (./labelscope_manuscript.aux)
+]
+(C:\Users\hatake\.gemini\antigravity\scratch/labelscope_manuscript.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -715,13 +720,13 @@ Package rerunfilecheck Info: File `labelscope_manuscript.out' has not changed.
 (rerunfilecheck)             Checksum: A936CA9A16C709CC442CA342948B4947;5899.
  ) 
 Here is how much of TeX's memory you used:
- 13348 strings out of 467533
- 203834 string characters out of 5423669
- 648329 words of memory out of 5000000
- 41947 multiletter control sequences out of 15000+600000
+ 13358 strings out of 467533
+ 204669 string characters out of 5423669
+ 648459 words of memory out of 5000000
+ 41951 multiletter control sequences out of 15000+600000
  753834 words of font info for 181 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,13n,79p,1247b,499s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,13n,79p,1334b,460s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/tex
 live/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2025
 /texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb><c:/texlive/2025/texm
@@ -742,10 +747,11 @@ exlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb><c:/texlive/202
 xmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2025/texmf-dist/fonts/typ
 e1/urw/times/utmbi8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr
 8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on labelscope_manuscript.pdf (8 pages, 1173829 bytes).
+Output written on C:\Users\hatake\.gemini\antigravity\scratch/labelscope_manusc
+ript.pdf (8 pages, 1174806 bytes).
 PDF statistics:
- 412 PDF objects out of 1000 (max. 8388607)
- 350 compressed objects within 4 object streams
- 111 named destinations out of 1000 (max. 500000)
+ 421 PDF objects out of 1000 (max. 8388607)
+ 359 compressed objects within 4 object streams
+ 115 named destinations out of 1000 (max. 500000)
  235 words of extra memory for PDF output out of 10000 (max. 10000000)
 
