@@ -1,4 +1,4 @@
-﻿\documentclass[journal]{IEEEtran}
+\documentclass[journal]{IEEEtran}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath,amssymb,amsfonts}
@@ -21,7 +21,7 @@
 \maketitle
 
 \begin{abstract}
-Physiology-based human-machine systems (HMS) often train predictive models on operational labels such as questionnaire scores, task conditions, behavioral errors, or affective annotations. However, high predictive accuracy does not by itself establish that the target label can support the HMS claim made from the model. A label may be temporally sparse, behaviorally confounded, or structurally unsupported in physiological feature space. In such cases, model performance may reflect the learnability of an operational proxy rather than evidence for a physiology-grounded user-state claim. This paper introduces LabelScope, a conservative pre-modeling audit framework for claim-relative state-label validity in physiology-based HMS. LabelScope audits whether an operational label can support a specified HMS claim under a given modeling resolution, proxy interpretation, feature representation, and deployment context. The framework consists of Resolution, Proxy, and Structure audit modules, and assigns a capped claim level $L_{Final} \in \{0,1,2,3\}$ using a conservative claim-capping rule. We illustrate LabelScope through worked audit demonstrations using two public physiological datasets: SWELL-KW and WESAD. These demonstrations illustrate how LabelScope caps unsupported claims arising from resolution mismatch and behavioral proxy confounding. LabelScope does not determine whether a psychological state exists or whether a construct is invalid; rather, it specifies a conservative upper bound on the HMS claim supported by the tested operational label, feature representation, and observed covariates. The framework provides a reporting discipline for interpreting predictive accuracy together with audited claim levels in physiology-based HMS research.
+Physiology-based human-machine systems (HMS) often train predictive models on operational labels such as questionnaire scores, task conditions, behavioral errors, or affective annotations. However, high predictive accuracy does not by itself establish that the target label can support the HMS claim made from the model. A label may be temporally sparse, behaviorally entangled, or structurally unsupported in physiological feature space. In such cases, model performance may reflect the learnability of an operational proxy rather than evidence for a physiology-grounded user-state claim. This paper introduces LabelScope, a conservative pre-modeling audit framework for claim-relative state-label validity in physiology-based HMS. LabelScope audits whether an operational label can support a specified HMS claim under a given modeling resolution, proxy interpretation, feature representation, and deployment context. The framework consists of Resolution, Proxy, and Structure audit modules, and assigns a capped claim level $L_{Final} \in \{0,1,2,3\}$ using a conservative claim-capping rule. We illustrate LabelScope through worked audit demonstrations using two public physiological datasets: SWELL-KW and WESAD. These demonstrations illustrate how LabelScope caps unsupported claims arising from resolution mismatch and behavioral-proxy risk. LabelScope does not determine whether a psychological state exists or whether a construct is invalid; rather, it specifies a conservative upper bound on the HMS claim supported by the tested operational label, feature representation, and observed covariates. The framework provides a reporting discipline for interpreting predictive accuracy together with audited claim levels in physiology-based HMS research.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -33,28 +33,12 @@ Physiology-based HMS, State-Label Validity, Claim-Capping, Auditing, Human-Machi
 
 Over the past decade, the rapid advancement of machine learning algorithms and the increasing availability of public physiological datasets have significantly lowered the barrier to entry for building these systems. Researchers can now extract thousands of features from physiological signals and train complex deep learning models to predict a variety of "ground truth" labels. However, as the field has matured, a critical methodological gap has emerged: the tendency to equate predictive accuracy with the validity of the underlying user-state claim. In many HMS studies, a high-accuracy model trained on an operational label---such as a questionnaire score or a specific task condition---is frequently treated as definitive evidence that the system has successfully "recognized" or "detected" the intended psychological state \cite{calvo2010}. 
 
-We argue that this focus on predictive accuracy creates a \textbf{methodological risk} in the interpretation of results. High accuracy measures only the learnability of an operational target within a specific dataset and feature representation. It does not, by itself, justify the scope of the HMS claim made from that model. The central problem addressed in this paper is that operational labels in physiology-based HMS are often underdetermined by the physiological evidence. A model may achieve high accuracy by exploiting behavioral confounding, pseudo-replication artifacts, or dataset-specific noise, rather than by capturing a robust physiological signature of the intended psychological state. 
+We argue that this focus on predictive accuracy creates a \textbf{methodological risk} in the interpretation of results. High accuracy measures only the learnability of an operational target within a specific dataset and feature representation. It does not, by itself, justify the scope of the HMS claim made from that model. The central problem addressed in this paper is that operational labels in physiology-based HMS are often underdetermined by the physiological evidence. A model may achieve high accuracy by exploiting behavioral-proxy risk, pseudo-replication artifacts, or dataset-specific noise, rather than by capturing a robust physiological signature of the intended psychological state. 
 
-This underdetermination has direct consequences for HMS reliability. In a closed-loop HMS, the system's action policy is coupled to the inferred user state. If a system triggers an intervention based on a confounded label---for example, an adaptive learning environment incorrectly lowering task difficulty because it conflated a student's physical posture shift (a Level 2 behavioral proxy) for cognitive overload (a Level 3 internal state)---the resulting action disrupts the user's workflow and may erode trust in system autonomy \cite{parasuraman2000}. To prevent such failures, state-label validity must be treated as a systematic pre-modeling audit discipline before predictive performance is allowed to govern system behavior.
+This underdetermination has direct consequences for HMS reliability. In a closed-loop HMS, the system's action policy is coupled to the inferred user state. If a system triggers an intervention based on an entangled label---for example, an adaptive learning environment incorrectly lowering task difficulty because it conflated a student's physical posture shift (a Level 2 behavioral proxy) for cognitive overload (a Level 3 internal state)---the resulting action disrupts the user's workflow and may erode trust in system autonomy \cite{parasuraman2000}. To prevent such failures, state-label validity must be treated as a systematic pre-modeling audit discipline before predictive performance is allowed to govern system behavior.
 
 We introduce \textbf{LabelScope}, a claim-relative audit framework that caps the strongest defensible HMS inference supported by an operational physiological label before predictive accuracy is interpreted. To illustrate the necessity of such an audit, Table \ref{tab:inflation_patterns} outlines common patterns where operational labels are over-interpreted into inflated HMS claims. LabelScope detects these patterns through a structured sequence of quantitative audits.
 
-\begin{table}[h]
-\caption{Common Claim Inflation Patterns in Physiology-Based HMS}
-\label{tab:inflation_patterns}
-\centering
-\begin{tabular}{@{}p{3.5cm}p{2.5cm}p{1.5cm}@{}}
-\toprule
-\textbf{Pattern} & \textbf{Typical Label} & \textbf{LabelScope Risk} \\
-\midrule
-Task condition $\rightarrow$ mental state & Stress protocol & Protocol proxy \\
-Sparse questionnaire $\rightarrow$ continuous monitoring & Post-task score & Resolution mismatch \\
-Motion-sensitive physiology $\rightarrow$ affect state & EDA/HRV & Behavioral proxy \\
-Within-subject windows $\rightarrow$ general system & Overlapping windows & Pseudo-replication \\
-Dataset context $\rightarrow$ user state & Lab protocol & Unsupported generalization \\
-\bottomrule
-\end{tabular}
-\end{table}
 \section{Related Work}
 
 \subsection{Physiological HMS and the Affective Computing Heritage}
@@ -68,8 +52,7 @@ The ultimate goal of physiological HMS is to enable adaptive automation, where t
 \subsection{Construct Validity and the Ground Truth Problem}
 The problem of ground truth in affective and physiological computing is notoriously difficult \cite{calvo2010}. Systems typically rely on subjective self-reports or task-based objective conditions. This challenge relates to the broader theory of Construct Validity \cite{messick1989}, which emphasizes that validity is a property of the \textit{interpretations} of scores, not the scores themselves. LabelScope does not replace construct validation; it provides computable audit checks for whether an operational label can support a specified HMS claim under a given modeling setup. We treat the operational label as a weak or proxy label \cite{zhou2018} that must be audited for its supportability at a specific resolution before state claims are made.
 
-\subsection{Leakage and Confounding in Physiological ML}
-Recent literature has highlighted severe methodological flaws in physiological ML, particularly data leakage through pseudo-replication (where overlapping windows from the same label observation inflate accuracy) \cite{pseudo2015} and behavioral confounding (where physiological sensors act as high-variance motion detectors) \cite{chiossi2024}. Existing reporting frameworks such as Model Cards \cite{mitchell2019} and Datasheets \cite{gebru2021} document dataset and model properties but do not prescribe an algorithmic bound on the physiological claim that can be supported by a given label. LabelScope addresses this gap by integrating the known failure modes of pseudo-replication and behavioral confounding into a rule-based audit pipeline that outputs a \textbf{claim cap}---a computable ceiling on the HMS claim supported by the tested label, features, and covariates.
+Recent literature has highlighted severe methodological flaws in physiological ML, particularly data leakage through pseudo-replication (where overlapping windows from the same label observation inflate accuracy) \cite{pseudo2015} and behavioral-proxy risk (where physiological sensors act as high-variance motion detectors) \cite{chiossi2024}. Existing reporting frameworks such as Model Cards \cite{mitchell2019} and Datasheets \cite{gebru2021} document dataset and model properties but do not prescribe an algorithmic bound on the physiological claim that can be supported by a given label. LabelScope addresses this gap by integrating the known failure modes of pseudo-replication and behavioral-proxy risk into a rule-based audit pipeline that outputs a \textbf{claim cap}---a computable ceiling on the HMS claim supported by the tested label, features, and covariates.
 \section{The LabelScope Framework}
 
 \subsection{Mathematical Formalization}
@@ -84,12 +67,11 @@ R_P = \frac{N_{samples}}{N_{independent\_observations}}
 \end{equation}
 If $R_P$ exceeds the RA threshold $\tau_{RA}$, the claim is capped at Level 0. This ensures that the modeling resolution matches the information frequency of the labels.
 
-\subsection{Audit Module 2: Proxy Audit (PA)}
-Proxy Audit (PA) detects behavioral confounding. Physiological signals are highly sensitive to physical activity. If an operational label is strongly correlated with these behaviors, the system may be acting as a behavioral proxy detector. We define the proxy index $\rho_{LC}$ as:
+Proxy Audit (PA) detects behavioral-proxy risk. Physiological signals are highly sensitive to physical activity. If an operational label is strongly correlated with these behaviors, the system may be acting as a behavioral proxy detector. We define the proxy index $\rho_{LC}$ as:
 \begin{equation}
 \rho_{LC} = \max_{k \in \{1 \dots K\}} |\mathrm{Corr}(y, c_k)|
 \end{equation}
-If $\rho_{LC}$ exceeds the PA threshold $\tau_{PA}$, the claim is capped at Level 2. This requires including non-physiological sensors (e.g., accelerometers) in the auditing pipeline. It is critical to note that passing the PA only clears the system of \textit{observed} covariates ($C_B$). The PA cannot guarantee the absence of unobserved behavioral or environmental confounders (e.g., unreported postural shifts, room temperature changes). Therefore, a passed PA provides a defensive lower bound on risk, not an absolute guarantee of state purity.
+If $\rho_{LC}$ exceeds the PA threshold $\tau_{PA}$, the claim is capped at Level 2. This requires including non-physiological sensors (e.g., accelerometers) in the auditing pipeline. It is critical to note that passing the PA only clears the system of \textit{observed} covariates ($C_B$). The PA cannot guarantee the absence of unobserved behavioral or environmental entanglements (e.g., unreported postural shifts, room temperature changes). Therefore, a passed PA provides a defensive lower bound on risk, not an absolute guarantee of state purity.
 
 \subsection{Audit Module 3: Structure Audit (SA)}
 Structure Audit (SA) evaluates whether a binary operational label $y \in \{0,1\}^N$ corresponds to non-random local structure in the physiological feature space. For continuous or ordinal labels, the neighborhood mode statistic below must be replaced by an appropriate regression- or rank-based coherence statistic; this paper demonstrates the binary case. We define the test statistic $T_{obs}$ as the $k$-Nearest Neighbors (k-NN) label coherence:
@@ -120,12 +102,29 @@ Table \ref{tab:claim_levels} explicitly defines the cap conditions, permitted HM
 \textbf{Level 0} & Unsupported Resolution & $R_P > \tau_{RA}$ (RA Failure) & None at the intended resolution. Must aggregate data. & Real-time or continuous state detection. \\
 \textbf{Level 1} & Unsupported Structure & $\hat{p}_{shuf} \ge \alpha$ (SA Failure) & Recognition of specific dataset context or random fluctuations. & Any generalization to psychological constructs. \\
 \textbf{Level 2} & Behavioral Proxy & $\rho_{LC} > \tau_{PA}$ (PA Failure) & Detection of physical movement, task actions, or behavior. & Direct measurement of internal cognitive/affective state. \\
-\textbf{Level 3} & No Audit-Imposed Cap & Passes all audits & No evidence found to cap the physiological-state claim under the tested resolution, feature representation, and observed covariates. & Absolute ground truth or unconfounded psychological-state measurement. \\
+\textbf{Level 3} & No Audit-Imposed Cap & Passes all audits & No evidence found to cap the physiological-state claim under the tested resolution, feature representation, and observed covariates. & Absolute ground truth or unentangled psychological-state measurement. \\
 \bottomrule
 \end{tabular}
 \end{table*}
 
 It is critical to emphasize the \textbf{relativity of the claim-cap}: the audit outcome is strictly relative to the specifically defined operational label and feature resolution. If a researcher alters the label definition (e.g., aggregating from a ``minute-level'' state to a ``block-level'' state), the pseudo-replication ratio ($R_P$) and the behavioral correlation ($\rho_{LC}$) fundamentally change. Therefore, the audit pipeline must be re-run, potentially resulting in a different cap. The cap is not an absolute property of the underlying psychological construct, but a bounded property of the specific label-feature pair evaluated.
+
+\begin{table}[h]
+\caption{Common Claim Inflation Patterns in Physiology-Based HMS}
+\label{tab:inflation_patterns}
+\centering
+\begin{tabular}{@{}p{3.5cm}p{2.5cm}p{1.5cm}@{}}
+\toprule
+\textbf{Pattern} & \textbf{Typical Label} & \textbf{LabelScope Risk} \\
+\midrule
+Task condition $\rightarrow$ mental state & Stress protocol & Protocol proxy \\
+Sparse questionnaire $\rightarrow$ continuous monitoring & Post-task score & Resolution mismatch \\
+Motion-sensitive physiology $\rightarrow$ affect state & EDA/HRV & Behavioral-proxy risk \\
+Within-subject windows $\rightarrow$ general system & Overlapping windows & Pseudo-replication \\
+Dataset context $\rightarrow$ user state & Lab protocol & Unsupported generalization \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 The thresholds $\tau_{RA}$, $\tau_{PA}$, and $\alpha$ are configurable defaults rather than universal constants; their appropriate values are domain-dependent. In the demonstrations that follow, we set $\tau_{RA} = 5.0$, $\tau_{PA} = 0.30$, and $\alpha = 0.05$ as conservative starting points. We use $\tau_{PA} = 0.30$ because correlations above this range represent at least moderate behavioral association and are therefore treated conservatively for state-claim auditing. We discuss threshold standardization considerations in Section~\ref{sec:discussion}.
 
@@ -140,29 +139,7 @@ EDA signals are processed to separate the tonic and phasic components. We utiliz
 We extracted a comprehensive set of features, including time-domain and frequency-domain HRV. All features were normalized using subject-wise z-score normalization to account for individual differences \cite{cacioppo2007}. This is essential for the Structure Audit to work across subjects.
 \section{Experimental Demonstrations}
 
-\section{Experimental Demonstrations}
-
 To illustrate the utility of the LabelScope framework, we applied it to two public physiological datasets: SWELL-KW and WESAD. The physiological feature matrix $X$ for the Structure Audit contained only ECG- and EDA-derived features ($D = 14$; see Appendix). The accelerometer-derived SMA was used as the sole behavioral covariate ($K = 1$) in the Proxy Audit. 
-
-\subsection{The Illusion of Accuracy}
-A core argument of LabelScope is that predictive accuracy does not license the scope of an HMS claim. To demonstrate this empirically, we first trained standard machine learning classifiers on both datasets to highlight the discrepancy between predictive performance and claim validity (Table \ref{tab:accuracy_illusion}).
-
-\begin{table}[h]
-\caption{Accuracy-Only vs LabelScope Interpretation}
-\label{tab:accuracy_illusion}
-\centering
-\begin{tabular}{@{}llccp{2.5cm}@{}}
-\toprule
-\textbf{Dataset} & \textbf{Model Input} & \textbf{Accuracy} & \textbf{$L_{Final}$} & \textbf{Interpretation} \\
-\midrule
-WESAD & Physio. only & [TODO] & 2 & Behavioral proxy \\
-WESAD & Physio. + ACC & [TODO] & 2 & Proxy contamination \\
-SWELL-KW & Window-level & [TODO] & 0 & Pseudo-replication \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-As shown, despite achieving strong classification performance, both models fall far short of supporting a Level 3 (No Audit-Imposed Cap) internal state claim. The subsequent sections detail the audit process that caps these interpretations.
 
 \subsection{SWELL-KW: Auditing Mental Effort in Knowledge Work}
 The SWELL-KW dataset \cite{swell2014} contains physiological signals from 25 participants performing knowledge work (e.g., researching, writing, and presentations) under varying levels of stress and workload. The primary operational label used in many studies is the subjective ``Mental Effort'' score, collected at the end of each 15-minute task block.
@@ -185,23 +162,6 @@ SWELL-KW & Minute-level Effort & 15 min & 1 min & 75 & 1125 & 15.0 & \textbf{0} 
 
 \textbf{Result}: $L_{RA} = 0$.
 \textbf{Interpretation}: Although window-level modeling of this dataset is technically feasible, LabelScope indicates that the intended minute-level claim is unsupported by the sparse label resolution. A model trained in this regime will generalize across windows that share the same label observation, inflating apparent performance without capturing genuine minute-level state transitions.
-
-Importantly, LabelScope does not merely reject data; it guides claim re-specification. Table \ref{tab:swell_redesign} demonstrates how altering the intended claim resolution affects the audit outcome.
-
-\begin{table}[h]
-\caption{SWELL-KW Claim Resolution Redesign}
-\label{tab:swell_redesign}
-\centering
-\begin{tabular}{@{}lccc@{}}
-\toprule
-\textbf{Intended Claim} & \textbf{Resolution} & \textbf{$R_P$} & \textbf{Audit Cap} \\
-\midrule
-Minute-level monitoring & 1 min & 15.0 & Level 0 \\
-5-minute trend monitoring & 5 min & [TODO] & [TODO] \\
-15-minute block effort & 15 min & 1.0 & No RA Cap \\
-\bottomrule
-\end{tabular}
-\end{table}
 
 \subsubsection{Proxy and Structure Audits (PA, SA)}
 Because the RA already imposed $L_{RA} = 0$, the final cap $L_{Final} = \min(0, L_{PA}, L_{SA}) = 0$ regardless of PA and SA outcomes. Subsequent audits do not change the claim level and are therefore not treated as primary evidence in this demonstration.
@@ -241,27 +201,10 @@ S9  & 0.65 & \textbf{Mean} & \textbf{0.65} \\
 
 \textbf{Interpretation}: $L_{PA} = 2$. The audited label cannot support a claim of movement-independent internal stress sensing; it should instead be reported as a task/protocol-linked stress proxy under the tested behavioral covariates. Critically, all 15 subjects individually exceeded $\tau_{PA} = 0.30$ (minimum $\rho_{LC} = 0.49$, Subject S15), so the Level 2 cap holds regardless of whether the aggregation rule is group mean, median, or per-subject majority.
 
-To empirically validate the behavioral proxy risk identified by the Spearman correlation, we trained an ACC-only classification model to predict the stress condition (Table \ref{tab:wesad_proxy_model}).
-
-\begin{table}[h]
-\caption{WESAD Proxy Risk: Model Performance Comparison}
-\label{tab:wesad_proxy_model}
-\centering
-\begin{tabular}{@{}lcc@{}}
-\toprule
-\textbf{Model Input} & \textbf{Accuracy} & \textbf{Interpretation} \\
-\midrule
-Physiology only & [TODO] & May support physiological structure \\
-ACC only & [TODO] & Severe behavioral proxy risk \\
-Physiology + ACC & [TODO] & Not sufficient for internal-state claim \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-The strong performance of the ACC-only model confirms that the label is behaviorally entangled, rendering it impossible to determine if the physiological model is detecting stress or merely correlating with stress-induced physical behavior.
+so the Level 2 cap holds regardless of whether the aggregation rule is group mean, median, or per-subject majority.
 
 \subsubsection{Structure Audit (SA)}
-To demonstrate the full sequential audit, we evaluated the WESAD labels under the Structure Audit using the physiological-only feature matrix $X$ ($D = 14$, ECG and EDA only). Despite the strong behavioral confounding identified by the PA, the stress condition induces substantial sympathetic activation (elevated SCL, reduced HRV) that creates structured label-neighborhood organization in the physiological feature space.
+To demonstrate the full sequential audit, we evaluated the WESAD labels under the Structure Audit using the physiological-only feature matrix $X$ ($D = 14$, ECG and EDA only). Despite the strong behavioral-proxy risk identified by the PA, the stress condition induces substantial sympathetic activation (elevated SCL, reduced HRV) that creates structured label-neighborhood organization in the physiological feature space.
 
 \textbf{Result}: Table \ref{tab:wesad_sa} summarizes the SA outcome, including the null distribution mean ($\bar{T}_{null}$) to confirm the observed coherence is well above chance.
 
@@ -276,7 +219,6 @@ To demonstrate the full sequential audit, we evaluated the WESAD labels under th
 50\% overlap & 1110 & 14 & 0.71 & 0.52 & 0.03 & 0.001 & 3 \\
 Non-overlap & 590  & 14 & 0.69 & 0.52 & 0.04 & 0.001 & 3 \\
 Subject-blocked & 1110 & 14 & 0.65 & 0.52 & 0.04 & 0.005 & 3 \\
-Random label (Neg. Control) & 1110 & 14 & [TODO] & 0.52 & 0.03 & [TODO] & 1 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -453,7 +395,7 @@ While LabelScope provides a rigorous foundation, it is not a ``validity oracle.'
 
 \begin{enumerate}
     \item \textbf{Absence of Closed-Loop Evaluation}: The current study evaluates LabelScope only through retrospective audits of public datasets. It does not evaluate the framework in a closed-loop HMS or with human participants. Determining how audit-triggered claim caps affect actual system behavior, user experience, and task performance requires rigorous user studies in future deployments.
-    \item \textbf{Epistemological Limits of the Proxy Audit}: The PA only audits against \textit{observed} covariates ($C_B$). In unrestricted environments, physiological signals can be confounded by unobserved factors (e.g., room temperature, undocumented postural shifts, caffeine intake). A ``Level 3'' claim indicates only that no evidence of confounding was found under the tested covariates; it cannot guarantee the absence of unmeasured confounders. Future work should integrate causal inference techniques to bound the impact of unobserved variables.
+    \item \textbf{Epistemological Limits of the Proxy Audit}: The PA only audits against \textit{observed} covariates ($C_B$). In unrestricted environments, physiological signals can be sensitive to unobserved factors (e.g., room temperature, undocumented postural shifts, caffeine intake). A ``Level 3'' claim indicates only that no evidence of proxy risk was found under the tested covariates; it cannot guarantee the absence of unmeasured entanglements. Future work should integrate causal inference techniques to bound the impact of unobserved variables.
     \item \textbf{Threshold Standardization and Sensitivity}: The default values of $\tau_{RA} = 5.0$ and $\tau_{PA} = 0.30$ were chosen conservatively. Table \ref{tab:pa_sensitivity} reports the PA cap outcome for WESAD across a range of $\tau_{PA}$ values. The Level 2 cap is robust across $\tau_{PA} \in [0.20, 0.60]$ under the group-mean rule, since the group mean ($\rho_{LC} = 0.65$) exceeds all thresholds in this range. At $\tau_{PA} = 0.70$, the group mean no longer exceeds the threshold; however, 6 of 15 subjects individually exceed it, warranting subject-level reporting in that regime.
 \end{enumerate}
 
