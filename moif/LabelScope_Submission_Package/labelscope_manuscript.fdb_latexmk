@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1778501727.42938 "c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_Package/labelscope_manuscript.tex" "labelscope_manuscript.pdf" "labelscope_manuscript" 1778501728.74371 0
-  "c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_Package/labelscope_manuscript.tex" 1778501724 36750 00ed02183c735fc71628dd839e815cb8 ""
+["pdflatex"] 1778503696.12403 "c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_Package/labelscope_manuscript.tex" "labelscope_manuscript.pdf" "labelscope_manuscript" 1778503697.73342 0
+  "c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_Package/labelscope_manuscript.tex" 1778503692 40134 0c45c6f69aff5fca331b60d92371803f ""
   "c:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4352/fig1_pipeline_1778498543035.png" 1778498543 382275 55f18c1cb80a76c324f669a937b46c42 ""
   "c:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4352/fig2_comparison_1778499261087.png" 1778499261 500108 49a0625cbacdebc039c6fd4264eadbf8 ""
   "c:/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc" 1770093395 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
@@ -68,6 +68,7 @@
   "c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1770091463 32726 39f0f9e62e84beb801509898a605dbd5 ""
   "c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb" 1770091463 33993 9b89b85fd2d9df0482bd47194d1d3bf3 ""
   "c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1770091463 32569 5e5ddc8df908dea60932f3c484a54c0d ""
+  "c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb" 1770091463 32587 65067f817f408bc71a7312f3d9828a9b ""
   "c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb" 1770091463 32716 08e384dc442464e7285e891af9f45947 ""
   "c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1770091463 32626 5abc8bb2f28aa647d4c70f8ea38cc0d3 ""
   "c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb" 1770091463 32442 c975af247b6702f7ca0c299af3616b80 ""
@@ -149,9 +150,9 @@
   "c:/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1770103547 5587484 49bd08ff372a6985d7d70778694ddaac ""
   "c:/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1770103868 3636162 afd28e82f1bc0291a2e045cd3ffa4474 ""
   "c:/texlive/2025/texmf.cnf" 1770103504 713 614551405fc44b98efbf516466e3c909 ""
-  "labelscope_manuscript.aux" 1778501728 10568 fd24cad58efbe0bf0f6764d30cb86111 "pdflatex"
-  "labelscope_manuscript.out" 1778501728 5899 a936ca9a16c709cc442ca342948b4947 "pdflatex"
-  "labelscope_manuscript.tex" 1778501724 36750 00ed02183c735fc71628dd839e815cb8 ""
+  "labelscope_manuscript.aux" 1778503697 11008 5bb2ac33dbe536248596a4a458aa4b10 "pdflatex"
+  "labelscope_manuscript.out" 1778503697 6050 bd88b0a632fe231c80bc73a4c23eacc8 "pdflatex"
+  "labelscope_manuscript.tex" 1778503692 40134 0c45c6f69aff5fca331b60d92371803f ""
   (generated)
   "labelscope_manuscript.aux"
   "labelscope_manuscript.log"
