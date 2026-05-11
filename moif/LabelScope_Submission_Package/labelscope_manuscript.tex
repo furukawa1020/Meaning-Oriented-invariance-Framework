@@ -115,7 +115,7 @@ The thresholds $\tau_{RA}$, $\tau_{PA}$, and $\alpha$ are configurable defaults 
 \section{Signal Processing and Feature Engineering}
 
 \subsection{Pre-Modeling Signal Processing}
-Accurate auditing requires a robust signal processing foundation. Signals were first resampled to a common processing rate (e.g., 256 Hz for ECG, 4 Hz for EDA) where necessary to ensure consistent feature extraction. The original dataset-specific hardware acquisition rates are reported in Table \ref{tab:sensors}. In this work, we utilize a multi-modal processing pipeline implemented using \textbf{NeuroKit2} \cite{neurokit2021}. ECG signals are processed using standard bandpass filters. R-peaks are detected and validated to derive HRV features.
+Accurate auditing requires a robust signal processing foundation. For the demonstrations, ECG was resampled to 256 Hz and EDA to 4 Hz before feature extraction. The original dataset-specific hardware acquisition rates are reported in Table \ref{tab:sensors}. In this work, we utilize a multi-modal processing pipeline implemented using \textbf{NeuroKit2} \cite{neurokit2021}. ECG signals are processed using standard bandpass filters. R-peaks are detected and validated to derive HRV features.
 
 EDA signals are processed to separate the tonic and phasic components. We utilize the cvxEDA algorithm \cite{greco2016}, which frames the decomposition as a convex optimization problem, as implemented through NeuroKit2 \cite{neurokit2021}. These features are critical for ensuring that the Structure Audit reflects state-based variations rather than sensor noise.
 
@@ -196,7 +196,7 @@ To demonstrate the full sequential audit, we evaluated the WESAD labels under th
 \centering
 \begin{tabular}{@{}lcccccccc@{}}
 \toprule
-\textbf{Window} & \textbf{N} & \textbf{D} & \textbf{$T_{obs}$} & \textbf{$\bar{T}_{null}$} & \textbf{SD} & \textbf{$\hat{p}$} & \textbf{$L_{SA}$} \\
+\textbf{Window} & \textbf{N} & \textbf{D} & \textbf{$T_{obs}$} & \textbf{$\bar{T}_{null}$} & \textbf{SD} & \textbf{$\hat{p}_{\mathrm{shuf}}$} & \textbf{$L_{\mathrm{SA}}$} \\
 \midrule
 50\% overlap & 1110 & 14 & 0.71 & 0.52 & 0.03 & 0.001 & 3 \\
 Non-overlap & 590  & 14 & 0.69 & 0.52 & 0.04 & 0.001 & 3 \\
@@ -204,7 +204,7 @@ Non-overlap & 590  & 14 & 0.69 & 0.52 & 0.04 & 0.001 & 3 \\
 \end{tabular}
 \end{table}
 
-\textbf{Interpretation}: Passing the SA indicates non-random label organization in the tested physiological feature representation, but does not by itself establish movement-independent internal-state validity. The claim is still bounded at Level 2 by the PA, since $\rho_{LC} = 0.65 > \tau_{PA}$. This demonstrates the necessity of the multi-module framework: $L_{Final} = \min(3,\,2,\,3) = 2$.
+\textbf{Interpretation}: Passing the SA indicates non-random label organization in the tested physiological feature representation, but does not by itself establish movement-independent internal-state validity. The SA result is interpreted only as non-random label organization in the tested physiological representation, not as evidence of construct validity or deployment-ready state detection. The claim is still bounded at Level 2 by the PA, since $\rho_{LC} = 0.65 > \tau_{PA}$. This demonstrates the necessity of the multi-module framework: $L_{Final} = \min(3,\,2,\,3) = 2$.
 
 \subsection{Summary of Audit Results}
 The demonstrations illustrate how LabelScope identifies distinct failure modes across datasets.
@@ -275,7 +275,7 @@ The core logic of the LabelScope audits is formalized in Algorithms 1--3. These 
 \ENDFOR
 \STATE $\hat{p}_{shuf} \gets (1 + count) / (B + 1)$
 \IF{$\hat{p}_{shuf} \ge \alpha$}
-    \STATE $L_{SA} \gets 1$ \COMMENT{Noise/artifact cap}
+    \STATE $L_{SA} \gets 1$ \COMMENT{unsupported-structure cap}
 \ELSE
     \STATE $L_{SA} \gets 3$ \COMMENT{No structure cap}
 \ENDIF
@@ -321,7 +321,7 @@ EDA Threshold & 0.01 $\mu$S & Peak detection floor \\
 \label{sec:discussion}
 
 \subsection{From Accuracy-Centric to Claim-Centric Reporting}
-The primary shift proposed by LabelScope is a transition from accuracy-centric reporting to claim-centric auditing. In current HMS research, a model with 90\% accuracy is almost universally treated as superior to one with 80\% accuracy. However, as our demonstrations show, high accuracy is insufficient to support an HMS state claim if the underlying label cannot support that claim. A Level 0 model with 95\% accuracy (driven by pseudo-replication) or a Level 2 model with 90\% accuracy (driven by behavioral confounding) should not be interpreted as evidence for a successful physiology-based HMS.
+The primary shift proposed by LabelScope is a transition from accuracy-centric reporting to claim-centric auditing. In current HMS research, a model with high accuracy is almost universally treated as superior to one with lower accuracy. However, as our demonstrations show, high accuracy is insufficient to support an HMS state claim if the underlying label cannot support that claim. A high-accuracy Level 0 model (driven by pseudo-replication) or a high-accuracy Level 2 model (driven by behavioral confounding) should not be interpreted as evidence for a successful physiology-based HMS.
 
 Table \ref{tab:reporting_comparison} illustrates how LabelScope changes the interpretation of a typical WESAD result. Without the audit, a researcher might report a high-accuracy binary stress classifier. With the audit, the same result is bounded at Level 2, conveying that the model likely tracks task-linked activity rather than movement-independent physiological state.
 
@@ -333,7 +333,7 @@ Table \ref{tab:reporting_comparison} illustrates how LabelScope changes the inte
 \toprule
 \textbf{Aspect} & \textbf{Without Audit} & \textbf{With LabelScope} \\
 \midrule
-Reported metric & Classification performance & Accuracy + $L_{Final} = 2$ \\
+Reported metric & Classification performance & Performance metric + $L_{Final} = 2$ \\
 Potential interpretation & ``Stress detector'' & Task-condition proxy \\
 Prohibited claim & (unspecified) & Internal state monitor \\
 Recommended next step & (unspecified) & Refine hardware or restate claim \\
@@ -351,7 +351,7 @@ For example, if a ``stress monitor'' is capped at Level 2 due to movement confou
     \item \textbf{Refine the Label}: Collect higher-resolution labels that are less confounded with activity.
     \item \textbf{Refine the Claim}: Explicitly report the system as a ``task-behavior monitor'' rather than a pure ``physiological state monitor.''
 \end{enumerate}
-This proactive auditing reduces the risk of misdirected interventions and improves the overall trust in adaptive human-machine systems.
+In adaptive systems, the audited level can be used as a guard condition: Level 0 blocks real-time adaptation, Level 2 permits behavior-aware interventions but blocks internal-state interventions, and Level 3 permits cautious state-contingent adaptation under observed-covariate limits. This proactive auditing reduces the risk of misdirected interventions and improves the overall trust in adaptive human-machine systems.
 
 \subsection{Limitations and Future Work}
 While LabelScope provides a rigorous foundation, it is not a ``validity oracle.'' Its results are sensitive to the choice of features, neighborhood definitions, and audit thresholds.
@@ -478,6 +478,9 @@ ACC (Wrist) & SMA & $\frac{1}{T}\int_0^T(|a_x|+|a_y|+|a_z|)dt$; gravity-subtract
 \bibitem{zhou2018} Z.-H. Zhou, ``A brief introduction to weakly supervised learning,'' \emph{National Science Review}, vol. 5, no. 1, pp. 44--53, 2018.
 
 \end{thebibliography}
+
+\section*{Data and Code Availability}
+The WESAD and SWELL-KW datasets are publicly available. We support reproducible auditing under fixed preprocessing parameters and permutation seeds. The implementation uses NeuroKit2 (v0.2.1) and cvxEDA. Code for the demonstrations will be made available upon publication.
 
 \section*{Author Biographies}
 \textbf{Kotaro Furukawa} is currently pursuing the B.S. degree. Their research interests include affective computing, physiological signal processing, and human-machine systems.
