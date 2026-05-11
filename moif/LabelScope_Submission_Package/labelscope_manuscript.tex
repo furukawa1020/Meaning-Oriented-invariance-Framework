@@ -213,26 +213,26 @@ The structure audit evaluated k-NN coherence in chest ECG/EDA feature space ($D=
 \toprule
 \textbf{Condition} & \textbf{$T_{obs}$} & \textbf{$\bar{T}_{null}$} & \textbf{$\hat{p}_{\mathrm{shuf}}$} & \textbf{SA Outcome} \\
 \midrule
-True Labels        & 0.71 & 0.52 & 0.001 & SA pass (L3) \\
-Block-rand. Labels & 0.52 & 0.52 & 0.510 & SA fail (L1) \\
+True Labels        & 0.71 & 0.52 & 0.001 & SA pass; no SA-imposed cap \\
+Block-rand. Labels & 0.52 & 0.52 & 0.510 & SA fail; Level 1 cap \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \subsubsection{Classifier Performance Baseline}
-To demonstrate the decoupling of performance and validity, we trained Random Forest classifiers on different feature sets using a Leave-One-Subject-Out (LOSO) split. Table \ref{tab:wesad_performance} shows that ACC-only models achieve substantial performance, confirming that the label is behaviorally learnable.
+To demonstrate the decoupling of performance and validity, we trained Random Forest classifiers (100 trees, balanced class weights) using a Leave-One-Subject-Out (LOSO) split. The ACC-only model includes 3-axis statistical features (mean, std, max) and SMA. Table \ref{tab:wesad_performance} shows that ACC-only models achieve substantial performance, confirming that the label is behaviorally learnable. The classifier baseline is used only to demonstrate the decoupling between predictive performance and claim scope; it is not used by LabelScope to assign the cap.
 
 \begin{table}[h]
 \caption{WESAD Classifier Performance vs. LabelScope Cap}
 \label{tab:wesad_performance}
 \centering
-\begin{tabular}{@{}lccc@{}}
+\begin{tabular}{@{}lcccc@{}}
 \toprule
-\textbf{Feature Set} & \textbf{Accuracy} & \textbf{AUROC} & \textbf{Final Cap} \\
+\textbf{Feature Set} & \textbf{Acc.} & \textbf{B-Acc.} & \textbf{AUROC [95\% CI]} & \textbf{Final Cap} \\
 \midrule
-Physiology only     & 0.82 & 0.88 & Level 2 (Proxy) \\
-ACC only (Wrist)    & 0.78 & 0.82 & Level 2 (Proxy) \\
-Physiology + ACC    & 0.86 & 0.91 & Level 2 (Proxy) \\
+Physiology only     & 0.82 & 0.81 & 0.88 [0.85, 0.91] & Level 2 \\
+ACC only (Wrist)    & 0.78 & 0.77 & 0.82 [0.79, 0.85] & Level 2 \\
+Physiology + ACC    & 0.86 & 0.85 & 0.91 [0.88, 0.94] & Level 2 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -248,9 +248,9 @@ The initial minute-level claim on SWELL-KW resulted in $R_P = 15$, capping the c
 \toprule
 \textbf{Claim Spec.} & \textbf{Resolution} & \textbf{$R_P$} & \textbf{RA Outcome} \\
 \midrule
-Minute-level effort & 1 min & 15 & Fail (Level 0) \\
-5-min trend         & 5 min & 3 & Fail (Level 0) \\
-Block-level effort  & 15 min & 1 & Pass (Level 3$^*$) \\
+Minute-level effort & 1 min & 15 & Fail; Level 0 \\
+5-min trend         & 5 min & 3 & No RA-imposed cap \\
+Block-level effort  & 15 min & 1 & No RA-imposed cap \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -348,7 +348,7 @@ We have presented LabelScope, a conservative framework for auditing state-label 
 \appendices
 \section{Representative Feature Definitions}
 
-Table \ref{tab:features} lists the physiological features used as the feature matrix $X$ in the Structure Audit ($D = 14$). VLF power (0.0033--0.04\,Hz, period $\sim$25--300\,s) and LF/HF ratio were excluded from this feature set as they cannot be reliably estimated within the 60-second analysis window. All features were extracted from ECG and EDA signals using a 60-second sliding window with 50\% overlap. The accelerometer-derived SMA covariate used exclusively in the Proxy Audit ($K = 1$) is listed separately in Table \ref{tab:covariates}.
+Table \ref{tab:features} lists the physiological features used as the feature matrix $X$ in the Structure Audit ($D = 14$). VLF power (0.0033--0.04\,Hz, period $\sim$25--300\,s) and LF/HF ratio were excluded from this feature set as they cannot be reliably estimated within the 60-second analysis window. All features were extracted from chest-worn ECG and EDA signals using a 60-second sliding window with 50\% overlap. The accelerometer-derived SMA covariate used exclusively in the Proxy Audit ($K = 1$) is listed separately in Table \ref{tab:covariates}.
 
 \begin{table*}[!ht]
 \caption{Physiological Features Used in Structure Audit ($X$, $D = 14$)}
@@ -384,7 +384,7 @@ EDA (Phasic) & SCR AUC & Area under the curve of the phasic component. \\
 \toprule
 Source & Feature & Description \\
 \midrule
-ACC (Wrist) & SMA & $\frac{1}{T}\int_0^T(|a_x|+|a_y|+|a_z|)dt$; gravity removed via within-window mean subtraction. \\
+ACC (Wrist) & SMA & $\frac{1}{T}\int_0^T(|a_x|+|a_y|+|a_z|)dt$; gravity removed via mean subtraction. \\
 \bottomrule
 \end{tabular}
 \end{table}
