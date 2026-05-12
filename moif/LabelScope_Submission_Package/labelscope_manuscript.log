@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.3)  12 MAY 2026 11:36
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.3)  12 MAY 2026 11:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -489,24 +489,24 @@ File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 (./labelscope_manuscript.aux)
 \openout1 = `labelscope_manuscript.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
 
 -- Lines per column: 58 (exact).
 (c:/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
@@ -531,20 +531,20 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring OFF on input line 17.
+Package hyperref Info: Link coloring OFF on input line 24.
 
 (./labelscope_manuscript.out) (./labelscope_manuscript.out)
 \@outlinefile=\write3
 \openout3 = `labelscope_manuscript.out'.
 
 \c@lstlisting=\count339
-LaTeX Font Info:    Trying to load font information for U+msa on input line 26.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 33.
 
 
 (c:/texlive/2025/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 26.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 33.
 
 
 (c:/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
@@ -557,69 +557,51 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 ]
-Overfull \hbox (4.94972pt too wide) in paragraph at lines 63--71
+Overfull \hbox (4.94972pt too wide) in paragraph at lines 70--78
  [][] 
  []
 
-<C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4352
-/fig1_pipeline_1778498543035.png, id=144, 246.6816pt x 246.6816pt>
-File: C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebc
-b4352/fig1_pipeline_1778498543035.png Graphic file (type png)
-<use C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb
-4352/fig1_pipeline_1778498543035.png>
-Package pdftex.def Info: C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83
-e-4952-83ec-ee1bebcb4352/fig1_pipeline_1778498543035.png  used on input line 78
-.
+<fig1_pipeline.png, id=144, 246.6816pt x 246.6816pt>
+File: fig1_pipeline.png Graphic file (type png)
+<use fig1_pipeline.png>
+Package pdftex.def Info: fig1_pipeline.png  used on input line 84.
 (pdftex.def)             Requested size: 252.0pt x 252.00711pt.
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 89.
-[2 <c:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4
-352/fig1_pipeline_1778498543035.png>]
-Underfull \hbox (badness 4673) in paragraph at lines 162--162
+put line 95.
+[2 <./fig1_pipeline.png>]
+Underfull \hbox (badness 4673) in paragraph at lines 169--169
 []\T1/ptm/m/n/8 Recognition of spe-cific dataset
  []
 
 
-Underfull \hbox (badness 3386) in paragraph at lines 163--164
+Underfull \hbox (badness 3386) in paragraph at lines 170--171
 []\T1/ptm/m/n/8 Direct mea-sure-ment of in-ter-nal
  []
 
 
-Underfull \hbox (badness 1902) in paragraph at lines 164--164
+Underfull \hbox (badness 1902) in paragraph at lines 171--171
 []\T1/ptm/m/n/8 No ev-i-dence found to cap the
  []
 
 [3]
-Overfull \hbox (56.18468pt too wide) in paragraph at lines 197--206
+Overfull \hbox (56.18468pt too wide) in paragraph at lines 206--222
  [][] 
  []
 
 [4]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [5]
-Underfull \hbox (badness 10000) in paragraph at lines 356--356
+Underfull \hbox (badness 10000) in paragraph at lines 367--367
 []\T1/ptm/m/n/8 Cautious state-aware
  []
 
-
+[6]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [6]
-Underfull \hbox (badness 1590) in paragraph at lines 373--374
-\T1/ptm/m/n/10 balanced neg-a-tive con-trols, and de-tailed candidate-
- []
-
-
-Underfull \hbox (badness 1400) in paragraph at lines 382--383
-\T1/ptm/m/n/10 SA negative-control im-ple-men-ta-tions (Python), candidate-
- []
-
-[7] [8
+ [7]
+[8
 
 ] (./labelscope_manuscript.aux)
  ***********
@@ -630,13 +612,13 @@ Package rerunfilecheck Info: File `labelscope_manuscript.out' has not changed.
 (rerunfilecheck)             Checksum: 9A27424B234B94BFD51FE69801899DB6;5056.
  ) 
 Here is how much of TeX's memory you used:
- 13374 strings out of 467533
- 203706 string characters out of 5423669
- 647234 words of memory out of 5000000
+ 13371 strings out of 467533
+ 203036 string characters out of 5423669
+ 642766 words of memory out of 5000000
  41965 multiletter control sequences out of 15000+600000
  754912 words of font info for 182 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,14n,79p,2024b,588s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,13n,79p,1255b,584s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/tex
 live/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2025
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2025/texmf-di
@@ -657,10 +639,10 @@ mf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2025/texmf-d
 ist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/ur
 w/times/utmbi8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pf
 b><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on labelscope_manuscript.pdf (8 pages, 680675 bytes).
+Output written on labelscope_manuscript.pdf (8 pages, 677024 bytes).
 PDF statistics:
- 400 PDF objects out of 1000 (max. 8388607)
- 339 compressed objects within 4 object streams
- 114 named destinations out of 1000 (max. 500000)
+ 397 PDF objects out of 1000 (max. 8388607)
+ 336 compressed objects within 4 object streams
+ 111 named destinations out of 1000 (max. 500000)
  198 words of extra memory for PDF output out of 10000 (max. 10000000)
 

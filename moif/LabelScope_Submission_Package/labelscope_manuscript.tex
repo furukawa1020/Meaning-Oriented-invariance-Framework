@@ -14,6 +14,13 @@
 \usepackage{grffile}
 \usepackage{bm}
 
+\renewcommand{\arraystretch}{0.8}
+\setlength{\textfloatsep}{5pt plus 2pt minus 2pt}
+\setlength{\floatsep}{5pt plus 2pt minus 2pt}
+\setlength{\intextsep}{5pt plus 2pt minus 2pt}
+\setlength{\dbltextfloatsep}{5pt plus 2pt minus 2pt}
+\setlength{\dblfloatsep}{5pt plus 2pt minus 2pt}
+
 \begin{document}
 
 \title{LabelScope: A Claim-Capping Framework for Auditing Operational Labels in Physiology-Based Human-Machine Systems}
@@ -23,13 +30,13 @@
 \maketitle
 
 \begin{abstract}
-Physiology-based human-machine systems (HMS) often report high predictive performance on operational labels, but such labels may not support the state claims used to drive adaptive system behavior. Rather than evaluating model performance alone, LabelScope audits whether an operational label can support the intended HMS claim. The framework assigns an interpretive claim level $L_{Final} \in \{0,1,2,3\}$ using Resolution (RA), Proxy (PA), and Structure (SA) audit modules. The framework is demonstrated through case studies on the WESAD and SWELL-KW datasets. In WESAD, a momentary 60-s internal-state claim was capped at Level 0 by RA, while a protocol-linked stress-proxy reporting claim was conservatively capped at Level 2 based on protocol-level proxy evidence. In SWELL-KW, a redesigned 15-min block-level claim resolved the RA failure but still exhibited task-interaction proxy risk.
-By flagging failure modes such as behavioral-proxy risk and pseudo-replication under specified audit assumptions, LabelScope provides an audit basis for cautious HMS design, supporting the interpretation of predictive accuracy within defensible claim boundaries.
+Physiology-based human-machine systems (HMS) often report high predictive performance on operational labels, but such labels may not support the state claims used to drive adaptive system behavior. Rather than evaluating model performance alone, LabelScope audits whether an operational label can support the intended HMS claim. The framework assigns an interpretive claim level $L_{Final} \in \{0,1,2,3\}$ using Resolution (RA), Proxy (PA), and Structure (SA) audit modules. The framework is demonstrated through case studies on the WESAD and SWELL-KW datasets. In WESAD, a momentary 60-s internal-state claim was capped at Level 0 by RA, while a protocol-linked stress-proxy reporting claim was conservatively capped at Level 2 based on protocol-level proxy evidence. In SWELL-KW, a redesigned 15-min block-level claim resolved the RA failure but still exhibited task-interaction proxy risk. By flagging failure modes such as behavioral-proxy risk and pseudo-replication under specified audit assumptions, LabelScope provides an audit basis for cautious HMS design, supporting the interpretation of predictive accuracy within defensible claim boundaries.
 \end{abstract}
 
 \begin{IEEEkeywords}
 Physiology-based HMS, State-Label Validity, Claim-Capping, Auditing, Human-Machine Systems, Affective Computing, Behavioral Proxy.
 \end{IEEEkeywords}
+
 \section{Introduction}
 
 \IEEEPARstart{P}{hysiological} sensing is increasingly integrated into human-machine systems (HMS) to infer operator state without requiring explicit input. By monitoring signals such as heart rate variability (HRV), electrodermal activity (EDA), and electroencephalography (EEG), researchers aim to build systems that can adapt to a user's stress, fatigue, or cognitive load \cite{picard1997,martinez2017,cheng2020}. These systems, often positioned under affective computing or cognitive load monitoring, have been applied across domains including healthcare, industrial safety, and assistive technology \cite{parasuraman2000}.
@@ -72,10 +79,9 @@ Construct Validity \cite{messick1989} & Theory Testing & Experimental & Theory C
 
 \section{The LabelScope Framework}
 
-
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4352/fig1_pipeline_1778498543035.png}
+\includegraphics[width=\columnwidth]{fig1_pipeline.png}
 \caption{The LabelScope Audit Pipeline. The framework sequentially evaluates operational labels through Resolution (RA), Proxy (PA), and Structure (SA) audits. Explicit failure mapping: RA fail $\rightarrow L_0$; SA fail $\rightarrow L_1$; PA fail $\rightarrow L_2$; all passed $\rightarrow L_3$.}
 \label{fig:pipeline}
 \end{figure}
@@ -100,7 +106,7 @@ Proxy Audit (PA) detects \textbf{behavioral-proxy risk}. Physiological signals a
 \begin{equation}
 \rho_{LC,s} = \max_{k \in \{1 \dots K\}} |\mathrm{Spearman}(y_s, c_{s,k})|
 \end{equation}
-where $y_s$ is the label vector and $\{c_{s,k}\}$ are observed behavioral covariates for subject $s$. The group-level index $\rho_{LC}$ is calculated as the mean of subject-wise indices. For protocol-level claims, LabelScope additionally supports a block-level PA variant in which $y$ and $C_B$ are first aggregated to the independent claim unit. We denote this index as $\rho^{block}_{LC}$. Here, $u$ is the independent claim unit specified in $S$. Because block-level observations can remain clustered by subject, $\rho^{block}_{LC}$ is interpreted as a conservative claim-capping check rather than an inferential subject-level effect-size estimate. If the proxy index exceeds the threshold $\tau_{PA}$, the claim is capped at Level 2. Critically, passing the PA only clears the system of \textit{observed} covariates; it cannot guarantee the absence of unobserved behavioral or environmental entanglements.
+where $y_s$ is the label vector and $\{c_{s,k}\}$ are observed behavioral covariates for subject $s$. The group-level index $\rho_{LC}$ is calculated as the mean of subject-wise indices. For protocol-level claims, LabelScope additionally supports a block-level PA variant in which $y$ and $C_B$ are first aggregated to the independent claim unit. We denote this index as $\rho^{block}_{LC}$. Here, $u$ is the independent claim unit specified in $S$. Because block-level observations can remain clustered by subject, $\rho^{block}_{LC}$ is interpreted as a conservative claim-capping check rather than an inferential subject-level effect-size estimate. If the proxy index exceeds the threshold $\tau_{PA}$, the claim is capped at Level 2.
 
 \begin{algorithm}[t]
 \caption{Proxy Audit (PA)}
@@ -150,6 +156,7 @@ The interpretive claim level is determined by the most restrictive constraint:
 \begin{equation}
     L_{Final} = \min(L_{RA},\; L_{PA},\; L_{SA})
 \end{equation}
+
 \begin{table*}[t!]
 \caption{LabelScope Claim Level Definitions and Interpretative Boundaries}
 \label{tab:claim_levels}
@@ -165,6 +172,7 @@ The interpretive claim level is determined by the most restrictive constraint:
 \bottomrule
 \end{tabular}
 \end{table*}
+
 Table \ref{tab:claim_levels} specifies the designation, cap condition, permitted HMS claim, and prohibited interpretation for each level. The mapping of audit failures to specific levels is justified by the following propositions:
 \begin{enumerate}
     \item \textbf{L0 (Resolution Mismatch)}: If the replication ratio $R_P$ is too high, the target resolution itself is empirically unsupported, prohibiting any claim at that resolution.
@@ -172,13 +180,14 @@ Table \ref{tab:claim_levels} specifies the designation, cap condition, permitted
     \item \textbf{L2 (Proxy Mismatch)}: If the label is behaviorally entangled (PA fail), the model cannot be interpreted as an internal-state monitor and should be reported as a behavior/task-level proxy.
     \item \textbf{L3 (Passed)}: No evidence was found to cap the claim under the tested configuration.
 \end{enumerate}
+
 \FloatBarrier
 \section{Retrospective Case-Study Evaluation}
 
 \subsection{Experimental Protocol and Dataset Parameters}
 
 \subsubsection{WESAD}
-WESAD \cite{wesad2018} is a multimodal wearable dataset collected from 15 subjects (S2--S17, $N=15$). For this audit, we use chest-worn ECG and EDA signals for the Structure Audit and wrist-worn accelerometer-derived SMA as the behavioral covariate for the Proxy Audit. The binary label is defined as Stress ($y=1$) vs.~Non-Stress ($y=0$), where Non-Stress comprises both Baseline and Amusement conditions. Signal processing used a 60\,s sliding window with 50\% overlap ($\Delta t = 60\,\text{s}$, $n_{win} = 1110$ total windows). Feature extraction yielded $D=14$ physiology-only features. For SA, subject-wise z-scoring was used as an audit-specific normalization to evaluate localized feature-space organization independently of subject-level baseline offsets. This is distinct from the classifier baseline preprocessing, where normalization parameters were estimated using training subjects only and applied to the held-out subject in the LOSO scheme to prevent data leakage and simulate real-world deployment. The SMA covariate is computed with gravity removed. Audit thresholds: $\tau_{RA}=5.0$, $\tau_{PA}=0.30$, $\alpha=0.05$, $k=50$, $B=1000$.
+WESAD \cite{wesad2018} is a multimodal wearable dataset collected from 15 subjects (S2--S17, $N=15$). For this audit, we use chest-worn ECG and EDA signals for the Structure Audit and wrist-worn accelerometer-derived SMA as the behavioral covariate for the Proxy Audit. The binary label is defined as Stress ($y=1$) vs.~Non-Stress ($y=0$), where Non-Stress comprises both Baseline and Amusement conditions. Signal processing used a 60\,s sliding window with 50\% overlap ($\Delta t = 60\,\text{s}$, $n_{win} = 1110$ total windows). Feature extraction yielded $D=14$ physiology-only features. For SA, subject-wise z-scoring was used as an audit-specific normalization to evaluate localized feature-space organization independently of subject-level baseline offsets. The SMA covariate is computed with gravity removed. Audit thresholds: $\tau_{RA}=5.0$, $\tau_{PA}=0.30$, $\alpha=0.05$, $k=50$, $B=1000$.
 
 \subsubsection{SWELL-KW}
 SWELL-KW \cite{swell2014} contains physiological recordings from 25 participants under Neutral, Time Pressure, and Interruption conditions. For the redesigned 15-minute block claim, windowing is coarsened to one feature vector per block per subject ($R_P = 1$). For SWELL-KW PA, $C_B$ was defined as the aggregate computer interaction intensity (total mouse clicks and keystrokes) per 15-min block. The main SWELL-KW PA used a binary Neutral-vs.-Stressor contrast to avoid imposing an ordinal structure on the three experimental conditions. For this binary PA, Time Pressure and Interruption blocks were averaged within subject to form one stressor-composite block, yielding 50 block-level observations. Subject-cluster bootstrap in the supplementary archive was used to verify proxy-index stability.
@@ -188,7 +197,7 @@ SWELL-KW \cite{swell2014} contains physiological recordings from 25 participants
 \subsubsection{Resolution Audit (RA) Results}
 For WESAD, the RA was evaluated under a claim of momentary 60-s internal-state detection. Because the operational label is derived from protocol blocks (Stress, Baseline, Amusement), we define $N_{ind\_obs}$ as the number of independent label segments across all subjects ($N_{ind\_obs} = 15 \text{ subjects} \times 3 \text{ blocks} = 45$). The replication ratio $R_P = 1110/45 \approx 24.7$ substantially exceeds the threshold $\tau_{RA} = 5.0$. Therefore, the momentary claim is capped at \textbf{Level 0} by RA. Claim redesign is not treated as a rescue of a failed claim; it is a separate audit of a newly specified, weaker HMS claim $S'$. A Level 0 cap for the original claim remains unchanged.
 
-We subsequently evaluate a \textbf{protocol-linked stress-proxy claim}. For this claim, the unit of analysis is the 45 protocol-level blocks ($R_P = 1.0$). For the protocol-level audits, window-level physiological features were first subject-wise z-scored and then mean-pooled within each subject-condition block, yielding 45 protocol-level vectors. We then re-ran the PA and SA modules on these aggregated units; for the protocol-level SA, we used $k=5$ and block-level labels. The protocol-level SA also passed under this block-level aggregation ($T_{obs}=0.78, \bar{T}_{null}=0.55, \hat{p}_{shuf}=0.001$), meaning the protocol-linked cap was determined by PA rather than SA. As shown in Table \ref{tab:wesad_claim_outcomes}, the block-level PA resulted in $\rho^{block}_{LC} = 0.68$ (computed over 45 blocks), confirming that the Level 2 cap is a computed property of the protocol-linked claim. Because the 45 block-level observations are clustered by subject, this protocol-level PA is treated as a conservative claim-capping check. Subject-cluster bootstrap in the supplementary archive confirmed that the lower 95\% confidence bound for this block-level estimate remained above $\tau_{PA} = 0.30$.
+We subsequently evaluate a \textbf{protocol-linked stress-proxy claim}. For this claim, the unit of analysis is the 45 protocol-level blocks ($R_P = 1.0$). For the protocol-level audits, window-level physiological features were first subject-wise z-scored and then mean-pooled within each subject-condition block, yielding 45 protocol-level vectors. We then re-ran the PA and SA modules on these aggregated units; for the protocol-level SA, we used $k=5$ and block-level labels. The protocol-level SA also passed under this block-level aggregation ($T_{obs}=0.78, \bar{T}_{null}=0.55, \hat{p}_{shuf}=0.001$), meaning the protocol-linked cap was determined by PA rather than SA. As shown in Table \ref{tab:wesad_claim_outcomes}, the block-level PA resulted in $\rho^{block}_{LC} = 0.68$, confirming that the Level 2 cap is a computed property of the protocol-linked claim.
 
 \begin{table}[h]
 \caption{WESAD Computed Interpretive Caps by Claim Specification}
@@ -203,19 +212,18 @@ Protocol-linked proxy    & No RA cap$^\ddagger$ & Level 2 ($\rho^{block}_{LC}=0.
 \bottomrule
 \end{tabular}
 \smallskip
-
 \begin{minipage}{\columnwidth}
 \small $^\dagger$Protocol-level SA stats ($T_{obs}=0.78, \bar{T}_{null}=0.55, p = 0.001$).
 \end{minipage}
 \smallskip
-
 \begin{minipage}{\columnwidth}
 \small $^\ddagger$No RA-imposed cap for reporting claim ($R_P=1.0$). Level 2 is the computed interpretive cap at the protocol level.
 \end{minipage}
 \end{table}
 
 \subsubsection{Proxy Audit (PA) Results}
-We use \textbf{behavioral entanglement} to denote a condition in which the operational label is systematically associated with observed behavioral covariates, such that movement-independent internal-state claims should be capped. We audited the protocol-linked stress label in WESAD against the SMA derived from wrist-worn acceleration ($K=1$). As shown in Table \ref{tab:wesad_pa}, the binary stress label exceeded the proxy-risk threshold $\tau_{PA} = 0.30$ across all 15 subjects.
+We use \textbf{behavioral-proxy risk} to denote a condition in which the operational label is systematically associated with observed behavioral covariates, such that movement-independent internal-state claims should be capped. We audited the protocol-linked stress label in WESAD against the SMA derived from wrist-worn acceleration ($K=1$). As shown in Table \ref{tab:wesad_pa}, the binary stress label exceeded the proxy-risk threshold $\tau_{PA} = 0.30$ across all 15 subjects.
+
 \begin{table*}[t]
 \caption{WESAD Condition-wise Proxy Index ($\rho_{LC}$). Audit threshold $\tau_{PA} = 0.30$.}
 \label{tab:wesad_pa}
@@ -238,9 +246,11 @@ Protocol-level block PA$^\S$ & $\rho^{block}_{LC}=0.68$ & [0.55, 0.78] & --- & L
 \textbf{Interpretation}: $L_{PA} = 2$. The audited label cannot support a claim of movement-independent internal stress sensing; it should instead be reported as a task-linked stress proxy. 
 
 \subsubsection{Structure Audit (SA) Results}
-The structure audit evaluated k-NN coherence in chest ECG/EDA feature space ($D=14$, $k=50$, $B=1000$, $L=60$\,s blocks, seed=42). To ensure that the coherence was not driven by temporal autocorrelation of adjacent windows, the k-NN candidate set for each query $x_i$ was restricted to windows outside the immediate $\pm 60$\,s temporal neighborhood. Furthermore, a cross-subject SA was performed by restricting the k-NN candidate set to windows from other subjects only; the resulting coherence remained statistically significant ($T_{obs}=0.64$, $\hat{p}_{shuf}=0.001$), suggesting that the observed organization is not solely driven by subject-specific temporal drift, although protocol-block structure cannot be fully excluded. Subject-cluster bootstrap in the supplement confirmed the stability of this cross-subject coherence, with the lower 95\% confidence bound for cross-subject coherence remaining above the block-shuffled null mean. To probe the SA's sensitivity to spurious structure, a \textbf{stricter negative control} was performed using \textbf{run-length-preserving block-level label shuffling}. This procedure permutes contiguous task blocks \textit{within each subject}, thereby preserving both the subject-specific class balance and the internal temporal structure of the labels while explicitly breaking feature-label associations. As shown in Table \ref{tab:wesad_sa}, the observed coherence $T_{obs}=0.71$ was higher than the block-shuffled null mean $\bar{T}_{null}=0.52$ under the SA test ($\hat{p}_{shuf}=0.001$), indicating statistically significant non-random organization in the tested ECG/EDA feature representation. This SA pass should be interpreted only as evidence of feature-space organization under the tested representation, not as construct validation of stress. The SA does not impose a cap. However, because $L_{PA}=2$, the weakened protocol-linked interpretation is reported with an interpretive Level 2 cap ($L_{Final} = 2$).
+The structure audit evaluated k-NN coherence in chest ECG/EDA feature space ($D=14, k=50, B=1000, L=60$\,s blocks). To ensure that the coherence was not driven by temporal autocorrelation of adjacent windows, the k-NN candidate set for each query $x_i$ was restricted to windows outside the immediate $\pm 60$\,s temporal neighborhood. Furthermore, a cross-subject SA was performed by restricting the k-NN candidate set to windows from other subjects only; the resulting coherence remained statistically significant ($T_{obs}=0.64, \hat{p}_{shuf}=0.001$), suggesting that the observed organization is not solely driven by subject-specific temporal drift. As shown in Table \ref{tab:wesad_sa}, the observed coherence $T_{obs}=0.71$ was higher than the block-shuffled null mean $\bar{T}_{null}=0.52$ under the SA test ($\hat{p}_{shuf}=0.001$), indicating statistically significant non-random organization in the tested ECG/EDA representation. This SA pass should be interpreted only as evidence of feature-space organization under the tested representation, not as construct validation of stress.
+\enlargethispage{2\baselineskip}
+
 \begin{table*}[t]
-\caption{WESAD SA Result (with Negative Control). Params: $D=14, k=50, B=1000, L=60$\,s. Cross-subject k-NN restricts neighbors to windows from other subjects only. For each variant, the null distribution was recomputed under the same candidate restriction. Note: SA pass does not imply $L_{Final}=3$ if PA fails. Exploratory candidate-restricted checks are detailed in the supplementary material.}
+\caption{WESAD SA Result (with Negative Control). Params: $D=14, k=50, B=1000, L=60$\,s.}
 \label{tab:wesad_sa}
 \centering
 \begin{tabular}{@{}lcccc@{}}
@@ -255,7 +265,7 @@ Run-length-preserving block-randomized & 0.52 & 0.52 & 0.510 & SA fail; would im
 \end{table*}
 
 \subsubsection{Classifier Performance Baseline}
-To demonstrate the decoupling of performance and validity, we trained Random Forest classifiers (100 trees, random seed 42, default max depth, balanced class weights) using a Leave-One-Subject-Out (LOSO) split. For these classifier baselines, all physiological features were standardized using parameters estimated from the training subjects only and then applied to the held-out subject to prevent data leakage. The ACC-only model includes 3-axis statistical features (mean, std, max) and SMA. The ACC-only classifier is not part of the PA itself; it is included as an auxiliary baseline to test whether the operational label is predictable from movement-derived features beyond the single SMA audit covariate. Table \ref{tab:wesad_performance} shows that ACC-only models achieve non-trivial performance, suggesting that the operational label is predictable from movement-derived features. Confidence intervals were estimated by subject-level bootstrapping over LOSO predictions ($B=1000$ resamples over held-out subjects). The classifier baseline is used only to demonstrate the decoupling between predictive performance and claim scope; it is not used by LabelScope to assign the cap.
+To demonstrate the decoupling of performance and validity, we trained Random Forest classifiers using a Leave-One-Subject-Out (LOSO) split. For these classifier baselines, all physiological features were standardized using parameters estimated from the training subjects only and then applied to the held-out subject to prevent data leakage. Confidence intervals were estimated by subject-level bootstrapping ($B=1000$ resamples over held-out subjects). Table \ref{tab:wesad_performance} shows that ACC-only models achieve non-trivial performance, suggesting that the operational label is predictable from movement-derived features. 
 
 \begin{table*}[t!]
 \caption{WESAD Classifier Performance vs. Audit-Imposed Cap for Weakened Claim. Classifier performance is reported to illustrate label learnability; it does not by itself support a 60-s momentary internal-state claim, which is capped at Level 0 by RA. Confidence intervals estimated by subject-level bootstrapping ($B=1000$).}
@@ -279,12 +289,9 @@ ACC only (S vs A)         & 0.70 & 0.69 & 0.73 [0.70, 0.76] & Level 2 \\
 \end{minipage}
 \end{table*}
 
-
-
-
 \subsection{SWELL-KW: Resolution Audit Case Study}
-The SWELL-KW evaluation is used to examine whether LabelScope detects resolution mismatch and behavioral-proxy risk under a different dataset and evaluation-unit design. The initial minute-level claim on SWELL-KW resulted in $R_P = 15$ and was therefore capped at \textbf{Level 0} by RA. As shown in Table \ref{tab:swell_redesign}, coarsening the claim to a 15-min block-level unit removes the RA-imposed cap ($R_P = 1$), but the redesigned claim remains subject to a PA-imposed Level 2 upper cap due to task-interaction proxy risk. Specifically, the Neutral vs. stressor-composite blocks yielded a proxy index of $\rho^{block}_{LC}=0.48$ (Table \ref{tab:swell_pa}), confirming that the label is behaviorally entangled with keyboard and mouse activity. Table \ref{tab:swell_performance} further illustrates that apparent classifier performance decreases as the evaluation unit becomes coarser, highlighting that high minute-level accuracy ($0.90$) can coexist with an empirically unsupported minute-level claim. This case study illustrates that the RA failure mode and subsequent PA constraint can also appear under a different dataset and evaluation-unit design, without implying a full final-level assignment for SWELL-KW.
-
+The SWELL-KW evaluation is used to demonstrate RA-to-PA claim redesign rather than a full final-level assignment. The initial minute-level claim on SWELL-KW resulted in $R_P = 15$ and was therefore capped at \textbf{Level 0} by RA. As shown in Table \ref{tab:swell_redesign}, coarsening the claim to a 15-min block-level unit removes the RA-imposed cap ($R_P = 1$), but the redesigned claim remains subject to a PA-imposed Level 2 upper cap due to task-interaction proxy risk. Specifically, the Neutral vs. stressor-composite blocks yielded a proxy index of $\rho^{block}_{LC}=0.48$ (Table \ref{tab:swell_pa}), indicating that the label is behaviorally entangled with keyboard and mouse activity. This does not imply a full final-level assignment for SWELL-KW because SA under the redesigned 15-min claim remains outside the present demonstration. Table \ref{tab:swell_performance} further illustrates that apparent classifier performance decreases as the evaluation unit becomes coarser, highlighting that high minute-level accuracy ($0.90$) can coexist with an empirically unsupported minute-level claim.
+\enlargethispage{1\baselineskip}
 
 \begin{table*}[t!]
 \caption{SWELL-KW Resolution Redesign Comparison. Audit demonstrates how claim redesign at coarser resolutions can resolve RA-imposed caps.}
@@ -306,7 +313,7 @@ Block-level effort  & 15 min & 1 & No RA-imposed cap & Level 2 (PA-Cap)$^*$ \\
 \end{table*}
 
 \begin{table*}[t!]
-\caption{SWELL-KW Performance Inflation Analysis. Metrics: Random Forest (100 trees), LOSO split, Binary target: Neutral vs. (TP+Intr.). For SWELL-KW, physiological features were aggregated within each resolution unit, standardized using training-subject parameters only, and evaluated under LOSO. Confidence intervals were estimated by subject-level bootstrapping with $B = 1000$.}
+\caption{SWELL-KW Performance Inflation Analysis. Metrics: Random Forest (100 trees), LOSO split, Binary target: Neutral vs. (TP+Intr.). Confidence intervals were estimated by subject-level bootstrapping with $B = 1000$.}
 \label{tab:swell_performance}
 \centering
 \begin{tabular}{@{}lcccccc@{}}
@@ -319,7 +326,6 @@ Block-level effort  & 15 min & 1 & No RA-imposed cap & Level 2 (PA-Cap)$^*$ \\
 \bottomrule
 \end{tabular}
 \end{table*}
-
 
 \begin{table*}[h!]
 \caption{SWELL-KW PA Results ($L=15$\,min blocks, unit=block). Behavioral covariate: aggregate keyboard + mouse interaction intensity.}
@@ -334,14 +340,19 @@ Neutral vs. stressor-composite & $\rho^{block}_{LC}=0.48$ & [0.38, 0.58] & 50 & 
 \end{tabular}
 \end{table*}
 
+\FloatBarrier
 \section{Discussion: Implications for HMS Design}
 \label{sec:discussion}
 
 LabelScope requires researchers to report their predictive performance \textit{within the context of an audited claim level}. This helps prevent engineering convenience from being mistaken for physiological support. In this sense, LabelScope does not merely report a lower confidence in a classifier; it changes the permissible interpretation of the classifier output before that output is connected to an adaptive HMS action policy. 
 
-This shift is particularly important for adaptive HMS because the same classifier output may permit offline dataset characterization while prohibiting closed-loop internal-state intervention. These case studies illustrate LabelScope as a modular audit framework rather than exhaustively validating every module on every dataset. We advocate that future HMS research report claim supportability levels alongside traditional performance metrics. Future work should evaluate how such audit-triggered claim caps affect closed-loop adaptive behavior in deployed HMS.
+This shift is particularly important because the same classifier output may permit offline dataset characterization while prohibiting closed-loop internal-state intervention. These case studies illustrate LabelScope as a modular audit framework rather than exhaustively validating every module on every dataset. Future work should evaluate how such audit-triggered claim caps affect actual closed-loop adaptive behavior in deployed HMS.
 
+\FloatBarrier
 \section{Pre-deployment Engineering Check}
+
+Beyond its role as a reporting discipline, LabelScope serves as a pre-deployment engineering check during the HMS design process. By identifying failure modes such as resolution mismatch or behavioral-proxy risk \textit{before} the system is deployed, designers can establish \textbf{design-time constraints on permissible interpretations}. Table \ref{tab:action_policy} details the action-policy gating for each LabelScope level. These levels establish cautious interpretative boundaries for system interventions.
+
 \begin{table*}[t!]
 \caption{HMS Action Policy Gating by Claim Level}
 \label{tab:action_policy}
@@ -361,29 +372,20 @@ Level 3 & Cautious state-aware adapt. & Ground-truth diagnosis & Monitored adapt
 \small $^*$No audit-imposed cap under tested configuration.
 \end{minipage}
 \end{table*}
-Beyond its role as a reporting discipline, LabelScope serves as a pre-deployment engineering check during the HMS design process. By identifying failure modes such as resolution mismatch or behavioral-proxy risk \textit{before} the system is deployed, designers can establish \textbf{design-time constraints on permissible interpretations}. Table \ref{tab:action_policy} details how each LabelScope level maps to cautious interpretative boundaries for system interventions.
 
 \FloatBarrier
 \section{Limitations and Future Work}
-While LabelScope provides a rigorous foundation, it is not a ``validity oracle.'' Its results are sensitive to the choice of features, neighborhood definitions, and audit thresholds. Audit thresholds are treated as pre-deployment safety parameters rather than universal constants; therefore, LabelScope requires reporting both the chosen threshold and a sensitivity check around the resulting cap. A sensitivity analysis (detailed in the supplementary archive) evaluated the stability of the WESAD PA outcome across a range of thresholds ($\tau_{PA} \in [0.2, 0.8]$); the resulting group-level Level 2 cap remained stable for $\tau_{PA} \le 0.6$, after which the group-mean rule no longer imposed a collective cap.
-
-\begin{enumerate}
-    \item \textbf{Absence of Closed-Loop Evaluation}: The current study evaluates LabelScope through retrospective audits. Determining how audit-triggered claim caps affect actual system behavior requires rigorous user studies in future deployments.
-    \item \textbf{Epistemological Limits of the Proxy Audit}: The PA only audits against \textit{observed} covariates ($C_B$). A ``Level 3'' claim indicates only that no evidence of proxy risk was found under the tested configuration; it cannot guarantee the absence of unmeasured entanglements. 
-    \item \textbf{SA and Claim Supportability}: In WESAD, SA checks for detectable organization in the tested ECG/EDA feature space; it does not rescue the claim from PA/RA-imposed caps. While the $\pm 60$\,s k-NN exclusion reduces immediate temporal autocorrelation artifacts, the cross-subject SA provides an additional check against subject dependence. Future work should evaluate even stricter controls, such as condition-held-out SA, block-identity-balanced negative controls, and detailed candidate-restricted SA variants beyond those exploratory checks discussed in the supplementary material.
-\end{enumerate}
+While LabelScope provides a rigorous foundation, it is not a ``validity oracle.'' Its results are sensitive to the choice of features, neighborhood definitions, and audit thresholds. Audit thresholds are treated as pre-deployment safety parameters rather than universal constants; therefore, LabelScope requires reporting both the chosen threshold and a sensitivity check around the resulting cap. A sensitivity analysis (detailed in the supplementary archive) evaluated the stability of the WESAD PA outcome across a range of thresholds ($\tau_{PA} \in [0.2, 0.8]$); the resulting group-level Level 2 cap remained stable for $\tau_{PA} \le 0.6$. Limitations include the absence of closed-loop user evaluation and the epistemological limits of the Proxy Audit (Level 3 implies no evidence of proxy risk, not its absolute absence). Future work should evaluate even stricter controls, such as condition-held-out SA and block-identity-balanced negative controls.
 
 \section{Conclusion}
-We have presented LabelScope, a conservative framework for auditing state-label validity in physiology-based HMS. By shifting the focus from predictive accuracy to claim supportability, LabelScope supports more cautious and reproducible reporting. As HMS are deployed in consequential settings, reporting explicit claim-supportability bounds will help keep the scope of physiological inference well characterized. The modular nature of LabelScope allows for future extensions, including more robust proxy detection and the incorporation of domain-specific audit assumptions. Ultimately, this framework encourages more rigorous interpretative standards in the HMS community by requiring predictive performance to be reported together with explicit claim-supportability bounds.
-
-
+We have presented LabelScope, a conservative framework for auditing state-label validity in physiology-based HMS. By shifting the focus from predictive accuracy to claim supportability, LabelScope supports more cautious and reproducible reporting. As HMS are deployed in consequential settings, reporting explicit claim-supportability bounds will help keep the scope of physiological inference well characterized. Ultimately, this framework encourages more rigorous interpretative standards in the HMS community by requiring predictive performance to be reported together with explicit claim-supportability bounds.
 
 \section*{Data and Code Availability}
-The WESAD and SWELL-KW datasets are publicly available. The supplementary archive contains the preprocessing configuration (JSON), LOSO prediction records (CSV), subject-cluster bootstrap procedures and confidence intervals, SA negative-control implementations (Python), candidate-restricted SA results, RA/PA threshold sensitivity analysis tables, SWELL-KW protocol-level aggregation scripts, random seeds, and automated table-generation code to support peer review and full reproducibility.
+The WESAD and SWELL-KW datasets are publicly available. The supplementary archive contains the preprocessing configuration (JSON), LOSO prediction records (CSV), subject-cluster bootstrap procedures and confidence intervals, SA implementations (Python), candidate-restricted SA results, RA/PA threshold sensitivity analysis tables, SWELL-KW protocol-level aggregation scripts, random seeds, and automated table-generation code to support peer review and computational reproducibility.
 
 \bibliographystyle{IEEEtran}
 \begin{thebibliography}{30}
-\small
+\footnotesize
 \setlength{\itemsep}{0pt}
 \setlength{\parskip}{0pt}
 

@@ -298,11 +298,11 @@ INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmbx8.tfm
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmmib8.tfm
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy8.tfm
-INPUT c:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4352/fig1_pipeline_1778498543035.png
-INPUT c:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4352/fig1_pipeline_1778498543035.png
-INPUT c:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4352/fig1_pipeline_1778498543035.png
-INPUT c:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4352/fig1_pipeline_1778498543035.png
-INPUT c:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4352/fig1_pipeline_1778498543035.png
+INPUT ./fig1_pipeline.png
+INPUT ./fig1_pipeline.png
+INPUT ./fig1_pipeline.png
+INPUT ./fig1_pipeline.png
+INPUT ./fig1_pipeline.png
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam7.tfm
