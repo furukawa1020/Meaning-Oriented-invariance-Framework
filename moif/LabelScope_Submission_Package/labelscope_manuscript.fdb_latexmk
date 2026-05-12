@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1778547229.55767 "c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_Package/labelscope_manuscript.tex" "labelscope_manuscript.pdf" "labelscope_manuscript" 1778547231.45081 0
-  "c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_Package/labelscope_manuscript.tex" 1778547218 43711 66ce43e0aa74dfc3de62febd589618fc ""
+["pdflatex"] 1778548567.89732 "c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_Package/labelscope_manuscript.tex" "labelscope_manuscript.pdf" "labelscope_manuscript" 1778548569.19445 2
+  "c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_Package/labelscope_manuscript.tex" 1778548562 44618 d03ce08ffe58a07a7bb84363733bcd62 ""
   "c:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4352/fig1_pipeline_1778498543035.png" 1778498543 382275 55f18c1cb80a76c324f669a937b46c42 ""
   "c:/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc" 1770093395 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "c:/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1770094395 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -148,9 +148,9 @@
   "c:/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1770103547 5587484 49bd08ff372a6985d7d70778694ddaac ""
   "c:/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1770103868 3636162 afd28e82f1bc0291a2e045cd3ffa4474 ""
   "c:/texlive/2025/texmf.cnf" 1770103504 713 614551405fc44b98efbf516466e3c909 ""
-  "labelscope_manuscript.aux" 1778547230 10915 55927dd253e0a878324b26fef2d5d00e "pdflatex"
-  "labelscope_manuscript.out" 1778547231 5382 5b20452e02f5f69755af3daa0f054de1 "pdflatex"
-  "labelscope_manuscript.tex" 1778547218 43711 66ce43e0aa74dfc3de62febd589618fc ""
+  "labelscope_manuscript.aux" 1778548569 11320 170cedbf6cdf33cc47bff6a6cfaf221b "pdflatex"
+  "labelscope_manuscript.out" 1778548569 5382 5b20452e02f5f69755af3daa0f054de1 "pdflatex"
+  "labelscope_manuscript.tex" 1778548562 44618 d03ce08ffe58a07a7bb84363733bcd62 ""
   (generated)
   "labelscope_manuscript.aux"
   "labelscope_manuscript.log"

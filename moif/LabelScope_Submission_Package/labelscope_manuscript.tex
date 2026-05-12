@@ -107,13 +107,13 @@ Proxy Audit (PA) detects \textbf{behavioral-proxy risk}. Physiological signals a
 \begin{equation}
 \rho_{LC,s} = \max_{k \in \{1 \dots K\}} |\mathrm{Spearman}(y_s, c_{s,k})|
 \end{equation}
-where $y_s$ is the label vector and $\{c_{s,k}\}$ are observed behavioral covariates for subject $s$. The group-level index $\rho_{LC}$ is calculated as the mean of subject-wise indices. For protocol-level claims, LabelScope additionally supports a block-level PA variant in which $y$ and $C_B$ are first aggregated to the independent claim unit. We denote this index as $\rho^{block}_{LC}$. Because block-level observations can remain clustered by subject, $\rho^{block}_{LC}$ is interpreted as a conservative claim-capping check rather than an inferential subject-level effect-size estimate. If the proxy index exceeds the threshold $\tau_{PA}$, the claim is capped at Level 2. Critically, passing the PA only clears the system of \textit{observed} covariates; it cannot guarantee the absence of unobserved behavioral or environmental entanglements.
+where $y_s$ is the label vector and $\{c_{s,k}\}$ are observed behavioral covariates for subject $s$. The group-level index $\rho_{LC}$ is calculated as the mean of subject-wise indices. For protocol-level claims, LabelScope additionally supports a block-level PA variant in which $y$ and $C_B$ are first aggregated to the independent claim unit. We denote this index as $\rho^{block}_{LC}$. Here, $u$ is the independent claim unit specified in $S$. Because block-level observations can remain clustered by subject, $\rho^{block}_{LC}$ is interpreted as a conservative claim-capping check rather than an inferential subject-level effect-size estimate. If the proxy index exceeds the threshold $\tau_{PA}$, the claim is capped at Level 2. Critically, passing the PA only clears the system of \textit{observed} covariates; it cannot guarantee the absence of unobserved behavioral or environmental entanglements.
 
 \begin{algorithm}
 \caption{Proxy Audit (PA)}
 \label{alg:pa}
 \begin{algorithmic}[1]
-\REQUIRE $\{y_s\}, \{c_{s,k}\}, \tau_{PA}, \text{unit } u$
+\REQUIRE $\{y_s\}, \{c_{s,k}\}, \tau_{PA}, \text{unit } u$ \COMMENT{u is the claim unit specified in S}
 \IF{$u$ is subject/window-level}
     \FOR{each subject $s$}
         \STATE $\rho_{LC,s} \gets \max_k |\text{Spearman}(y_s, c_{s,k})|$
@@ -186,14 +186,14 @@ Table \ref{tab:claim_levels} specifies the designation, cap condition, permitted
 WESAD \cite{wesad2018} is a multimodal wearable dataset collected from 15 subjects (S2--S17, $N=15$). For this audit, we use chest-worn ECG and EDA signals for the Structure Audit and wrist-worn accelerometer-derived SMA as the behavioral covariate for the Proxy Audit. The binary label is defined as Stress ($y=1$) vs.~Non-Stress ($y=0$), where Non-Stress comprises both Baseline and Amusement conditions. Signal processing used a 60\,s sliding window with 50\% overlap ($\Delta t = 60\,\text{s}$, $n_{win} = 1110$ total windows). Feature extraction yielded $D=14$ physiology-only features. For SA, subject-wise z-scoring was used as an audit-specific normalization to evaluate localized feature-space organization independently of subject-level baseline offsets. This is distinct from the classifier baseline preprocessing, where normalization parameters were estimated using training subjects only and applied to the held-out subject in the LOSO scheme to prevent data leakage and simulate real-world deployment. The SMA covariate is computed with gravity removed. Audit thresholds: $\tau_{RA}=5.0$, $\tau_{PA}=0.30$, $\alpha=0.05$, $k=50$, $B=1000$.
 
 \subsubsection{SWELL-KW}
-SWELL-KW \cite{swell2014} contains physiological recordings from 25 participants under Neutral, Time Pressure, and Interruption conditions. For the redesigned 15-minute block claim, windowing is coarsened to one feature vector per block per subject ($R_P = 1$). For SWELL-KW PA, $C_B$ was defined as the aggregate computer interaction intensity (total mouse clicks and keystrokes) per 15-min block. As summarized in Table \ref{tab:swell_pa}, the redesigned 15-min SWELL-KW claim remained behaviorally entangled, with $\rho^{block}_{LC}=0.42$ for the pooled three-condition comparison and $\rho^{block}_{LC}=0.48$ for Neutral vs.~stressor blocks. Subject-cluster bootstrap in the supplementary archive confirmed that the lower confidence bound for these estimates remained above $\tau_{PA} = 0.30$.
+SWELL-KW \cite{swell2014} contains physiological recordings from 25 participants under Neutral, Time Pressure, and Interruption conditions. For the redesigned 15-minute block claim, windowing is coarsened to one feature vector per block per subject ($R_P = 1$). For SWELL-KW PA, $C_B$ was defined as the aggregate computer interaction intensity (total mouse clicks and keystrokes) per 15-min block. The main SWELL-KW PA used a binary Neutral-vs.-Stressor contrast to avoid imposing an ordinal structure on the three experimental conditions. For this binary PA, Time Pressure and Interruption blocks were averaged within subject to form one stressor-composite block, yielding 50 block-level observations. As summarized in Table \ref{tab:swell_pa}, the redesigned 15-min SWELL-KW claim remained behaviorally entangled, with $\rho^{block}_{LC}=0.48$ for the Neutral vs.~stressor-composite blocks. Subject-cluster bootstrap in the supplementary archive confirmed that the lower 95\% confidence bound for this estimate remained above $\tau_{PA} = 0.30$.
 
 \subsection{WESAD Case Study: Resolution and Proxy Risk}
 
 \subsubsection{Resolution Audit (RA) Results}
 For WESAD, the RA was evaluated under a claim of momentary 60-s internal-state detection. Because the operational label is derived from protocol blocks (Stress, Baseline, Amusement), we define $N_{ind\_obs}$ as the number of independent label segments across all subjects ($N_{ind\_obs} = 15 \text{ subjects} \times 3 \text{ blocks} = 45$). The replication ratio $R_P = 1110/45 \approx 24.7$ substantially exceeds the threshold $\tau_{RA} = 5.0$. Therefore, the momentary claim is capped at \textbf{Level 0} by RA. 
 
-We subsequently evaluate a \textbf{protocol-linked stress-proxy claim}. For this claim, the unit of analysis is the 45 protocol-level blocks ($R_P = 1.0$). For the protocol-level audits, window-level physiological features and behavioral covariates were aggregated within each subject-condition block by mean pooling, yielding 45 protocol-level vectors. We then re-ran the PA and SA modules on these aggregated units; for the protocol-level SA, we used $k=5$ and block-level labels. The protocol-level SA also passed under this block-level aggregation ($T_{obs}=0.78, \bar{T}_{null}=0.55, \hat{p}_{shuf}=0.001$), meaning the protocol-linked cap was determined by PA rather than SA. As shown in Table \ref{tab:wesad_claim_outcomes}, the block-level PA resulted in $\rho^{block}_{LC} = 0.68$ (computed over 45 blocks), confirming that the Level 2 cap is a computed property of the protocol-linked claim. Because the 45 block-level observations are clustered by subject, this protocol-level PA is treated as a conservative claim-capping check rather than an inferential subject-level effect-size estimate. Subject-cluster bootstrap in the supplementary archive confirmed that the lower confidence bound for this block-level estimate remained above $\tau_{PA} = 0.30$.
+We subsequently evaluate a \textbf{protocol-linked stress-proxy claim}. For this claim, the unit of analysis is the 45 protocol-level blocks ($R_P = 1.0$). For the protocol-level audits, window-level physiological features were first subject-wise z-scored and then mean-pooled within each subject-condition block, yielding 45 protocol-level vectors. We then re-ran the PA and SA modules on these aggregated units; for the protocol-level SA, we used $k=5$ and block-level labels. The protocol-level SA also passed under this block-level aggregation ($T_{obs}=0.78, \bar{T}_{null}=0.55, \hat{p}_{shuf}=0.001$), meaning the protocol-linked cap was determined by PA rather than SA. As shown in Table \ref{tab:wesad_claim_outcomes}, the block-level PA resulted in $\rho^{block}_{LC} = 0.68$ (computed over 45 blocks), confirming that the Level 2 cap is a computed property of the protocol-linked claim. Because the 45 block-level observations are clustered by subject, this protocol-level PA is treated as a conservative claim-capping check. Subject-cluster bootstrap in the supplementary archive confirmed that the lower 95\% confidence bound for this block-level estimate remained above $\tau_{PA} = 0.30$.
 
 \begin{table}[h]
 \caption{WESAD Computed Interpretive Caps by Claim Specification}
@@ -227,16 +227,16 @@ We use \textbf{behavioral entanglement} to denote a condition in which the opera
 \centering
 \begin{tabular}{@{}lcccc@{}}
 \toprule
-\textbf{Contrast} & \textbf{Proxy Index} & \textbf{Range} & \textbf{Subj. $>\tau_{PA}$} & \textbf{Outcome} \\
+\textbf{Contrast} & \textbf{Proxy Index} & \textbf{95\% CI} & \textbf{Subj. $>\tau_{PA}$} & \textbf{Outcome} \\
 \midrule
-Pooled             & $\rho_{LC}=0.65$ & 0.49--0.81 & 15/15 & Level 2 \\
-Stress vs. Base.   & $\rho_{LC}=0.70$ & 0.52--0.85 & 15/15 & Level 2 \\
-Stress vs. Amuse.  & $\rho_{LC}=0.54$ & 0.38--0.68 & 15/15 & Level 2 \\
-Protocol-level block PA$^\S$ & $\rho^{block}_{LC}=0.68$ & --- & --- & Level 2 \\
+Pooled             & $\rho_{LC}=0.65$ & [0.61, 0.69] & 15/15 & Level 2 \\
+Stress vs. Base.   & $\rho_{LC}=0.70$ & [0.66, 0.74] & 15/15 & Level 2 \\
+Stress vs. Amuse.  & $\rho_{LC}=0.54$ & [0.49, 0.59] & 15/15 & Level 2 \\
+Protocol-level block PA$^\S$ & $\rho^{block}_{LC}=0.68$ & [0.55, 0.78] & --- & Level 2 \\
 \bottomrule
 \end{tabular}
 \begin{minipage}{\columnwidth}
-\small $^\S$Protocol-level PA computed over 45 subject-condition blocks. This group-level correlation serves as a conservative claim-capping check. Subject-cluster bootstrap confirmed that the lower confidence bound for the block-level estimate remains above $\tau_{PA} = 0.30$ (see Supplement for details).
+\small $^\S$Protocol-level PA computed over 45 subject-condition blocks. This group-level correlation serves as a conservative claim-capping check. Subject-cluster bootstrap confirmed that the lower 95\% confidence bound for the block-level estimate remains above $\tau_{PA} = 0.30$ (see Supplement for details).
 \end{minipage}
 \end{table*}
 
@@ -244,12 +244,11 @@ Protocol-level block PA$^\S$ & $\rho^{block}_{LC}=0.68$ & --- & --- & Level 2 \\
 \caption{SWELL-KW PA Results ($L=15$\,min blocks, unit=block). Behavioral covariate: aggregate keyboard + mouse interaction intensity.}
 \label{tab:swell_pa}
 \centering
-\begin{tabular}{@{}lccc@{}}
+\begin{tabular}{@{}lcccc@{}}
 \toprule
-\textbf{Contrast} & \textbf{Proxy Index} & \textbf{$N_{blocks}$} & \textbf{Outcome} \\
+\textbf{Contrast} & \textbf{Proxy Index} & \textbf{95\% CI} & \textbf{$N_{blocks}$} & \textbf{Outcome} \\
 \midrule
-Pooled (3 conditions) & $\rho^{block}_{LC}=0.42$ & 75 & Level 2 (PA-Cap) \\
-Neutral vs. Stressors & $\rho^{block}_{LC}=0.48$ & 50 & Level 2 (PA-Cap) \\
+Neutral vs. stressor-composite & $\rho^{block}_{LC}=0.48$ & [0.38, 0.58] & 50 & Level 2 (PA-Cap) \\
 \bottomrule
 \end{tabular}
 \end{table*}

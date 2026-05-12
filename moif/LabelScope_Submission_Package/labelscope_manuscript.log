@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.3)  12 MAY 2026 10:11
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.3)  12 MAY 2026 10:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -596,20 +596,17 @@ Overfull \hbox (56.18468pt too wide) in paragraph at lines 202--211
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [4] [5]
-Underfull \hbox (badness 10000) in paragraph at lines 358--358
+Underfull \hbox (badness 10000) in paragraph at lines 357--357
 []\T1/ptm/m/n/8 Cautious state-aware
  []
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [6]
-Underfull \hbox (badness 1590) in paragraph at lines 376--377
+[6]
+Underfull \hbox (badness 1590) in paragraph at lines 375--376
 \T1/ptm/m/n/10 balanced neg-a-tive con-trols, and de-tailed candidate-
  []
 
 
-Underfull \hbox (badness 1400) in paragraph at lines 385--386
+Underfull \hbox (badness 1400) in paragraph at lines 384--385
 \T1/ptm/m/n/10 SA negative-control im-ple-men-ta-tions (Python), candidate-
  []
 
@@ -651,7 +648,7 @@ mf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2025/texmf-d
 ist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/ur
 w/times/utmbi8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pf
 b><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on labelscope_manuscript.pdf (8 pages, 681588 bytes).
+Output written on labelscope_manuscript.pdf (8 pages, 681958 bytes).
 PDF statistics:
  407 PDF objects out of 1000 (max. 8388607)
  346 compressed objects within 4 object streams
