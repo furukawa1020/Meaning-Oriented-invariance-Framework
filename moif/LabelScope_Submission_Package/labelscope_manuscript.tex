@@ -150,13 +150,6 @@ The interpretive claim level is determined by the most restrictive constraint:
 \begin{equation}
     L_{Final} = \min(L_{RA},\; L_{PA},\; L_{SA})
 \end{equation}
-Table \ref{tab:claim_levels} specifies the designation, cap condition, permitted HMS claim, and prohibited interpretation for each level. The mapping of audit failures to specific levels is justified by the following propositions:
-\begin{enumerate}
-    \item \textbf{L0 (Resolution Mismatch)}: If the replication ratio $R_P$ is too high, the target resolution itself is empirically unsupported, prohibiting any claim at that resolution.
-    \item \textbf{L1 (Structure Mismatch)}: If the label lacks detectable organization in the physiological feature space (SA fail), the audit provides no basis for generalizing the label as a physiological state claim, limiting the claim to dataset- or context-specific monitoring.
-    \item \textbf{L2 (Proxy Mismatch)}: If the label is behaviorally entangled (PA fail), the model cannot be interpreted as an internal-state monitor and should be reported as a behavior/task-level proxy.
-    \item \textbf{L3 (Passed)}: No evidence was found to cap the claim under the tested configuration.
-\end{enumerate}
 \begin{table*}[t!]
 \caption{LabelScope Claim Level Definitions and Interpretative Boundaries}
 \label{tab:claim_levels}
@@ -172,6 +165,14 @@ Table \ref{tab:claim_levels} specifies the designation, cap condition, permitted
 \bottomrule
 \end{tabular}
 \end{table*}
+Table \ref{tab:claim_levels} specifies the designation, cap condition, permitted HMS claim, and prohibited interpretation for each level. The mapping of audit failures to specific levels is justified by the following propositions:
+\begin{enumerate}
+    \item \textbf{L0 (Resolution Mismatch)}: If the replication ratio $R_P$ is too high, the target resolution itself is empirically unsupported, prohibiting any claim at that resolution.
+    \item \textbf{L1 (Structure Mismatch)}: If the label lacks detectable organization in the physiological feature space (SA fail), the audit provides no basis for generalizing the label as a physiological state claim, limiting the claim to dataset- or context-specific monitoring.
+    \item \textbf{L2 (Proxy Mismatch)}: If the label is behaviorally entangled (PA fail), the model cannot be interpreted as an internal-state monitor and should be reported as a behavior/task-level proxy.
+    \item \textbf{L3 (Passed)}: No evidence was found to cap the claim under the tested configuration.
+\end{enumerate}
+\FloatBarrier
 \section{Retrospective Case-Study Evaluation}
 
 \subsection{Experimental Protocol and Dataset Parameters}

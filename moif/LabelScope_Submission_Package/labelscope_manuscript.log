@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.3)  12 MAY 2026 11:34
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.3)  12 MAY 2026 11:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -575,52 +575,51 @@ Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
 put line 89.
 [2 <c:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4
 352/fig1_pipeline_1778498543035.png>]
-Underfull \hbox (badness 4673) in paragraph at lines 169--169
+Underfull \hbox (badness 4673) in paragraph at lines 162--162
 []\T1/ptm/m/n/8 Recognition of spe-cific dataset
  []
 
 
-Underfull \hbox (badness 3386) in paragraph at lines 170--171
+Underfull \hbox (badness 3386) in paragraph at lines 163--164
 []\T1/ptm/m/n/8 Direct mea-sure-ment of in-ter-nal
  []
 
 
-Underfull \hbox (badness 1902) in paragraph at lines 171--171
+Underfull \hbox (badness 1902) in paragraph at lines 164--164
 []\T1/ptm/m/n/8 No ev-i-dence found to cap the
  []
 
 [3]
-Overfull \hbox (56.18468pt too wide) in paragraph at lines 196--205
+Overfull \hbox (56.18468pt too wide) in paragraph at lines 197--206
  [][] 
  []
 
 [4]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 355--355
-[]\T1/ptm/m/n/8 Cautious state-aware
- []
-
 [5]
-Underfull \vbox (badness 1092) has occurred while \output is active []
-
- [6]
-Underfull \hbox (badness 1590) in paragraph at lines 372--373
-\T1/ptm/m/n/10 balanced neg-a-tive con-trols, and de-tailed candidate-
- []
-
-
-Underfull \hbox (badness 1400) in paragraph at lines 381--382
-\T1/ptm/m/n/10 SA negative-control im-ple-men-ta-tions (Python), candidate-
+Underfull \hbox (badness 10000) in paragraph at lines 356--356
+[]\T1/ptm/m/n/8 Cautious state-aware
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [7]
-[8
+ [6]
+Underfull \hbox (badness 1590) in paragraph at lines 373--374
+\T1/ptm/m/n/10 balanced neg-a-tive con-trols, and de-tailed candidate-
+ []
+
+
+Underfull \hbox (badness 1400) in paragraph at lines 382--383
+\T1/ptm/m/n/10 SA negative-control im-ple-men-ta-tions (Python), candidate-
+ []
+
+[7] [8
 
 ] (./labelscope_manuscript.aux)
  ***********
@@ -633,11 +632,11 @@ Package rerunfilecheck Info: File `labelscope_manuscript.out' has not changed.
 Here is how much of TeX's memory you used:
  13374 strings out of 467533
  203706 string characters out of 5423669
- 645234 words of memory out of 5000000
+ 647234 words of memory out of 5000000
  41965 multiletter control sequences out of 15000+600000
  754912 words of font info for 182 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,13n,79p,2024b,582s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,14n,79p,2024b,588s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/tex
 live/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2025
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2025/texmf-di
@@ -658,7 +657,7 @@ mf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2025/texmf-d
 ist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/ur
 w/times/utmbi8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pf
 b><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on labelscope_manuscript.pdf (8 pages, 680873 bytes).
+Output written on labelscope_manuscript.pdf (8 pages, 680675 bytes).
 PDF statistics:
  400 PDF objects out of 1000 (max. 8388607)
  339 compressed objects within 4 object streams
