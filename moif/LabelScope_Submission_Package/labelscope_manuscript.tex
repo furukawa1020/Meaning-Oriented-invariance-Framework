@@ -242,19 +242,6 @@ Protocol-level block PA$^\S$ & $\rho^{block}_{LC}=0.68$ & [0.55, 0.78] & --- & L
 \end{minipage}
 \end{table*}
 
-\begin{table*}[h!]
-\caption{SWELL-KW PA Results ($L=15$\,min blocks, unit=block). Behavioral covariate: aggregate keyboard + mouse interaction intensity.}
-\label{tab:swell_pa}
-\centering
-\begin{tabular}{@{}lcccc@{}}
-\toprule
-\textbf{Contrast} & \textbf{Proxy Index} & \textbf{95\% CI} & \textbf{$N_{blocks}$} & \textbf{Outcome} \\
-\midrule
-Neutral vs. stressor-composite & $\rho^{block}_{LC}=0.48$ & [0.38, 0.58] & 50 & Level 2 (PA-Cap) \\
-\bottomrule
-\end{tabular}
-\end{table*}
-
 \textbf{Interpretation}: $L_{PA} = 2$. The audited label cannot support a claim of movement-independent internal stress sensing; it should instead be reported as a task-linked stress proxy. 
 
 \subsubsection{Structure Audit (SA) Results}
@@ -278,9 +265,9 @@ Run-length-preserving block-randomized & 0.52 & 0.52 & 0.510 & SA fail; would im
 To demonstrate the decoupling of performance and validity, we trained Random Forest classifiers (100 trees, random seed 42, default max depth, balanced class weights) using a Leave-One-Subject-Out (LOSO) split. For these classifier baselines, all physiological features were standardized using parameters estimated from the training subjects only and then applied to the held-out subject to prevent data leakage. The ACC-only model includes 3-axis statistical features (mean, std, max) and SMA. The ACC-only classifier is not part of the PA itself; it is included as an auxiliary baseline to test whether the operational label is predictable from movement-derived features beyond the single SMA audit covariate. Table \ref{tab:wesad_performance} shows that ACC-only models achieve non-trivial performance, suggesting that the operational label is predictable from movement-derived features. Confidence intervals were estimated by subject-level bootstrapping over LOSO predictions ($B=1000$ resamples over held-out subjects). The classifier baseline is used only to demonstrate the decoupling between predictive performance and claim scope; it is not used by LabelScope to assign the cap.
 
 
-\subsection{SWELL-KW: Resolution Audit Case Study}
-The SWELL-KW evaluation is intended as a primary case study for the Resolution Audit (RA). The initial minute-level claim on SWELL-KW resulted in $R_P = 15$, capping the claim at \textbf{Level 0}. Table \ref{tab:swell_redesign} illustrates how claim redesign can remove the RA-imposed cap. Table \ref{tab:swell_performance} details the performance inflation that occurs at higher resolutions. This RA outcome is unchanged across $\tau_{RA} = 2.0$--$10.0$; for $\tau_{RA} \ge 15.0$, the 1-min claim would not be capped by RA, highlighting the importance of setting $\tau_{RA}$ according to the desired replication safety margin. SWELL-KW is used here to demonstrate RA-to-PA claim redesign rather than a full final claim-level assignment. The purpose of the SWELL-KW case is not to provide a second full final-level assignment, but to test whether the RA failure mode and subsequent PA constraint appear under a different dataset and evaluation-unit design. This analysis is intended as an evaluation-unit sensitivity check rather than a classifier optimization experiment.
 
+
+\subsection{SWELL-KW: Resolution Audit Case Study}
 \begin{table*}[t!]
 \caption{WESAD Classifier Performance vs. Audit-Imposed Cap for Weakened Claim. Classifier performance is reported to illustrate label learnability; it does not by itself support a 60-s momentary internal-state claim, which is capped at Level 0 by RA. Confidence intervals estimated by subject-level bootstrapping ($B=1000$).}
 \label{tab:wesad_performance}
@@ -303,6 +290,7 @@ ACC only (S vs A)         & 0.70 & 0.69 & 0.73 [0.70, 0.76] & Level 2 \\
 \small $^\dagger$The Level 2 cap applies only to the weakened protocol-linked stress-proxy claim. A momentary 60-s internal-state claim is capped at Level 0 by RA.
 \end{minipage}
 \end{table*}
+
 
 \begin{table*}[t!]
 \caption{SWELL-KW Resolution Redesign Comparison. Audit demonstrates how claim redesign at coarser resolutions can resolve RA-imposed caps.}
@@ -338,6 +326,18 @@ Block-level effort  & 15 min & 1 & No RA-imposed cap & Level 2 (PA-Cap)$^*$ \\
 \end{tabular}
 \end{table*}
 
+\begin{table*}[h!]
+\caption{SWELL-KW PA Results ($L=15$\,min blocks, unit=block). Behavioral covariate: aggregate keyboard + mouse interaction intensity.}
+\label{tab:swell_pa}
+\centering
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Contrast} & \textbf{Proxy Index} & \textbf{95\% CI} & \textbf{$N_{blocks}$} & \textbf{Outcome} \\
+\midrule
+Neutral vs. stressor-composite & $\rho^{block}_{LC}=0.48$ & [0.38, 0.58] & 50 & Level 2 (PA-Cap) \\
+\bottomrule
+\end{tabular}
+\end{table*}
 
 \section{Discussion: Implications for HMS Design}
 \label{sec:discussion}
@@ -347,8 +347,6 @@ In this sense, LabelScope does not merely report a lower confidence in a classif
 This shift is particularly important for adaptive HMS because the same classifier output may permit offline dataset characterization while prohibiting closed-loop internal-state intervention. These case studies illustrate LabelScope as a modular audit framework rather than exhaustively validating every module on every dataset. We advocate that future HMS research report claim supportability levels alongside traditional performance metrics.
 
 \section{Pre-deployment Engineering Check}
-Beyond its role as a reporting discipline, LabelScope serves as a pre-deployment engineering check during the HMS design process. By identifying failure modes such as resolution mismatch or behavioral-proxy risk \textit{before} the system is deployed, designers can establish \textbf{design-time constraints on permissible interpretations}. Table \ref{tab:action_policy} details how each LabelScope level maps to cautious interpretative boundaries for system interventions.
-
 \begin{table*}[t!]
 \caption{HMS Action Policy Gating by Claim Level}
 \label{tab:action_policy}
@@ -368,8 +366,7 @@ Level 3 & Cautious state-aware adapt. & Ground-truth diagnosis & Monitored adapt
 \small $^*$No audit-imposed cap under tested configuration.
 \end{minipage}
 \end{table*}
-
-
+Beyond its role as a reporting discipline, LabelScope serves as a pre-deployment engineering check during the HMS design process. By identifying failure modes such as resolution mismatch or behavioral-proxy risk \textit{before} the system is deployed, designers can establish \textbf{design-time constraints on permissible interpretations}. Table \ref{tab:action_policy} details how each LabelScope level maps to cautious interpretative boundaries for system interventions.
 
 \section{Limitations and Future Work}
 While LabelScope provides a rigorous foundation, it is not a ``validity oracle.'' Its results are sensitive to the choice of features, neighborhood definitions, and audit thresholds. Audit thresholds are treated as pre-deployment safety parameters rather than universal constants; therefore, LabelScope requires reporting both the chosen threshold and a sensitivity check around the resulting cap. A sensitivity analysis (detailed in the supplementary archive) evaluated the stability of the WESAD PA outcome across a range of thresholds ($\tau_{PA} \in [0.2, 0.8]$); the resulting group-level Level 2 cap remained stable for $\tau_{PA} \le 0.6$, after which the group-mean rule no longer imposed a collective cap.
