@@ -180,6 +180,7 @@ Table \ref{tab:claim_levels} specifies the designation, cap condition, permitted
 \bottomrule
 \end{tabular}
 \end{table*}
+\FloatBarrier
 \section{Retrospective Case-Study Evaluation}
 
 \subsection{Experimental Protocol and Dataset Parameters}
@@ -309,7 +310,7 @@ The SWELL-KW evaluation is intended as a primary case study for the Resolution A
 \centering
 \begin{tabular}{@{}lcccc@{}}
 \toprule
-\textbf{Claim Spec.} & \textbf{Res.} & \textbf{$R_P$} & \textbf{RA Outcome} & \textbf{Current Audit Cap} \\
+\textbf{Claim Spec.} & \textbf{Res.} & \textbf{$R_P$} & \textbf{RA Outcome} & \textbf{RA/PA Audit Cap} \\
 \midrule
 Minute-level effort & 1 min & 15 & Fail; Level 0 & Level 0 \\
 5-min trend         & 5 min & 3 & No RA-imposed cap & --- \\
@@ -337,11 +338,13 @@ Block-level effort  & 15 min & 1 & No RA-imposed cap & Level 2 (PA-Cap)$^*$ \\
 \end{tabular}
 \end{table*}
 
+\FloatBarrier
 \section{Discussion: Implications for HMS Design}
 \label{sec:discussion}
 
 LabelScope requires researchers to report their predictive performance \textit{within the context of an audited claim level}. This helps prevent engineering convenience from being mistaken for physiological support. In this sense, LabelScope does not merely report a lower confidence in a classifier; it changes the permissible interpretation of the classifier output before that output is connected to an adaptive HMS action policy. This shift is particularly important for adaptive HMS because the same classifier output may permit offline dataset characterization while prohibiting closed-loop internal-state intervention. These case studies illustrate LabelScope as a modular audit framework rather than exhaustively validating every module on every dataset. We advocate that future HMS research report claim supportability levels alongside traditional performance metrics.
 
+\FloatBarrier
 \section{Pre-deployment Engineering Check}
 Beyond its role as a reporting discipline, LabelScope serves as a pre-deployment engineering check during the HMS design process. By identifying failure modes such as resolution mismatch or behavioral-proxy risk \textit{before} the system is deployed, designers can establish \textbf{design-time constraints on permissible interpretations}. Table \ref{tab:action_policy} details how each LabelScope level maps to cautious interpretative boundaries for system interventions.
 
