@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.3)  12 MAY 2026 09:33
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.3)  12 MAY 2026 09:43
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -547,7 +547,7 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 25.
 (c:/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Underfull \vbox (badness 2903) has occurred while \output is active []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [1{c:/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/texlive/20
 25/texmf-dist/fonts/enc/dvips/base/8r.enc}
@@ -596,26 +596,23 @@ Overfull \hbox (50.16396pt too wide) in paragraph at lines 195--204
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [4]
-<C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4352
-/fig2_comparison_1778499261087.png, id=239, 246.6816pt x 246.6816pt>
-File: C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebc
-b4352/fig2_comparison_1778499261087.png Graphic file (type png)
-<use C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb
-4352/fig2_comparison_1778499261087.png>
-Package pdftex.def Info: C:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83
-e-4952-83ec-ee1bebcb4352/fig2_comparison_1778499261087.png  used on input line 
-349.
-(pdftex.def)             Requested size: 214.20154pt x 214.2085pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 370--370
+Underfull \hbox (badness 10000) in paragraph at lines 340--340
 []\T1/ptm/m/n/8 Cautious state-aware
  []
 
-[5 <c:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4
-352/fig2_comparison_1778499261087.png>] [6] [7] [8
 
-]
-(./labelscope_manuscript.aux)
+Underfull \hbox (badness 1694) in paragraph at lines 358--359
+\T1/ptm/m/n/10 fea-ture space; it does not res-cue the claim from
+ []
+
+[5]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [6]
+[7] (./labelscope_manuscript.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -624,13 +621,13 @@ Package rerunfilecheck Info: File `labelscope_manuscript.out' has not changed.
 (rerunfilecheck)             Checksum: 5B20452E02F5F69755AF3DAA0F054DE1;5382.
  ) 
 Here is how much of TeX's memory you used:
- 13352 strings out of 467533
- 203842 string characters out of 5423669
- 644157 words of memory out of 5000000
- 41949 multiletter control sequences out of 15000+600000
+ 13340 strings out of 467533
+ 202946 string characters out of 5423669
+ 647064 words of memory out of 5000000
+ 41940 multiletter control sequences out of 15000+600000
  760200 words of font info for 184 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,13n,79p,1649b,588s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,13n,79p,1649b,585s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/tex
 live/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2025
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2025/texmf-di
@@ -651,10 +648,10 @@ mf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2025/texmf-d
 ist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/ur
 w/times/utmbi8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pf
 b><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on labelscope_manuscript.pdf (8 pages, 1180641 bytes).
+Output written on labelscope_manuscript.pdf (7 pages, 678103 bytes).
 PDF statistics:
- 404 PDF objects out of 1000 (max. 8388607)
- 342 compressed objects within 4 object streams
- 110 named destinations out of 1000 (max. 500000)
- 211 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 393 PDF objects out of 1000 (max. 8388607)
+ 333 compressed objects within 4 object streams
+ 107 named destinations out of 1000 (max. 500000)
+ 206 words of extra memory for PDF output out of 10000 (max. 10000000)
 
