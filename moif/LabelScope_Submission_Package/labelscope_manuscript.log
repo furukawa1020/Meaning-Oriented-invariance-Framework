@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.3)  12 MAY 2026 10:38
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.3)  12 MAY 2026 10:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -636,7 +636,7 @@ Package rerunfilecheck Info: File `labelscope_manuscript.out' has not changed.
 Here is how much of TeX's memory you used:
  13376 strings out of 467533
  203736 string characters out of 5423669
- 655430 words of memory out of 5000000
+ 655428 words of memory out of 5000000
  41966 multiletter control sequences out of 15000+600000
  754912 words of font info for 182 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -661,7 +661,7 @@ mf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2025/texmf-d
 ist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/ur
 w/times/utmbi8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pf
 b><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on labelscope_manuscript.pdf (8 pages, 681776 bytes).
+Output written on labelscope_manuscript.pdf (8 pages, 681841 bytes).
 PDF statistics:
  407 PDF objects out of 1000 (max. 8388607)
  346 compressed objects within 4 object streams
