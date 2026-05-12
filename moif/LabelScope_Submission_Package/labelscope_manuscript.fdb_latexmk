@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1778544997.62917 "c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_Package/labelscope_manuscript.tex" "labelscope_manuscript.pdf" "labelscope_manuscript" 1778544999.29884 0
-  "c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_Package/labelscope_manuscript.tex" 1778544993 44098 6d3ecc1801c36b0553b31ef0db0fa243 ""
+["pdflatex"] 1778545084.13141 "c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_Package/labelscope_manuscript.tex" "labelscope_manuscript.pdf" "labelscope_manuscript" 1778545085.49957 0
+  "c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_Package/labelscope_manuscript.tex" 1778545080 44068 2261981a3795ffc477d4b88ff06343f3 ""
   "c:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4352/fig1_pipeline_1778498543035.png" 1778498543 382275 55f18c1cb80a76c324f669a937b46c42 ""
   "c:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4352/fig2_comparison_1778499261087.png" 1778499261 500108 49a0625cbacdebc039c6fd4264eadbf8 ""
   "c:/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc" 1770093395 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
@@ -8,6 +8,7 @@
   "c:/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmb7t.tfm" 1770102106 2172 fd0c924230362ff848a33632ed45dc23 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmb8r.tfm" 1770102106 4524 6bce29db5bc272ba5f332261583fee9c ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmb8t.tfm" 1770102106 6880 f19b8995b61c334d78fc734065f6b4d4 ""
+  "c:/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmbc8t.tfm" 1770102106 16820 c06a5e067b0ad78c9474777b7e2265b7 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmbi7t.tfm" 1770102106 2228 e564491c42a4540b5ebb710a75ff306c ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmbi8r.tfm" 1770102106 4480 10409ed8bab5aea9ec9a78028b763919 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmbi8t.tfm" 1770102106 6784 37b32cc10800b5afa030d935c393695a ""
@@ -78,6 +79,7 @@
   "c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb" 1770102106 46026 687528a208fbfc1f00832bb96cccebbb ""
   "c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb" 1770102106 45458 504e2b06fa82109d168c7a0afb09e145 ""
   "c:/texlive/2025/texmf-dist/fonts/vf/adobe/times/ptmb8t.vf" 1770102106 2340 df9c920cc5688ebbf16a93f45ce7bdd3 ""
+  "c:/texlive/2025/texmf-dist/fonts/vf/adobe/times/ptmbc8t.vf" 1770102106 3604 b996520a6e31a74c2f4ad8c7ea17c389 ""
   "c:/texlive/2025/texmf-dist/fonts/vf/adobe/times/ptmbi8t.vf" 1770102106 2324 51908dae6e03953a90119973962f0e4d ""
   "c:/texlive/2025/texmf-dist/fonts/vf/adobe/times/ptmr8t.vf" 1770102106 2348 91706c542228501c410c266421fbe30c ""
   "c:/texlive/2025/texmf-dist/fonts/vf/adobe/times/ptmrc8t.vf" 1770102106 3608 eb048a634708cbf5eda8def0ce93c7bb ""
@@ -149,9 +151,9 @@
   "c:/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1770103547 5587484 49bd08ff372a6985d7d70778694ddaac ""
   "c:/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1770103868 3636162 afd28e82f1bc0291a2e045cd3ffa4474 ""
   "c:/texlive/2025/texmf.cnf" 1770103504 713 614551405fc44b98efbf516466e3c909 ""
-  "labelscope_manuscript.aux" 1778544999 11658 afca97b97fb40c16ab773ed27a7892d1 "pdflatex"
-  "labelscope_manuscript.out" 1778544999 5382 5b20452e02f5f69755af3daa0f054de1 "pdflatex"
-  "labelscope_manuscript.tex" 1778544993 44098 6d3ecc1801c36b0553b31ef0db0fa243 ""
+  "labelscope_manuscript.aux" 1778545085 11605 d4af3235d60e0a3f0cfa68aa19c3931d "pdflatex"
+  "labelscope_manuscript.out" 1778545085 5382 5b20452e02f5f69755af3daa0f054de1 "pdflatex"
+  "labelscope_manuscript.tex" 1778545080 44068 2261981a3795ffc477d4b88ff06343f3 ""
   (generated)
   "labelscope_manuscript.aux"
   "labelscope_manuscript.log"
