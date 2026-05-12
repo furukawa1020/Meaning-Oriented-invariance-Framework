@@ -186,7 +186,7 @@ SWELL-KW \cite{swell2014} contains physiological recordings from 25 participants
 \subsubsection{Resolution Audit (RA) Results}
 For WESAD, the RA was evaluated under a claim of momentary 60-s internal-state detection. Because the operational label is derived from protocol blocks (Stress, Baseline, Amusement), we define $N_{ind\_obs}$ as the number of independent label segments across all subjects ($N_{ind\_obs} = 15 \text{ subjects} \times 3 \text{ blocks} = 45$). The replication ratio $R_P = 1110/45 \approx 24.7$ substantially exceeds the threshold $\tau_{RA} = 5.0$. Therefore, the momentary claim is capped at \textbf{Level 0} by RA. 
 
-We subsequently evaluate a \textbf{protocol-linked stress-proxy claim}. For this claim, the unit of analysis is the 45 protocol-level blocks ($R_P = 1.0$). For the protocol-level audits, window-level physiological features and behavioral covariates were aggregated within each subject-condition block by mean pooling, yielding 45 protocol-level vectors. We then re-ran the PA and SA modules on these aggregated units. As shown in Table \ref{tab:wesad_claim_outcomes}, the protocol-level PA resulted in $\rho_{LC} = 0.68$, confirming that the Level 2 cap is a computed property of the protocol-linked claim.
+We subsequently evaluate a \textbf{protocol-linked stress-proxy claim}. For this claim, the unit of analysis is the 45 protocol-level blocks ($R_P = 1.0$). For the protocol-level audits, window-level physiological features and behavioral covariates were aggregated within each subject-condition block by mean pooling, yielding 45 protocol-level vectors. We then re-ran the PA and SA modules on these aggregated units; for the protocol-level SA, we used $k=5$ and block-level labels. As shown in Table \ref{tab:wesad_claim_outcomes}, the protocol-level PA resulted in $\rho_{LC} = 0.68$, confirming that the Level 2 cap is a computed property of the protocol-linked claim.
 
 \begin{table}[h]
 \caption{WESAD Audit Outcomes by Claim Specification}
@@ -321,8 +321,7 @@ Block-level effort  & 15 min & 1 & No RA-imposed cap & Level 2 (PA-Cap)$^*$ \\
 \section{Discussion: Implications for HMS Design}
 \label{sec:discussion}
 
-Table \ref{tab:reporting_comparison} illustrates how LabelScope changes the interpretation of a typical WESAD result. LabelScope addresses this interpretive gap by auditing whether the operational label can support the intended HMS claim. With the audit, the WESAD Level 2 result should be read as a computed cap for a protocol-linked proxy claim, not as validation of movement-independent internal stress sensing.
-Thus, the WESAD Level 2 result should be read as a computed cap for protocol-linked proxy reporting. Fig. 2 visually summarizes the same shift from accuracy-only reporting to claim-capped interpretation.
+Table \ref{tab:reporting_comparison} illustrates how LabelScope changes the interpretation of a typical WESAD result. LabelScope addresses this interpretive gap by auditing whether the operational label can support the intended HMS claim. With the audit, the WESAD Level 2 result should be read as a computed cap for a protocol-linked proxy claim, not as validation of movement-independent internal stress sensing. Fig. 2 visually summarizes the same shift from accuracy-only reporting to claim-capped interpretation.
 
 \begin{table*}[t]
 \caption{Reporting Comparison: Accuracy-Only vs.\ LabelScope-Audited (Typical reporting patterns for a dataset like WESAD \cite{wesad2018})}
