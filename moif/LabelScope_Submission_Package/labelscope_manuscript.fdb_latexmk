@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1778551714.41545 "c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_Package/labelscope_manuscript.tex" "labelscope_manuscript.pdf" "labelscope_manuscript" 1778551715.82638 0
-  "c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_Package/labelscope_manuscript.tex" 1778551711 44180 b982d6c08948b8c638c85edbffbf4cad ""
+["pdflatex"] 1778552026.63409 "c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_Package/labelscope_manuscript.tex" "labelscope_manuscript.pdf" "labelscope_manuscript" 1778552027.93039 0
+  "c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_Package/labelscope_manuscript.tex" 1778552022 41874 57e2bb2c0d9a5b2d50a1cc4a9a25118e ""
   "c:/Users/hatake/.gemini/antigravity/brain/f49ccbea-e83e-4952-83ec-ee1bebcb4352/fig1_pipeline_1778498543035.png" 1778498543 382275 55f18c1cb80a76c324f669a937b46c42 ""
   "c:/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc" 1770093395 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "c:/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1770094395 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -149,9 +149,9 @@
   "c:/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1770103547 5587484 49bd08ff372a6985d7d70778694ddaac ""
   "c:/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1770103868 3636162 afd28e82f1bc0291a2e045cd3ffa4474 ""
   "c:/texlive/2025/texmf.cnf" 1770103504 713 614551405fc44b98efbf516466e3c909 ""
-  "labelscope_manuscript.aux" 1778551715 11320 f788581a2cf691ac8fd8fa9188aeb353 "pdflatex"
-  "labelscope_manuscript.out" 1778551715 5382 5b20452e02f5f69755af3daa0f054de1 "pdflatex"
-  "labelscope_manuscript.tex" 1778551711 44180 b982d6c08948b8c638c85edbffbf4cad ""
+  "labelscope_manuscript.aux" 1778552027 11111 e8cf5d7ea6128674493ecdab991ebf9e "pdflatex"
+  "labelscope_manuscript.out" 1778552027 5056 9a27424b234b94bfd51fe69801899db6 "pdflatex"
+  "labelscope_manuscript.tex" 1778552022 41874 57e2bb2c0d9a5b2d50a1cc4a9a25118e ""
   (generated)
   "labelscope_manuscript.aux"
   "labelscope_manuscript.log"
