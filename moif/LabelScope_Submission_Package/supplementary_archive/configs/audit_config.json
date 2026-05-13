@@ -1,0 +1,17 @@
+{
+  "ra": {
+    "tau_ra": 5.0,
+    "description": "Replication ratio threshold. If R_P > tau_ra, claim is capped at Level 0."
+  },
+  "pa": {
+    "tau_pa": 0.30,
+    "description": "Proxy index threshold. If rho_LC > tau_pa, claim is capped at Level 2."
+  },
+  "sa": {
+    "alpha": 0.05,
+    "k_neighbors": 50,
+    "block_length_sec": 60,
+    "temporal_exclusion_sec": 60,
+    "description": "SA pass requires p_shuf < alpha. If p_shuf >= alpha, claim is capped at Level 1."
+  }
+}

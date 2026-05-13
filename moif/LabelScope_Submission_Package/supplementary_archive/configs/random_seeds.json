@@ -1,0 +1,9 @@
+{
+  "random_forest_seed": 42,
+  "sa_permutation_seed": 42,
+  "bootstrap_seed": 42,
+  "n_bootstrap": 1000,
+  "n_permutations": 1000,
+  "n_trees": 100,
+  "loso_split_seed": 42
+}

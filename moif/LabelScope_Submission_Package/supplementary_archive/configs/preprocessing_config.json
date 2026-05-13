@@ -1,0 +1,18 @@
+{
+  "wesad": {
+    "signal_window_sec": 60,
+    "window_overlap": 0.5,
+    "ecg_features": ["mean_hr", "sdnn", "rmssd", "lf_power", "hf_power", "lf_hf_ratio", "nn50", "pnn50"],
+    "eda_features": ["mean_eda", "std_eda", "mean_scr_amplitude", "n_scr_peaks", "mean_scl", "slope_eda"],
+    "normalization": "subject_wise_zscore",
+    "binary_label": {"stress": 1, "baseline": 0, "amusement": 0},
+    "gravity_removal": true,
+    "acc_covariate": "sma_wrist"
+  },
+  "swell_kw": {
+    "block_duration_min": 15,
+    "covariate": "aggregate_keyboard_mouse_intensity",
+    "binary_label": {"neutral": 0, "time_pressure": 1, "interruption": 1},
+    "stressor_composite": "mean_within_subject"
+  }
+}
