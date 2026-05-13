@@ -1,6 +1,7 @@
 # Fdb version 4
-["pdflatex"] 1778554619.51308 "c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_Package/labelscope_manuscript.tex" "labelscope_manuscript.pdf" "labelscope_manuscript" 1778554620.9832 0
-  "c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_Package/labelscope_manuscript.tex" 1778554616 39016 ebf3ac4c87b34b2791a42d58d3ca97ca ""
+["pdflatex"] 1778558972.61573 "c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_Package/labelscope_manuscript.tex" "labelscope_manuscript.pdf" "labelscope_manuscript" 1778558974.43077 0
+  "IEEEtran.cls" 1770095493 281957 5b2e4fa15b0f7eabb840ebf67df4c0f7 ""
+  "c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_Package/labelscope_manuscript.tex" 1778558966 39137 21c7f4fe180ace1810dc3494768ae6cc ""
   "c:/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc" 1770093395 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "c:/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1770094395 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmb7t.tfm" 1770102106 2172 fd0c924230362ff848a33632ed45dc23 ""
@@ -127,7 +128,6 @@
   "c:/texlive/2025/texmf-dist/tex/latex/hyperref/nameref.sty" 1770095360 11459 697f11f6c439d25d39d2674b99566af4 ""
   "c:/texlive/2025/texmf-dist/tex/latex/hyperref/pd1enc.def" 1770095360 14249 b94983bbccc8d5739c16cc91d1fd1c3b ""
   "c:/texlive/2025/texmf-dist/tex/latex/hyperref/puenc.def" 1770095360 117118 2e3ba580751de5583beacf2e5fee69a9 ""
-  "c:/texlive/2025/texmf-dist/tex/latex/ieeetran/IEEEtran.cls" 1770095493 281957 5b2e4fa15b0f7eabb840ebf67df4c0f7 ""
   "c:/texlive/2025/texmf-dist/tex/latex/kvoptions/kvoptions.sty" 1770096058 22555 6d8e155cfef6d82c3d5c742fea7c992e ""
   "c:/texlive/2025/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty" 1770096061 13815 760b0c02f691ea230f5359c4e1de23a7 ""
   "c:/texlive/2025/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def" 1770096079 30662 bfd6e864f4ffc5018b0e2b6260c3181c ""
@@ -149,9 +149,9 @@
   "c:/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1770103868 3636162 afd28e82f1bc0291a2e045cd3ffa4474 ""
   "c:/texlive/2025/texmf.cnf" 1770103504 713 614551405fc44b98efbf516466e3c909 ""
   "fig1_pipeline.png" 1778498543 382275 55f18c1cb80a76c324f669a937b46c42 ""
-  "labelscope_manuscript.aux" 1778554620 10171 3d66250ea36e4b30754011c31ee8aa2e "pdflatex"
-  "labelscope_manuscript.out" 1778554620 5056 9a27424b234b94bfd51fe69801899db6 "pdflatex"
-  "labelscope_manuscript.tex" 1778554616 39016 ebf3ac4c87b34b2791a42d58d3ca97ca ""
+  "labelscope_manuscript.aux" 1778558974 10171 ac969d2c46b4f1d6049d7b972272d6be "pdflatex"
+  "labelscope_manuscript.out" 1778558974 5056 78591ea072385ad2ad10e079421c0590 "pdflatex"
+  "labelscope_manuscript.tex" 1778558966 39137 21c7f4fe180ace1810dc3494768ae6cc ""
   (generated)
   "labelscope_manuscript.aux"
   "labelscope_manuscript.log"

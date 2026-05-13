@@ -4,8 +4,8 @@ INPUT c:/texlive/2025/texmf-dist/web2c/texmf.cnf
 INPUT c:/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt
 INPUT c:/Projects/Meaning-Oriented invariance Framework/moif/LabelScope_Submission_Package/labelscope_manuscript.tex
 OUTPUT labelscope_manuscript.log
-INPUT c:/texlive/2025/texmf-dist/tex/latex/ieeetran/IEEEtran.cls
-INPUT c:/texlive/2025/texmf-dist/tex/latex/ieeetran/IEEEtran.cls
+INPUT ./IEEEtran.cls
+INPUT IEEEtran.cls
 INPUT c:/texlive/2025/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 INPUT c:/texlive/2025/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 INPUT c:/texlive/2025/texmf-dist/tex/latex/psnfss/ot1ptm.fd
